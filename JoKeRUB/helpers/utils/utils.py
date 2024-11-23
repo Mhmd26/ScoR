@@ -11,18 +11,11 @@ LOGS = logging.getLogger(__name__)
 async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
     """Execute a terminal command asynchronously and return the output."""
     try:
-        # Split the command into arguments using shlex
         args = shlex.split(cmd)
-        
-        # Create a subprocess to execute the command
         process = await asyncio.create_subprocess_exec(
             *args, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
         )
-        
-        # Wait for the process to complete and capture stdout and stderr
         stdout, stderr = await process.communicate()
-        
-        # Return the decoded output, error output, return code, and process ID
         return (
             stdout.decode("utf-8", "replace").strip(),
             stderr.decode("utf-8", "replace").strip(),
@@ -55,17 +48,31 @@ def runasync(func: callable):
 async def unsavegif(event, jasme):
     """Unsave a gif document using Telethon."""
     try:
-        # Make the SaveGifRequest call to unsave the gif
+        # Check if jasme and its attributes are valid
+        if not hasattr(jasme, 'media') or not hasattr(jasme.media, 'document'):
+            LOGS.error("Invalid 'jasme' object or missing 'media' or 'document'.")
+            return
+        
+        document = jasme.media.document
+        if not document:
+            LOGS.error("Document is missing in the provided 'jasme' object.")
+            return
+        
+        # Log document details for debugging purposes
+        LOGS.info(f"Attempting to unsave GIF with ID: {document.id} and Access Hash: {document.access_hash}")
+        
+        # Execute the SaveGifRequest to unsave the gif
         await event.client(
             functions.messages.SaveGifRequest(
                 id=types.InputDocument(
-                    id=jasme.media.document.id,
-                    access_hash=jasme.media.document.access_hash,
-                    file_reference=jasme.media.document.file_reference,
+                    id=document.id,
+                    access_hash=document.access_hash,
+                    file_reference=document.file_reference,
                 ),
                 unsave=True,
             )
         )
+        LOGS.info("Successfully unsaved the GIF.")
     except Exception as e:
         # Log any exceptions that occur during the process
-        LOGS.info(f"Error unsaving gif: {str(e)}")
+        LOGS.error(f"Error unsaving gif: {str(e)}")
