@@ -2,25 +2,22 @@ from .extdl import *
 from .paste import *
 
 try:
-    # محاولة استيراد الوحدات
+    # استيراد الوحدات
     from . import format as _format
-    from . import tools as _zedtools
-    from . import utils as _zedutils
+    from . import tools as _cattools
+    from . import utils as _catutils
     from .events import *
     from .format import *
-    from .tools import *
-    from .utils import *
 except ModuleNotFoundError as e:
-    # تثبيت الوحدة المفقودة إذا لم تكن موجودة
-    install_pip(e.name)
-    # إعادة المحاولة بعد التثبيت
+    print(f"Module {e.name} not found. Attempting to install it...")
     try:
+        # تثبيت الوحدة المفقودة
+        install_pip(e.name)
+        # إعادة محاولة الاستيراد بعد التثبيت
         from . import format as _format
-        from . import tools as _zedtools
-        from . import utils as _zedutils
+        from . import tools as _cattools
+        from . import utils as _catutils
         from .events import *
         from .format import *
-        from .tools import *
-        from .utils import *
     except ModuleNotFoundError:
-        raise ImportError(f"Unable to import {e.name} even after installing it.")
+        raise ImportError(f"Unable to import {e.name} even after attempting to install it.")
