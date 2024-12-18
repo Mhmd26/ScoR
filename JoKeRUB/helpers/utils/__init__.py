@@ -1,9 +1,19 @@
 from .extdl import *
 from .paste import *
 
-flag = True
-check = 0
-while flag:
+try:
+    # محاولة استيراد الوحدات
+    from . import format as _format
+    from . import tools as _zedtools
+    from . import utils as _zedutils
+    from .events import *
+    from .format import *
+    from .tools import *
+    from .utils import *
+except ModuleNotFoundError as e:
+    # تثبيت الوحدة المفقودة إذا لم تكن موجودة
+    install_pip(e.name)
+    # إعادة المحاولة بعد التثبيت
     try:
         from . import format as _format
         from . import tools as _zedtools
@@ -12,10 +22,5 @@ while flag:
         from .format import *
         from .tools import *
         from .utils import *
-
-        break
-    except ModuleNotFoundError as e:
-        install_pip(e.name)
-        check += 1
-        if check > 5:
-            break
+    except ModuleNotFoundError:
+        raise ImportError(f"Unable to import {e.name} even after installing it.")
