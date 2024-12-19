@@ -3,6 +3,7 @@ from .paste import *
 
 def install_pip(package_name):
     import subprocess
+    import sys
     subprocess.check_call([sys.executable, "-m", "pip", "install", package_name])
 
 try:
