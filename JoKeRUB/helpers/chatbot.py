@@ -5,7 +5,7 @@ from .utils.extdl import install_pip
 try:
     import randomstuff
 except ModuleNotFoundError:
-    install_pip("aiohttp")
+    install_pip("moviepy")
     import randomstuff
 
 from ..Config import Config
