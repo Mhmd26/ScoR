@@ -1,7 +1,6 @@
 from . import fonts
 from . import memeshelper as catmemes
 from .aiohttp_helper import AioHttp
-from .utils import *
 from .telegraph_utils import post_to_telegraph
 from .time_utils import time_formatter
 from .utiles import sanga_seperator
@@ -20,8 +19,6 @@ while flag:
         from .progress import *
         from .qhelper import process
         from .tools import *
-        from .utils import _cattools, _catutils, _format
-
         break
     except ModuleNotFoundError as e:
         install_pip(e.name)
