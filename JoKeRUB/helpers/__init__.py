@@ -7,18 +7,8 @@ from .utiles import sanga_seperator
 from .times_utils import readable_time
 from .media_utils import media_type
 from .media_type import *  # إضافة اسم الملف هنا
-    # تأكد من أنك قد حصلت على مفتاح API من Telegraph
-                            
-flag = True
-check = 0
-while flag:
-    try:
-        from .progress import *
-        from .qhelper import process
-        from .tools import *
-        break
-    except ModuleNotFoundError as e:
-        install_pip(e.name)
-        check += 1
-        if check > 5:
-            break
+
+# قم باستيراد الوحدات المطلوبة مباشرةً
+from .progress import *
+from .qhelper import process
+from .tools import *
