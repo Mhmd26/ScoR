@@ -1,37 +1,21 @@
-from .extdl import install_pip
+from .extdl import *
 from .paste import *
 
-MAX_RETRIES = 5  # الحد الأقصى للمحاولات
-retry_count = 0
-
-modules_to_import = {
-    "format": "_format",
-    "tools": "_cattools",
-    "utils": "_catutils",
-    "events": None,  # لا حاجة لتعيين اسم مستعار
-}
-
-while retry_count < MAX_RETRIES:
+flag = True
+check = 0
+while flag:
     try:
-        # استيراد الوحدات المطلوبة
-        for module_name, alias in modules_to_import.items():
-            module = __import__(f".{module_name}", globals(), locals(), [module_name], 1)
-            if alias:
-                globals()[alias] = module
-
-        # استيراد إضافي (اختياري)
+        from . import format as _format
+        from . import tools as _cattools
+        from . import utils as _catutils
+        from .events import *
         from .format import *
+        from .tools import *
+        from .utils import *
 
-        # إذا نجحت جميع الاستيرادات، اكسر الحلقة
         break
     except ModuleNotFoundError as e:
-        # تثبيت المكتبة المطلوبة
-        print(f"Module {e.name} not found. Attempting to install...")
         install_pip(e.name)
-        retry_count += 1
-    except Exception as e:
-        # التعامل مع أخطاء أخرى (إذا لزم الأمر)
-        print(f"Unexpected error: {e}")
-        break
-else:
-    print("Failed to import required modules after multiple attempts.")
+        check += 1
+        if check > 5:
+            break
