@@ -1,7 +1,5 @@
 import asyncio
 import aiohttp
-from .utils.extdl import install_pip
-
 try:
     import randomstuff
 except ModuleNotFoundError:
