@@ -13,7 +13,6 @@ flag = True
 check = 0
 while flag:
     try:
-        from .functions import *
         from .memeifyhelpers import *
         from .progress import *
         from .qhelper import process
