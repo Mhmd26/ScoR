@@ -310,14 +310,14 @@ async def _ban_person(event):
         await event.client.send_file(
           event.chat_id,
           repthon_ban,  
-          caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n✎┊‌ تـم حظـࢪه بنجـاح ☑️**\n\n✎┊‌ السـبب :** `{reason}`"
+          caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**✎┊‌ تـم حظـࢪه بنجـاح ☑️**\n\n✎┊‌ السـبب :** `{reason}`"
         )
         await event.delete()
     else:    
         await event.client.send_file(
             event.chat_id,
             repthon_ban,
-            caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n✎┊‌ تـم حظــࢪه بنجـاح ☑️**\n\n"
+            caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**✎┊‌ تـم حظــࢪه بنجـاح ☑️**\n\n"
         )
         await event.delete()
     if BOTLOG:
@@ -348,14 +348,19 @@ async def _ban_person(event):
 
 @l313l.ar_cmd(pattern=f"{UNBANN}(?:\s|$)([\s\S]*)")
 async def nothanos(event):
+    IMAGE_URL = "https://k.top4top.io/p_3276946ut0.jpg"
+    
     user, _ = await get_user_from_event(event)
     if not user:
         return
     zedevent = await edit_or_reply(event, "** .. جـاري الغاء حـظࢪه ..**")
     try:
         await event.client(EditBannedRequest(event.chat_id, user.id, UNBAN_RIGHTS))
-        await zedevent.edit(
-            f"{_format.mentionuser(user.first_name ,user.id)}  \n✎┊‌ تم الغـاء حظــࢪه بنجــاح ✓ **"
+        await event.delete()
+        await event.client.send_file(
+            event.chat_id,
+            IMAGE_URL,
+            caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}\n**✎┊‌ تـم الغـاء حظــࢪه بنجــاح ✓**"
         )
         if BOTLOG:
             await event.client.send_message(
