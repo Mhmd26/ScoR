@@ -137,7 +137,7 @@ async def startupmessage():
 async def mybot():
     try:
         starkbot = await l313l.tgbot.get_me()
-        Scorpion = "** العقرب | 𝗦𝗰𝗼𝗿𝗽𝗶𝗼 🦂**"
+        Scorpion = "** 𝗦𝗰𝗼𝗿𝗽𝗶𝗼𝗻 𝗦𝗼𝘂𝗿𝗰𝗲 🦂**"
         bot_name = starkbot.first_name
         botname = f"@{starkbot.username}"
         if bot_name.endswith("Assistant"):
@@ -162,7 +162,7 @@ async def mybot():
                 await asyncio.sleep(1)
                 await l313l.send_message("@BotFather", botname)
                 await asyncio.sleep(1)
-                await l313l.send_file("@BotFather", "zelz/zilzal/logozed.jpg")
+                await l313l.send_file("@BotFather", "Scorpion.jpg")
                 await asyncio.sleep(3)
                 await l313l.send_message("@BotFather", "/setabouttext")
                 await asyncio.sleep(1)
