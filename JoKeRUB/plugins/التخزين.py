@@ -50,7 +50,7 @@ async def monito_p_m_s(event):  # sourcery no-metrics
                             print(f"صار خطأ\n{er}")
                     else:
                         await event.client.send_message(
-Config.PM_LOGGER_GROUP_ID,
+                            Config.PM_LOGGER_GROUP_ID,
                             LOG_CHATS_.NEWPM.text.replace(
                                 " **📮┊رسـاله جـديده**", f"{LOG_CHATS_.COUNT} **رسـائل**"
                             )
@@ -97,7 +97,7 @@ async def log_tagged_messages(event):
     resalt = f"#التــاكــات\n\n<b>✎┊‌ الكــروب : </b><code>{hmm.title}</code>"
     if full is not None:
         resalt += (
-            f"\n\n<b✎┊‌ المـرسـل : </b> {_format.htmlmentionuser(full.first_name , full.id)}"
+            f"\n\n<b>✎┊‌ المـرسـل : </b> {_format.htmlmentionuser(full.first_name , full.id)}"
         )
     if messaget is not None:
         resalt += f"\n\n<b>✎┊‌ رسـالـة ميـديـا : </b><code>{messaget}</code>"
@@ -242,20 +242,4 @@ async def set_grplog(event):
             "__For functioning of this you need to set PM_LOGGER_GROUP_ID in config vars__",
             10,
         )
-    input_str = event.pattern_match.group(1)
-    if input_str == "تعطيل":
-        h_type = False
-    elif input_str == "تفعيل":
-        h_type = True
-    GRPLOG = not gvarstatus("GRPLOG") or gvarstatus("GRPLOG") != "false"
-    if GRPLOG:
-        if h_type:
-            await event.edit("**✎┊‌ تخزين الكـروبات بالفعـل ممكـن ✓**")
-        else:
-            addgvar("GRPLOG", h_type)
-            await event.edit("**✎┊‌ تـم تعطيـل تخـزين تاكـات الكـروبات .. بنجـاح✓**")
-    elif h_type:
-        addgvar("GRPLOG", h_type)
-        await event.edit("**✎┊‌ تـم تفعيـل تخـزين تاكـات الكـروبات .. بنجـاح✓**")
-    else:
-        await event.edit("**✎┊‌ تخزين الكـروبات بالفعـل معطـل ✓**")
+    input
