@@ -1,8 +1,6 @@
 import asyncio
-
 from JoKeRUB import l313l
 from JoKeRUB.core.logger import logging
-
 from ..Config import Config
 from ..core.managers import edit_delete
 from ..helpers.tools import media_type
@@ -58,7 +56,7 @@ async def monito_p_m_s(event):  # sourcery no-metrics
                     LOG_CHATS_.COUNT = 0
                 LOG_CHATS_.NEWPM = await event.client.send_message(
                     Config.PM_LOGGER_GROUP_ID,
-                    f"**🛂┊المسـتخـدم :** {_format.mentionuser(sender.first_name , sender.id)} **- قام بـ إرسـال رسـالة جـديـده** \n**🎟┊الايـدي :** `{chat.id}`",
+                    f"**🛂┊المسـتخـدم :** {_format.mentionuser(sender.first_name , sender.id)} **- قام بـ إرسـال رسـالة جـديـده** \n**🎟┊الايـدي :** `{chat.id}`\n**💬┊رابط الحساب :** [رابط الحساب](tg://user?id={sender.id})",
                 )
             try:
                 if event.message:
@@ -111,135 +109,3 @@ async def log_tagged_messages(event):
             parse_mode="html",
             link_preview=False,
         )
-
-
-@l313l.ar_cmd(
-    pattern="خزن(?:\s|$)([\s\S]*)",
-    command=("خزن", plugin_category),
-    info={
-        "header": "To log the replied message to bot log group so you can check later.",
-        "الاسـتخـدام": [
-            "{tr}خزن",
-        ],
-    },
-)
-async def log(log_text):
-    "To log the replied message to bot log group"
-    if BOTLOG:
-        if log_text.reply_to_msg_id:
-            reply_msg = await log_text.get_reply_message()
-            await reply_msg.forward_to(BOTLOG_CHATID)
-        elif log_text.pattern_match.group(1):
-            user = f"#التخــزين / ايـدي الدردشــه : {log_text.chat_id}\n\n"
-            textx = user + log_text.pattern_match.group(1)
-            await log_text.client.send_message(BOTLOG_CHATID, textx)
-        else:
-            await log_text.edit("**✎┊‌ بالــرد على اي رسـاله لحفظهـا في كـروب التخــزين**")
-            return
-        await log_text.edit("**✎┊‌ تـم الحفـظ في كـروب التخـزين .. بنجـاح ✓**")
-    else:
-        await log_text.edit("**✎┊‌ عـذراً .. هـذا الامـر يتطلـب تفعيـل فـار التخـزين اولاً**")
-    await asyncio.sleep(2)
-    await log_text.delete()
-
-
-@l313l.ar_cmd(
-    pattern="تفعيل التخزين$",
-    command=("تفعيل التخزين", plugin_category),
-    info={
-        "header": "To turn on logging of messages from that chat.",
-        "الاسـتخـدام": [
-            "{tr}log",
-        ],
-    },
-)
-async def set_no_log_p_m(event):
-    "To turn on logging of messages from that chat."
-    if Config.PM_LOGGER_GROUP_ID != -100:
-        chat = await event.get_chat()
-        if no_log_pms_sql.is_approved(chat.id):
-            no_log_pms_sql.disapprove(chat.id)
-            await edit_delete(
-                event, "**✎┊‌ تـم تفعيـل التخـزين لهـذه الدردشـه .. بنجـاح ✓**", 5
-            )
-
-
-@l313l.ar_cmd(
-    pattern="تعطيل التخزين$",
-    command=("تعطيل التخزين", plugin_category),
-    info={
-        "header": "To turn off logging of messages from that chat.",
-        "الاسـتخـدام": [
-            "{tr}nolog",
-        ],
-    },
-)
-async def set_no_log_p_m(event):
-    "To turn off logging of messages from that chat."
-    if Config.PM_LOGGER_GROUP_ID != -100:
-        chat = await event.get_chat()
-        if not no_log_pms_sql.is_approved(chat.id):
-            no_log_pms_sql.approve(chat.id)
-            await edit_delete(
-                event, "**✎┊‌ تـم تعطيـل التخـزين لهـذه الدردشـه .. بنجـاح ✓**", 5
-            )
-
-
-@l313l.ar_cmd(
-    pattern="تخزين الخاص (تفعيل|تعطيل)$",
-    command=("تخزين الخاص", plugin_category),
-    info={
-        "header": "To turn on or turn off logging of Private messages in pmlogger group.",
-        "الاسـتخـدام": [
-            "{tr}pmlog on",
-            "{tr}pmlog off",
-        ],
-    },
-)
-async def set_pmlog(event):
-    "To turn on or turn off logging of Private messages"
-    if Config.PM_LOGGER_GROUP_ID == -100:
-        return await edit_delete(
-            event,
-            "__For functioning of this you need to set PM_LOGGER_GROUP_ID in config vars__",
-            10,
-        )
-    input_str = event.pattern_match.group(1)
-    if input_str == "تعطيل":
-        h_type = False
-    elif input_str == "تفعيل":
-        h_type = True
-    PMLOG = not gvarstatus("PMLOG") or gvarstatus("PMLOG") != "false"
-    if PMLOG:
-        if h_type:
-            await event.edit("**✎┊‌ تخزين الخاص بالفعـل ممكـن ✓**")
-        else:
-            addgvar("PMLOG", h_type)
-            await event.edit("**✎┊‌ تـم تعطيـل تخـزين رسـائل الخـاص .. بنجـاح✓**")
-    elif h_type:
-        addgvar("PMLOG", h_type)
-        await event.edit("**✎┊‌ تـم تفعيـل تخـزين رسـائل الخـاص .. بنجـاح✓**")
-    else:
-        await event.edit("**✎┊‌ تخزين الخاص بالفعـل معطـل ✓**")
-
-
-@l313l.ar_cmd(
-    pattern="تخزين الكروبات (تفعيل|تعطيل)$",
-    command=("تخزين الكروبات", plugin_category),
-    info={
-        "header": "To turn on or turn off group tags logging in pmlogger group.",
-        "الاسـتخـدام": [
-            "{tr}grplog on",
-            "{tr}grplog off",
-        ],
-    },
-)
-async def set_grplog(event):
-    "To turn on or turn off group tags logging"
-    if Config.PM_LOGGER_GROUP_ID == -100:
-        return await edit_delete(
-            event,
-            "__For functioning of this you need to set PM_LOGGER_GROUP_ID in config vars__",
-            10,
-        )
-    input
