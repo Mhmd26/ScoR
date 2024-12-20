@@ -384,7 +384,6 @@ async def watcher(event):
             LOGS.info(str(e))
 
 
-
 @l313l.ar_cmd(pattern=f"{MUTE}(?:\s|$)([\s\S]*)")
 async def startmute(event):
     if event.is_private:
@@ -397,16 +396,14 @@ async def startmute(event):
             return await edit_delete(event, "**✎┊‌ لا تستطــع كتـم نفسـك**")
         if event.chat_id == 7275336620 or event.chat_id == 815010872 or event.chat_id == 7275336620:
             return await edit_delete(event, "**  دي لا يمڪنني كتـم احـد مطـورين السـورس  **")
+        if event.chat_id == 815010872 or event.chat_id == 7275336620 or event.chat_id == 815010872:
+            return await edit_delete(event, "**  دي . . لا يمڪنني كتـم مطـور السـورس  **")
         try:
             mute(event.chat_id, event.chat_id)
         except Exception as e:
             await event.edit(f"**✎┊‌ خطـأ **\n`{e}`")
         else:
-            await event.client.send_file(
-                event.chat_id,
-                repthon_mute,  # رابط الصورة
-                caption="**✎┊‌ تم ڪتـم الـمستخـدم  . . بنجـاح ✓**"
-            )
+            await event.edit("**✎┊‌ تم ڪتـم الـمستخـدم  . . بنجـاح ✓**")
         if BOTLOG:
             await event.client.send_message(
                 BOTLOG_CHATID,
@@ -428,6 +425,8 @@ async def startmute(event):
             return await edit_or_reply(event, "**✎┊‌ عــذراً .. لا استطيــع كتــم نفســي**")
         if user.id == 7275336620 or user.id == 815010872 or user.id == 7275336620:
             return await edit_or_reply(event, "**  دي لا يمڪنني كتـم احـد مطـورين السـورس  **")
+        if user.id == 7275336620 or user.id == 815010872 or user.id == 7275336620:
+            return await edit_or_reply(event, "**  دي . . لا يمڪنني كتـم مطـور السـورس  **")
         if is_muted(user.id, event.chat_id):
             return await edit_or_reply(
                 event, "**عــذراً .. هـذا الشخـص مكتــوم سـابقــاً هنـا**"
@@ -539,13 +538,4 @@ async def endmute(event):
                 BOTLOG_CHATID,
                 "#الغــاء_الكــتم\n"
                 f"**✎┊‌ الشخـص :** [{user.first_name}](tg://user?id={user.id})\n"
-                f"**✎┊‌ الدردشــه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
-            )
-
-
-@l313l.ar_cmd(pattern=f"{KICK}(?:\s|$)([\s\S]*)")
-async def kick(event):
-    user, reason = await get_user_from_event(event)
-    if not user:
-        return
-    if
+                f"**✎┊‌ الدردشــه :** {ge
