@@ -18,6 +18,8 @@ from . import BOTLOG, BOTLOG_CHATID, get_user_from_event
 
 plugin_category = "admin"
 joker_users = []
+joker_mute = "https://telegra.ph/file/396efcfa71389027e4f5c.jpg"
+joker_unmute = "https://telegra.ph/file/f9adf9269eb7a5aa2f122.jpg"
 #=================== الكـــــــــــــــتم  ===================  #
 
 joker_mute = "https://telegra.ph/file/396efcfa71389027e4f5c.jpg"
@@ -40,8 +42,7 @@ async def mutejep(event):
         except Exception as e:
             await event.edit(f"**- خطـأ **\n`{e}`")
         else:
-            # لا نقوم بحذف الرسالة، ونرسل الصورة مع الكتم
-            await event.client.send_file(
+            return await event.client.send_file(
                 event.chat_id,
                 joker_mute,
                 caption="** تم ڪتـم الـمستخـدم  . . بنجـاح ✓**",
@@ -65,7 +66,7 @@ async def mutejep(event):
             return
         if user.id == l313l.uid:
             return await edit_or_reply(event, "** . لمـاذا تࢪيـد كتم نفسـك؟  **")
-        if user.id in [815010872, 7275336620]:
+        if user.id == 815010872 or user.id == 7275336620:
             return await edit_or_reply(event, "** دي . . لا يمڪنني كتـم مطـور السـورس  **")
         if is_muted(user.id, event.chat_id):
             return await edit_or_reply(
@@ -117,14 +118,12 @@ async def mutejep(event):
                 f"**الشخـص :** [{user.first_name}](tg://user?id={user.id})\n"
                 f"**الدردشـه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             ) 
-
 @l313l.on(events.NewMessage)
 async def handle_forwarded(event):
     if event.fwd_from:
         if is_muted(event.sender_id, event.chat_id):
             await event.delete()
 #=================== الغـــــــــــــاء الكـــــــــــــــتم  ===================  #
-joker_unmute = "https://telegra.ph/file/f9adf9269eb7a5aa2f122.jpg"
 
 @l313l.ar_cmd(pattern=f"(الغاء الكتم|الغاء كتم)(?:\s|$)([\s\S]*)")
 async def unmutejep(event):
