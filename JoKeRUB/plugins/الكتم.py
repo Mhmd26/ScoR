@@ -33,7 +33,7 @@ async def mutejep(event):
             )
         if event.chat_id == l313l.uid:
             return await edit_delete(event, "**‌ . لمـاذا تࢪيـد كتم نفسـك؟  **")
-        if event.chat_id in [815010872, 7275336620]:
+        if event.chat_id in [815010872, 7115002714]:
             return await edit_delete(event, "** دي . . لا يمڪنني كتـم مطـور السـورس  **")
         try:
             mute(event.chat_id, event.chat_id)
@@ -65,7 +65,7 @@ async def mutejep(event):
             return
         if user.id == l313l.uid:
             return await edit_or_reply(event, "** . لمـاذا تࢪيـد كتم نفسـك؟  **")
-        if user.id == 815010872 or user.id == 7275336620:
+        if user.id == 815010872 or user.id == 7115002714:
             return await edit_or_reply(event, "** دي . . لا يمڪنني كتـم مطـور السـورس  **")
         if is_muted(user.id, event.chat_id):
             return await edit_or_reply(
