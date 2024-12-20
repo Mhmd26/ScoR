@@ -371,7 +371,7 @@ async def _(event):
         await event.edit("**✎┊‌ يجب وضع رابط الفيديو من التيك توك مع الامر  **")
     else:
         await event.edit("**✎┊‌تتم المعالجة انتظر قليلا**")
-    chat = "@G_mailbbot"
+    chat = "@LEbot"
     async with bot.conversation(chat) as conv:
         try:
             msg_start = await conv.send_message("/start")
@@ -381,7 +381,7 @@ async def _(event):
             video = await conv.get_response()
             await bot.send_read_acknowledge(conv.chat_id)
         except YouBlockedUserError:
-            await event.edit("✎┊‌الغـي حـظر هـذا البـوت و حـاول مجـددا @G_mailbbot")
+            await event.edit("✎┊‌الغـي حـظر هـذا البـوت و حـاول مجـددا @LEbot")
             return
         await bot.send_file(event.chat_id, video)
         await event.client.delete_messages(
