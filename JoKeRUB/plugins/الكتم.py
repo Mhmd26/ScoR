@@ -21,7 +21,6 @@ joker_users = []
 joker_mute = "https://telegra.ph/file/396efcfa71389027e4f5c.jpg"
 joker_unmute = "https://telegra.ph/file/f9adf9269eb7a5aa2f122.jpg"
 #=================== الكـــــــــــــــتم  ===================  #
-
 @l313l.ar_cmd(pattern=f"كتم(?:\s|$)([\s\S]*)")
 async def mutejep(event):
     await event.delete()
@@ -117,11 +116,7 @@ async def mutejep(event):
                 f"**الشخـص :** [{user.first_name}](tg://user?id={user.id})\n"
                 f"**الدردشـه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             ) 
-@l313l.on(events.NewMessage)
-async def handle_forwarded(event):
-    if event.fwd_from:
-        if is_muted(event.sender_id, event.chat_id):
-            await event.delete()
+
 #=================== الغـــــــــــــاء الكـــــــــــــــتم  ===================  #
 
 @l313l.ar_cmd(pattern=f"(الغاء الكتم|الغاء كتم)(?:\s|$)([\s\S]*)")
