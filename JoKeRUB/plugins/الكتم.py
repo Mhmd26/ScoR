@@ -18,14 +18,12 @@ from . import BOTLOG, BOTLOG_CHATID, get_user_from_event
 
 plugin_category = "admin"
 joker_users = []
-joker_unmute = "https://telegra.ph/file/f9adf9269eb7a5aa2f122.jpg"
 #=================== الكـــــــــــــــتم  ===================  #
 
-joker_mute = "https://d.top4top.io/p_3276txxe00.jpg"
+joker_mute = "https://telegra.ph/file/396efcfa71389027e4f5c.jpg"
 
 @l313l.ar_cmd(pattern=f"كتم(?:\s|$)([\s\S]*)")
 async def mutejep(event):
-    await event.delete()
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if is_muted(event.chat_id, event.chat_id):
@@ -42,7 +40,8 @@ async def mutejep(event):
         except Exception as e:
             await event.edit(f"**- خطـأ **\n`{e}`")
         else:
-            return await event.client.send_file(
+            # لا نقوم بحذف الرسالة، ونرسل الصورة مع الكتم
+            await event.client.send_file(
                 event.chat_id,
                 joker_mute,
                 caption="** تم ڪتـم الـمستخـدم  . . بنجـاح ✓**",
@@ -66,7 +65,7 @@ async def mutejep(event):
             return
         if user.id == l313l.uid:
             return await edit_or_reply(event, "** . لمـاذا تࢪيـد كتم نفسـك؟  **")
-        if user.id == 815010872 or user.id == 7275336620:
+        if user.id in [815010872, 7275336620]:
             return await edit_or_reply(event, "** دي . . لا يمڪنني كتـم مطـور السـورس  **")
         if is_muted(user.id, event.chat_id):
             return await edit_or_reply(
@@ -125,6 +124,7 @@ async def handle_forwarded(event):
         if is_muted(event.sender_id, event.chat_id):
             await event.delete()
 #=================== الغـــــــــــــاء الكـــــــــــــــتم  ===================  #
+joker_unmute = "https://telegra.ph/file/f9adf9269eb7a5aa2f122.jpg"
 
 @l313l.ar_cmd(pattern=f"(الغاء الكتم|الغاء كتم)(?:\s|$)([\s\S]*)")
 async def unmutejep(event):
@@ -198,4 +198,10 @@ async def show_muted_users(event):
         await event.edit("**✎┊‌ لا يوجد مستخدمين مكتومين حاليًا**")
 # ===================================== # 
 
+@l313l.ar_cmd(incoming=True)
+async def watcher(event):
+    if is_muted(event.sender_id, "كتم_مؤقت"):
+        await event.delete()
+
 #=====================================  #
+                
