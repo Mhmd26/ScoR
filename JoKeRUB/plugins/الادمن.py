@@ -298,7 +298,7 @@ async def _ban_person(event):
         return
     if user.id == event.client.uid:
         return await edit_delete(event, "**✎┊‌ عـذراً ..لا استطيـع حظـࢪ نفسـي **")
-    if user.id == 815010872 or user.id == 7115002714:
+    if user.id == 815010872 or user.id == 7275336620:
         return await edit_delete(event, "**  دي لا يمڪنني حظـر احـد مطـورين السـورس  **")
     zedevent = await edit_or_reply(event, "** ✎┊‌ جـاࢪِ الحـظـࢪ ...**")
     try:
@@ -310,14 +310,14 @@ async def _ban_person(event):
         await event.client.send_file(
           event.chat_id,
           repthon_ban,  
-          caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n✎┊‌ تـم حظـࢪه بنجـاح ☑️**\n\n✎┊‌ السـبب :** `{reason}`"
+          caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**✎┊‌ تـم حظـࢪه بنجـاح ☑️**\n\n✎┊‌ السـبب :** `{reason}`"
         )
         await event.delete()
     else:    
         await event.client.send_file(
             event.chat_id,
             repthon_ban,
-            caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n✎┊‌ تـم حظــࢪه بنجـاح ☑️**\n\n"
+            caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**✎┊‌ تـم حظــࢪه بنجـاح ☑️**\n\n"
         )
         await event.delete()
     if BOTLOG:
@@ -348,14 +348,19 @@ async def _ban_person(event):
 
 @l313l.ar_cmd(pattern=f"{UNBANN}(?:\s|$)([\s\S]*)")
 async def nothanos(event):
+    IMAGE_URL = "https://k.top4top.io/p_3276946ut0.jpg"
+    
     user, _ = await get_user_from_event(event)
     if not user:
         return
     zedevent = await edit_or_reply(event, "** .. جـاري الغاء حـظࢪه ..**")
     try:
         await event.client(EditBannedRequest(event.chat_id, user.id, UNBAN_RIGHTS))
-        await zedevent.edit(
-            f"{_format.mentionuser(user.first_name ,user.id)}  \n✎┊‌ تم الغـاء حظــࢪه بنجــاح ✓ **"
+        await event.delete()
+        await event.client.send_file(
+            event.chat_id,
+            IMAGE_URL,
+            caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}\n**✎┊‌ تـم الغـاء حظــࢪه بنجــاح ✓**"
         )
         if BOTLOG:
             await event.client.send_message(
@@ -379,6 +384,7 @@ async def watcher(event):
             LOGS.info(str(e))
 
 
+
 @l313l.ar_cmd(pattern=f"{MUTE}(?:\s|$)([\s\S]*)")
 async def startmute(event):
     if event.is_private:
@@ -389,10 +395,8 @@ async def startmute(event):
             )
         if event.chat_id == l313l.uid:
             return await edit_delete(event, "**✎┊‌ لا تستطــع كتـم نفسـك**")
-        if event.chat_id == 7275336620 or event.chat_id == 815010872 or event.chat_id == 7115002714:
+        if event.chat_id == 7275336620 or event.chat_id == 815010872 or event.chat_id == 7275336620:
             return await edit_delete(event, "**  دي لا يمڪنني كتـم احـد مطـورين السـورس  **")
-        if event.chat_id == 815010872 or event.chat_id == 7115002714 or event.chat_id == 815010872:
-            return await edit_delete(event, "**  دي . . لا يمڪنني كتـم مطـور السـورس  **")
         try:
             mute(event.chat_id, event.chat_id)
         except Exception as e:
@@ -400,7 +404,7 @@ async def startmute(event):
         else:
             await event.client.send_file(
                 event.chat_id,
-                repthon_mute,
+                repthon_mute,  # رابط الصورة
                 caption="**✎┊‌ تم ڪتـم الـمستخـدم  . . بنجـاح ✓**"
             )
         if BOTLOG:
@@ -422,10 +426,8 @@ async def startmute(event):
             return
         if user.id == l313l.uid:
             return await edit_or_reply(event, "**✎┊‌ عــذراً .. لا استطيــع كتــم نفســي**")
-        if user.id == 7115002714 or user.id == 815010872 or user.id == 7115002714:
+        if user.id == 7275336620 or user.id == 815010872 or user.id == 7275336620:
             return await edit_or_reply(event, "**  دي لا يمڪنني كتـم احـد مطـورين السـورس  **")
-        if user.id == 7115002714 or user.id == 815010872 or user.id == 7115002714:
-            return await edit_or_reply(event, "**  دي . . لا يمڪنني كتـم مطـور السـورس  **")
         if is_muted(user.id, event.chat_id):
             return await edit_or_reply(
                 event, "**عــذراً .. هـذا الشخـص مكتــوم سـابقــاً هنـا**"
@@ -460,14 +462,14 @@ async def startmute(event):
             await event.client.send_file(
                 event.chat_id,
                 repthon_mute,
-                caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n✎┊‌ تـم كتمـه بنجـاح ☑️**\n\n✎┊‌ السـبب :** {reason}",
+                caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**✎┊‌ تـم كتمـه بنجـاح ☑️**\n\n✎┊‌ السـبب :** {reason}",
             )
             await event.delete()
         else:
             await event.client.send_file(
                 event.chat_id,
                 repthon_mute,
-                caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n✎┊‌ تـم كتمـه بنجـاح ☑️**\n\n",
+                caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**✎┊‌ تـم كتمـه بنجـاح ☑️**\n\n",
             )
             await event.delete()
         if BOTLOG:
@@ -481,6 +483,8 @@ async def startmute(event):
 
 @l313l.ar_cmd(pattern=f"{UNMUTE}(?:\s|$)([\s\S]*)")
 async def endmute(event):
+    IMAGE_URL = "https://l.top4top.io/p_3276e6rxr0.jpg"
+    
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if not is_muted(event.chat_id, event.chat_id):
@@ -492,8 +496,11 @@ async def endmute(event):
         except Exception as e:
             await event.edit(f"**✎┊‌ خطــأ **\n`{e}`")
         else:
-            await event.edit(
-                "**✎┊‌ تـم الغــاء كتــم الشخـص هنـا .. بنجــاح ✓**"
+            await event.delete()
+            await event.client.send_file(
+                event.chat_id,
+                IMAGE_URL,
+                caption="**✎┊‌ تـم الغــاء كتــم الشخـص هنـا .. بنجــاح ✓**"
             )
         if BOTLOG:
             await event.client.send_message(
@@ -521,9 +528,11 @@ async def endmute(event):
             )
         except Exception as e:
             return await edit_or_reply(event, f"**✎┊‌ خطــأ : **`{e}`")
-        await edit_or_reply(
-            event,
-            f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)} \n✎┊‌ تـم الغـاء كتمـه بنجـاح ☑️**",
+        await event.delete()
+        await event.client.send_file(
+            event.chat_id,
+            IMAGE_URL,
+            caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)} \n**✎┊‌ تـم الغـاء كتمـه بنجـاح ☑️**"
         )
         if BOTLOG:
             await event.client.send_message(
@@ -539,5 +548,4 @@ async def kick(event):
     user, reason = await get_user_from_event(event)
     if not user:
         return
-    if user.id == 815010872 or user.id == 7115002714:
-        return await edit_delete(eve
+    if
