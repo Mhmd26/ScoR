@@ -456,14 +456,14 @@ async def startmute(event):
             await event.client.send_file(
                 event.chat_id,
                 repthon_mute,
-                caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n✎┊‌ تـم كتمـه بنجـاح ☑️**\n\n✎┊‌ السـبب :** {reason}",
+                caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**✎┊‌ تـم كتمـه بنجـاح ☑️**\n\n✎┊‌ السـبب :** {reason}",
             )
             await event.delete()
         else:
             await event.client.send_file(
                 event.chat_id,
                 repthon_mute,
-                caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n✎┊‌ تـم كتمـه بنجـاح ☑️**\n\n",
+                caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)}  \n**✎┊‌ تـم كتمـه بنجـاح ☑️**\n\n",
             )
             await event.delete()
         if BOTLOG:
@@ -477,6 +477,8 @@ async def startmute(event):
 
 @l313l.ar_cmd(pattern=f"{UNMUTE}(?:\s|$)([\s\S]*)")
 async def endmute(event):
+    IMAGE_URL = "https://l.top4top.io/p_3276e6rxr0.jpg"
+    
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if not is_muted(event.chat_id, event.chat_id):
@@ -488,8 +490,11 @@ async def endmute(event):
         except Exception as e:
             await event.edit(f"**✎┊‌ خطــأ **\n`{e}`")
         else:
-            await event.edit(
-                "**✎┊‌ تـم الغــاء كتــم الشخـص هنـا .. بنجــاح ✓**"
+            await event.delete()
+            await event.client.send_file(
+                event.chat_id,
+                IMAGE_URL,
+                caption="**✎┊‌ تـم الغــاء كتــم الشخـص هنـا .. بنجــاح ✓**"
             )
         if BOTLOG:
             await event.client.send_message(
@@ -517,9 +522,11 @@ async def endmute(event):
             )
         except Exception as e:
             return await edit_or_reply(event, f"**✎┊‌ خطــأ : **`{e}`")
-        await edit_or_reply(
-            event,
-            f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)} \n✎┊‌ تـم الغـاء كتمـه بنجـاح ☑️**",
+        await event.delete()
+        await event.client.send_file(
+            event.chat_id,
+            IMAGE_URL,
+            caption=f"**✎┊‌ المستخـدم :** {_format.mentionuser(user.first_name ,user.id)} \n**✎┊‌ تـم الغـاء كتمـه بنجـاح ☑️**"
         )
         if BOTLOG:
             await event.client.send_message(
