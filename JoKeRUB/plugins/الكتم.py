@@ -22,15 +22,14 @@ joker_mute = "https://telegra.ph/file/396efcfa71389027e4f5c.jpg"
 joker_unmute = "https://telegra.ph/file/f9adf9269eb7a5aa2f122.jpg"
 #=================== الكـــــــــــــــتم  ===================  #
 
+
 @l313l.ar_cmd(pattern=f"كتم(?:\s|$)([\s\S]*)")
 async def mutejep(event):
     await event.delete()
     if event.is_private:
         replied_user = await event.client.get_entity(event.chat_id)
         if is_muted(event.chat_id, event.chat_id):
-            return await event.edit(
-                "**- هـذا المسـتخـدم مڪتـوم . . سـابقـاً **"
-            )
+            return await event.edit("**- هـذا المسـتخـدم مڪتـوم . . سـابقـاً **")
         if event.chat_id == l313l.uid:
             return await edit_delete(event, "**‌ . لمـاذا تࢪيـد كتم نفسـك؟  **")
         if event.chat_id in [815010872, 7275336620]:
@@ -57,9 +56,7 @@ async def mutejep(event):
         admin = chat.admin_rights
         creator = chat.creator
         if not admin and not creator:
-            return await edit_or_reply(
-                event, "** أنـا لسـت مشـرف هنـا ؟!! .**"
-            )
+            return await edit_or_reply(event, "** أنـا لسـت مشـرف هنـا ؟!! .**")
         user, reason = await get_user_from_event(event)
         if not user:
             return
@@ -68,34 +65,10 @@ async def mutejep(event):
         if user.id == 815010872 or user.id == 7275336620:
             return await edit_or_reply(event, "** دي . . لا يمڪنني كتـم مطـور السـورس  **")
         if is_muted(user.id, event.chat_id):
-            return await edit_or_reply(
-                event, "**عــذراً .. هـذا الشخـص مكتــوم سـابقــاً هنـا**"
-            )
-        result = await event.client.get_permissions(event.chat_id, user.id)
-        try:
-            if result.participant.banned_rights.send_messages:
-                return await edit_or_reply(
-                    event,
-                    "**عــذراً .. هـذا الشخـص مكتــوم سـابقــاً هنـا**",
-                )
-        except AttributeError:
-            pass
-        except Exception as e:
-            return await edit_or_reply(event, f"**- خطــأ : **`{e}`")
+            return await edit_or_reply(event, "**عــذراً .. هـذا الشخـص مكتــوم سـابقــاً هنـا**")
         try:
             mute(user.id, event.chat_id)
             joker_users.append(user)
-        except UserAdminInvalidError:
-            if "admin_rights" in vars(chat) and vars(chat)["admin_rights"] is not None:
-                if chat.admin_rights.delete_messages is not True:
-                    return await edit_or_reply(
-                        event,
-                        "**- عــذراً .. ليـس لديـك صـلاحيـة حـذف الرسـائل هنـا**",
-                    )
-            elif "creator" not in vars(chat):
-                return await edit_or_reply(
-                    event, "**- عــذراً .. ليـس لديـك صـلاحيـة حـذف الرسـائل هنـا**"
-                )
         except Exception as e:
             return await edit_or_reply(event, f"**- خطــأ : **`{e}`")
         if reason:
@@ -116,7 +89,7 @@ async def mutejep(event):
                 "#الكــتم\n"
                 f"**الشخـص :** [{user.first_name}](tg://user?id={user.id})\n"
                 f"**الدردشـه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
-            ) 
+            )
 @l313l.on(events.NewMessage)
 async def handle_forwarded(event):
     if event.fwd_from:
