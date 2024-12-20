@@ -45,7 +45,7 @@ async def amireallyalive(event):
     ms = (end - start).microseconds / 1000
     _, check_sgnirts = check_data_base_heal_th()
     EMOJI = gvarstatus("ALIVE_EMOJI") or "✎┊‌"
-    ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or "**╔========================╗ **"
+    ALIVE_TEXT = gvarstatus("ALIVE_TEXT") or "**╔=======================╗ **"
     HuRe_IMG = gvarstatus("ALIVE_PIC") or Config.A_PIC
     l313l_caption = gvarstatus("ALIVE_TEMPLATE") or temp
     me = await l313l.get_me()
@@ -89,19 +89,14 @@ async def amireallyalive(event):
 
 
 temp = """{ALIVE_TEXT}
- **   [𝗦𝗰𝗼𝗥 𝘄𝗼𝗿𝗸𝘀 𝘀𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆](t.me/Scorpion_scorp) ✅
+ **  [𝗦𝗰𝗼𝗥 𝘄𝗼𝗿𝗸𝘀 𝘀𝘂𝗰𝗰𝗲𝘀𝘀𝗳𝘂𝗹𝗹𝘆](t.me/Scorpion_scorp) ✅
 
 {EMOJI}‌‎𝐍𝐢𝐦𝐞 | {mention} ٫
-
 {EMOJI}‌‎𝐏𝐲𝐭𝐡𝐨𝐧 | {pyver} ٫
-
 {EMOJI}‌‎𝐒𝐜𝐨𝐫𝐩𝐢𝐨𝐧 | {telever} ٫
-
 {EMOJI}‌‎𝐔𝐩𝐭𝐢𝐦𝐞 | {uptime} ٫
-
 ‌‎{EMOJI}‌‎‌‎𝐏𝐢𝐧𝐠 | {ping} ٫
-
 ‌‎{EMOJI}‌‎‌‎𝐒𝐞𝐭𝐮𝐩 𝐃𝐚𝐭𝐞 | {Tare5} ٫
 
      - 𝗚𝗼 𝗮𝗻𝗱 𝗲𝗻𝗷𝗼𝘆 😉**
-** ╚========================╝ **"""
+** ╚=======================╝ **"""
