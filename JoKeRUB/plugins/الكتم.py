@@ -18,9 +18,11 @@ from . import BOTLOG, BOTLOG_CHATID, get_user_from_event
 
 plugin_category = "admin"
 joker_users = []
-joker_mute = "https://telegra.ph/file/396efcfa71389027e4f5c.jpg"
 joker_unmute = "https://telegra.ph/file/f9adf9269eb7a5aa2f122.jpg"
 #=================== الكـــــــــــــــتم  ===================  #
+
+joker_mute = "https://d.top4top.io/p_3276txxe00.jpg"
+
 @l313l.ar_cmd(pattern=f"كتم(?:\s|$)([\s\S]*)")
 async def mutejep(event):
     await event.delete()
@@ -117,6 +119,11 @@ async def mutejep(event):
                 f"**الدردشـه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
             ) 
 
+@l313l.on(events.NewMessage)
+async def handle_forwarded(event):
+    if event.fwd_from:
+        if is_muted(event.sender_id, event.chat_id):
+            await event.delete()
 #=================== الغـــــــــــــاء الكـــــــــــــــتم  ===================  #
 
 @l313l.ar_cmd(pattern=f"(الغاء الكتم|الغاء كتم)(?:\s|$)([\s\S]*)")
@@ -190,10 +197,5 @@ async def show_muted_users(event):
     else:
         await event.edit("**✎┊‌ لا يوجد مستخدمين مكتومين حاليًا**")
 # ===================================== # 
-
-@l313l.ar_cmd(incoming=True)
-async def watcher(event):
-    if is_muted(event.sender_id, "كتم_مؤقت"):
-        await event.delete()
 
 #=====================================  #
