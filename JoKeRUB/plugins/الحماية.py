@@ -119,13 +119,13 @@ async def do_pm_permit_action(event, chat):  # sourcery no-metrics
             remwarns=remwarns,
         )
     elif gvarstatus("pmmenu") is None:
-        USER_BOT_NO_WARN = f"""✎┊‌ اهلا بك {mention} \n مالك الحساب غير موجود حاليا الرجاء الانتظار وعدم تكرار الرسائل. 
+        USER_BOT_NO_WARN = f"""**✎┊‌ هلا حبيبي {mention} \n مالك الحساب مو موجود حاليا الرجاء الانتظار وعدم تكرار الرسائل. 
 
-لديك {warns}/{totalwarns} من التحذيرات لا تكرر الرسائل. """
+لديك {warns}/{totalwarns} من التحذيرات لا تكرر الرسائل. ** """
     else:
-        USER_BOT_NO_WARN = f"""✎┊‌ اهلا بك {mention} \n مالك الحساب غير موجود حاليا الرجاء الانتظار وعدم تكرار الرسائل. 
+        USER_BOT_NO_WARN = f"""**✎┊‌ هلا حبيبي {mention} \n مالك الحساب مو موجود حاليا الرجاء الانتظار وعدم تكرار الرسائل. 
 
-لديك {warns}/{totalwarns} من التحذيرات لا تكرر الرسائل. """
+لديك {warns}/{totalwarns} من التحذيرات لا تكرر الرسائل. ** """
     addgvar("pmpermit_text", USER_BOT_NO_WARN)
     PM_WARNS[str(chat.id)] += 1
     try:
