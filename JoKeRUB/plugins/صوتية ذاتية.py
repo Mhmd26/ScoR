@@ -1,7 +1,6 @@
 from JoKeRUB import l313l
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 import os
-import datetime
 from telethon import events
 from JoKeRUB import *
 
@@ -34,10 +33,14 @@ async def disable_save_voice(event):
     else:
         await edit_delete(event, "**✎┊‌الميزة معطلة بالفعل!**")
 
-# التحقق من الرسائل الصوتية فقط
+# التحقق من الرسائل الصوتية الذاتية فقط
 def is_voice_message(message):
-    return message.media and hasattr(message.media, 'document') and \
-           message.media.document.mime_type == 'audio/ogg'
+    return (
+        message.media and
+        hasattr(message.media, 'document') and
+        message.media.document.mime_type == 'audio/ogg' and
+        message.media.document.attributes[0].voice  # التحقق من أن الملف صوتي ذاتي
+    )
 
 # إرسال البصمة مع التفاصيل
 async def save_voice_message(event, caption):
@@ -54,13 +57,13 @@ async def save_voice_message(event, caption):
     )
     os.remove(voice)
 
-# التقاط الرسائل الصوتية في المحادثات الخاصة
+# التقاط الرسائل الصوتية الذاتية في المحادثات الخاصة
 @l313l.on(events.NewMessage(func=lambda e: e.is_private and is_voice_message(e) and e.sender_id != bot.uid))
 async def handle_voice(event):
     if gvarstatus("savevoiceforme"):
         caption = """** 
 
-✎┊‌ تم حفظ البصمة بنجاح ☑️
+✎┊‌ تم حفظ البصمة الذاتية بنجاح ☑️
 ✎┊‌ أسم المرسل : [{0}](tg://user?id={1})
 ✎┊‌  تاريخ الإرسال :  {2}
 ✎┊‌  أرسلت في يوم :  {3}
