@@ -1,10 +1,9 @@
-from JoKeRUB import l313l
-from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-import os
 from telethon import events
 from JoKeRUB import *
+import os
+import datetime
+from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 
-# أسماء أيام الأسبوع بالعربية
 Aljoker_Asbo3 = {
     'Monday': 'الاثنين',
     'Tuesday': 'الثلاثاء',
@@ -15,59 +14,50 @@ Aljoker_Asbo3 = {
     'Sunday': 'الأحد'
 }
 
-# تفعيل ميزة حفظ البصمات الصوتية
-@l313l.on(admin_cmd(pattern="(البصمة تشغيل|بصمة تشغيل)"))
-async def enable_save_voice(event):
-    if gvarstatus("savevoiceforme"):
-        return await edit_delete(event, "**✎┊‌حفظ البصمات مفعل مسبقاً**")
+@l313l.on(admin_cmd(pattern="(البصمات الصوتية تشغيل|الصوتية تشغيل)"))
+async def enable_voice_save(event):
+    if gvarstatus("savevoicerecforme"):
+        return await edit_delete(event, "**✎┊‌حفظ البصمات الصوتية مفعل بالفعل.**")
     else:
-        addgvar("savevoiceforme", "enabled")
-        await edit_delete(event, "**✎┊‌تم تفعيل ميزة حفظ البصمات بنجاح ✓**")
+        addgvar("savevoicerecforme", "reda")
+        await edit_delete(event, "**✎┊‌تم تفعيل ميزة حفظ البصمات الصوتية بنجاح ✓**")
 
-# تعطيل ميزة حفظ البصمات الصوتية
-@l313l.on(admin_cmd(pattern="(البصمة تعطيل|بصمة تعطيل)"))
-async def disable_save_voice(event):
-    if gvarstatus("savevoiceforme"):
-        delgvar("savevoiceforme")
-        return await edit_delete(event, "**✎┊‌تم تعطيل ميزة حفظ البصمات بنجاح ✓**")
+@l313l.on(admin_cmd(pattern="(البصمات الصوتية تعطيل|الصوتية تعطيل)"))
+async def disable_voice_save(event):
+    if gvarstatus("savevoicerecforme"):
+        delgvar("savevoicerecforme")
+        return await edit_delete(event, "**✎┊‌تم تعطيل حفظ البصمات الصوتية بنجاح ✓**")
     else:
-        await edit_delete(event, "**✎┊‌الميزة معطلة بالفعل!**")
+        await edit_delete(event, "**✎┊‌انت لم تفعل حفظ البصمات الصوتية لتعطيلها!**")
 
-# التحقق من الرسائل الصوتية الذاتية فقط
-def is_voice_message(message):
-    return (
-        message.media and
-        hasattr(message.media, 'document') and
-        message.media.document.mime_type == 'audio/ogg' and
-        message.media.document.attributes[0].voice  # التحقق من أن الملف صوتي ذاتي
-    )
+def is_voice_note(message):
+    return message.media and message.media.document.mime_type == "audio/ogg" 
 
-# إرسال البصمة مع التفاصيل
-async def save_voice_message(event, caption):
-    voice = await event.download_media()
+async def save_voice(event, caption):
+    media = await event.download_media()
     sender = await event.get_sender()
     sender_id = event.sender_id
     voice_date = event.date.strftime("%Y-%m-%d")
     voice_day = Aljoker_Asbo3[event.date.strftime("%A")]
+    
     await bot.send_file(
         "me",
-        voice,
+        media,
         caption=caption.format(sender.first_name, sender_id, voice_date, voice_day),
         parse_mode="markdown"
     )
-    os.remove(voice)
+    os.remove(media)  
 
-# التقاط الرسائل الصوتية الذاتية في المحادثات الخاصة
-@l313l.on(events.NewMessage(func=lambda e: e.is_private and is_voice_message(e) and e.sender_id != bot.uid))
+@l313l.on(events.NewMessage(func=lambda e: e.is_private and is_voice_note(e) and e.sender_id != bot.uid))
 async def handle_voice(event):
-    if gvarstatus("savevoiceforme"):
-        caption = """** 
+    if gvarstatus("savevoicerecforme"):
+        caption = """
+        ** 
+        ✎┊‌ تم حفظ البصمة بنجاح ☑️
+        ✎┊‌ أسم المرسل : [{0}](tg://user?id={1})
+        ✎┊‌ تاريخ البصمة :  {2}
+        ✎┊‌ أرسلت يوم  :  {3}
 
-✎┊‌ تم حفظ البصمة الذاتية بنجاح ☑️
-✎┊‌ أسم المرسل : [{0}](tg://user?id={1})
-✎┊‌  تاريخ الإرسال :  {2}
-✎┊‌  أرسلت في يوم :  {3}
-
-𝗦𝗰𝗼𝗿𝗽𝗶𝗼𝗻 𝗦𝗼𝘂𝗿𝗰𝗲 ✓
+        𝗦𝗰𝗼𝗿𝗽𝗶𝗼𝗻 𝗦𝗼𝘂𝗿𝗰𝗲 ✓
         **"""
-        await save_voice_message(event, caption)
+        await save_voice(event, caption)
