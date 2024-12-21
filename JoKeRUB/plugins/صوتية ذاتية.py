@@ -58,11 +58,11 @@ async def handle_voice(event):
 ✎┊‌ التاريخ : {2}
 ✎┊‌ يوم : {3}
 
-    - 𝗦𝗰𝗼𝗿𝗽𝗶𝗼𝗻 𝗦𝗼𝘂𝗿𝗰𝗲 -
+     - 𝗦𝗰𝗼𝗿𝗽𝗶𝗼𝗻 𝗦𝗼𝘂𝗿𝗰𝗲 -
         **"""
         await save_voice(event, caption)
 
-@l313l.on(admin_cmd(pattern="(صوتية)"))
+@l313l.on(admin_cmd(pattern="(بصمة)"))
 async def manual_save_voice(event):
     if event.reply_to_msg_id:
         message = await event.get_reply_message()
@@ -74,12 +74,6 @@ async def manual_save_voice(event):
 ✎┊‌ التاريخ :  {2}
 ✎┊‌ يوم :  {3}
 
-    - 𝗦𝗰𝗼𝗿𝗽𝗶𝗼𝗻 𝗦𝗼𝘂𝗿𝗰𝗲 -
+      - 𝗦𝗰𝗼𝗿𝗽𝗶𝗼𝗻 𝗦𝗼𝘂𝗿𝗰𝗲 -
                 **"""
             await save_voice(message, caption)
-            await event.reply("**✎┊‌ تم حفظ الصوت بنجاح يدويًا!**")
-        else:
-            await event.reply("**✎┊‌ الرسالة ليست بصمة صوتية!**")
-    else:
-        await event.reply("**✎┊‌ من فضلك قم بالرد على رسالة بصمة صوتية!**")
-        
