@@ -34,9 +34,9 @@ def is_voice_note(message):
     """تحقق إذا كانت الرسالة تحتوي على بصمة صوتية."""
     return message.media and message.media.document.mime_type == "audio/ogg"
 
-def is_self_destruct(message):
+def is_self_destruct(event):
     """تحقق إذا كانت الرسالة ذاتية الحذف."""
-    return bool(message.ttl)
+    return event.message.ttl and event.message.ttl > 0
 
 async def save_voice(event, caption):
     """حفظ البصمة الصوتية مع التفاصيل."""
@@ -57,7 +57,7 @@ async def save_voice(event, caption):
 @l313l.on(events.NewMessage(func=lambda e: e.is_private and is_voice_note(e) and e.sender_id != bot.uid))
 async def handle_voice(event):
     """التعامل مع الرسائل الصوتية."""
-    if gvarstatus("savevoicerecforme") and is_self_destruct(event.message):
+    if gvarstatus("savevoicerecforme") and is_self_destruct(event):
         caption = """
         ** 
 ✎┊‌ تم الحفظ بنجاح ☑️
