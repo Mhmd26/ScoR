@@ -65,6 +65,7 @@ async def handle_voice(event):
 @l313l.on(admin_cmd(pattern="(بصمة)"))
 async def manual_save_voice(event):
     if event.reply_to_msg_id:
+        await event.delete()
         message = await event.get_reply_message()
         if is_voice_note(message):
             caption = """
