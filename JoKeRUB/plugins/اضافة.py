@@ -65,10 +65,6 @@ def user_full_name(user):
     return full_name
 
 
-# فريق العقرب 
-# علوش @ZS_SQ
-# محمد @Zo_r0
-
 @l313l.on(admin_cmd(pattern=r"ضيف ?(.*)"))
 async def get_users(event):   
     sender = await event.get_sender() 
@@ -108,20 +104,3 @@ async def get_users(event):
 
     # إرسال رسالة إتمام العملية
     return await roz.edit(f"**✎┊‌ اكتملت الأضافة ✅**\n\n• تمت بنجاح إضافة `{s}` \n• خطأ في إضافة `{f}`")
-
-
-@l313l.on(admin_cmd(pattern=r"اضافة_جهاتي ?(.*)"))
-async def Hussein(event):
-    channel_id = event.chat_id  
-    contacts = await event.client(functions.contacts.GetContactsRequest(hash=0))
-    added_count = 0 
-    for user in contacts.users:
-        try:
-            await event.client(functions.channels.InviteToChannelRequest(
-                channel=channel_id,
-                users=[user.id],
-            ))
-            added_count += 1
-        except Exception as e:
-            await event.reply(f"**✎┊‌ تم إضافة {added_count} من جهات اتصالي**")
-    await event.reply(f"**✎┊‌ تم إضافة {added_count} من جهات اتصالي**")
