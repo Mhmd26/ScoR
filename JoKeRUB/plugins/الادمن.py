@@ -403,6 +403,7 @@ async def startmute(event):
         except Exception as e:
             await event.edit(f"**✎┊‌ خطـأ **\n`{e}`")
         else:
+            await event.delete()
             await event.client.send_file(event.chat_id, repthon_mute, caption="**✎┊‌ تم ڪتـم الـمستخـدم  . . بنجـاح ✓**")
         if BOTLOG:
             await event.client.send_message(
