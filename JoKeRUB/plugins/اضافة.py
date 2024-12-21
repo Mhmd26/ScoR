@@ -1,13 +1,12 @@
-import asyncio
 from JoKeRUB import *
 from JoKeRUB import l313l
 from JoKeRUB.utils import admin_cmd
 from telethon.tl.types import Channel, Chat, User
 from telethon.tl import functions, types
-from telethon.errors import (ChannelInvalidError, ChannelPrivateError, ChannelPublicGroupNaError)
-from telethon.tl.functions.channels import GetFullChannelRequest
-
-# فريق العقرب
+from telethon.tl.functions.messages import  CheckChatInviteRequest, GetFullChatRequest
+from telethon.errors import (ChannelInvalidError, ChannelPrivateError, ChannelPublicGroupNaError, InviteHashEmptyError, InviteHashExpiredError, InviteHashInvalidError)
+from telethon.tl.functions.channels import GetFullChannelRequest, GetParticipantsRequest
+# فريق العقرب 
 # علوش @ZS_SQ
 # محمد @Zo_r0
 
@@ -27,54 +26,85 @@ async def get_chatinfo(event):
         else:
             chat = event.chat_id
     try:
-        chat_info = await event.client(GetFullChannelRequest(chat))
+        chat_info = await event.client(GetFullChatRequest(chat))
     except:
-        await event.reply("**✎┊‌ لم يتم العثور على المجموعة او القناة**")
-        return None
+        try:
+            chat_info = await event.client(GetFullChannelRequest(chat))
+        except ChannelInvalidError:
+            await event.reply("**✎┊‌ لم يتم العثور على المجموعة او القناة**")
+            return None
+        except ChannelPrivateError:
+            await event.reply("**✎┊‌ لا يمكنني استخدام الامر من الكروبات او القنوات الخاصة**")
+            return None
+        except ChannelPublicGroupNaError:
+            await event.reply("**✎┊‌ لم يتم العثور على المجموعة او القناة**")
+            return None
+        except (TypeError, ValueError) as err:
+            await event.reply("**✎┊‌ رابط الكروب غير صحيح**")
+            return None
     return chat_info
 
 
+def make_mention(user):
+    if user.username:
+        return f"@{user.username}"
+    else:
+        return inline_mention(user)
+
+
+def inline_mention(user):
+    full_name = user_full_name(user) or "No Name"
+    return f"[{full_name}](tg://user?id={user.id})"
+
+
+def user_full_name(user):
+    names = [user.first_name, user.last_name]
+    names = [i for i in list(names) if i]
+    full_name = ' '.join(names)
+    return full_name
+ 
+
+
+# فريق العقرب 
+# علوش @ZS_SQ
+# محمد @Zo_r0
+
 @l313l.on(admin_cmd(pattern=r"ضيف ?(.*)"))
-async def get_users(event):
-    sender = await event.get_sender()
-    me = await event.client.get_me()
-    
+async def get_users(event):   
+    sender = await event.get_sender() ; me = await event.client.get_me()
     if not sender.id == me.id:
         roz = await event.reply("**✎┊‌ تتـم العـملية انتظـࢪ قليلا ⏳ ...**")
     else:
         roz = await event.edit("**✎┊‌ تتـم العـملية انتظـࢪ قليلا ⏳ ...**.")
-    
-    JoKeRUB = await get_chatinfo(event)
-    chat = await event.get_chat()
-
+    JoKeRUB = await get_chatinfo(event) ; chat = await event.get_chat()
     if event.is_private:
-        return await roz.edit("**✎┊‌ لا يمكننـي اضافـة المـستخدمين هـنا**")
-    
-    s = 0
-    f = 0
-    error = 'None'
-    
+              return await roz.edit("**✎┊‌ لا يمكننـي اضافـة المـستخدمين هـنا**")    
+    s = 0 ; f = 0 ; error = 'None'   
+  
     await roz.edit("**✎┊‌ حـالة الأضافة:**\n\n**✎┊‌ تتـم جـمع معـلومات الـمستخدمين 🔄 **")
-
-    users_to_add = []
     async for user in event.client.iter_participants(JoKeRUB.full_chat.id):
-        users_to_add.append(user.id)
-
-    # إضافة 5 مستخدمين في كل مرة مع تأخير 10 ثواني بين كل دفعة
-    for i in range(0, len(users_to_add), 5):
-        batch = users_to_add[i:i+5]  # كل دفعة تحتوي على 5 مستخدمين
-        for user_id in batch:
-            try:
-                await event.client(functions.channels.InviteToChannelRequest(channel=chat, users=[user_id]))
-                s += 1
-            except Exception as e:
-                error = str(e)
-                f += 1
-        
-        # تأخير 10 ثواني بين كل دفعة
-        await asyncio.sleep(10)
-        
-        # تحديث الرسالة بحالة الإضافة بعد كل دفعة
-        await roz.edit(f"**✎┊‌ حـالة الأضـافة:**\n\n• تم إضافة `{s}` من الأشخاص بنجاح\n• أخطاء في إضافة `{f}`\n\n**× آخر خطأ:** `{error}`")
-    
-    return await roz.edit(f"**✎┊‌ أكملت الإضافة ✅**\n\n• تم إضافة `{s}` شخص بنجاح\n• أخطاء في إضافة `{f}`")
+                try:
+                    if error.startswith("Too"):
+                        return await roz.edit(f"**✎┊‌ حـالة الأضـافة انتـهت مـع الأخـطاء**\n- (**ربـما هـنالك ضغـط عـلى الأمࢪ حاول مججـدا لاحقـا **) \n**الـخطأ** : \n`{error}`\n\n• اضالـة `{s}` \n• خـطأ بأضافـة `{f}`"),
+                    await event.client(functions.channels.InviteToChannelRequest(channel=chat,users=[user.id]))
+                    s = s + 1                                                    
+                    await roz.edit(f"**✎┊‌تتـم الأضـافة **\n\n• اضـيف `{s}` \n•  خـطأ بأضافـة `{f}` \n\n**× اخـر خـطأ:** `{error}`") 
+                except Exception as e:
+                    error = str(e) ; f = f + 1             
+    return await roz.edit(f"**✎┊‌اڪتـملت الأضافـة ✅** \n\n• تـم بنجـاح اضافـة `{s}` \n• خـطأ بأضافـة `{f}`")
+#تم كتابة الكود من قبل مطورين الجوكر ممنوع السرقة اخي الكريم
+@l313l.on(admin_cmd(pattern=r"اضافة_جهاتي ?(.*)"))
+async def Hussein(event):
+    channel_id = event.chat_id  
+    contacts = await event.client(functions.contacts.GetContactsRequest(hash=0))
+    added_count = 0 
+    for user in contacts.users:
+        try:
+            await event.client(functions.channels.InviteToChannelRequest(
+                channel=channel_id,
+                users=[user.id],
+            ))
+            added_count += 1
+        except Exception as e:
+            await event.reply(f"**✎┊‌ تم إضافة {added_count} من جهات اتصالي**")
+    await event.reply(f"**✎┊‌ تم إضافة {added_count} من جهات اتصالي**")
