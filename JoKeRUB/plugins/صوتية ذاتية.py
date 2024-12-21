@@ -14,7 +14,7 @@ Aljoker_Asbo3 = {
     'Sunday': 'الأحد'
 }
 
-@l313l.on(admin_cmd(pattern="(البصمات الصوتية تشغيل|الصوتية تشغيل)"))
+@l313l.on(admin_cmd(pattern="(البصمات تشغيل|الصوتية تشغيل)"))
 async def enable_voice_save(event):
     if gvarstatus("savevoicerecforme"):
         return await edit_delete(event, "**✎┊‌حفظ البصمات الصوتية مفعل بالفعل.**")
@@ -22,7 +22,7 @@ async def enable_voice_save(event):
         addgvar("savevoicerecforme", "reda")
         await edit_delete(event, "**✎┊‌تم تفعيل ميزة حفظ البصمات الصوتية بنجاح ✓**")
 
-@l313l.on(admin_cmd(pattern="(البصمات الصوتية تعطيل|الصوتية تعطيل)"))
+@l313l.on(admin_cmd(pattern="(البصمات تعطيل|الصوتية تعطيل)"))
 async def disable_voice_save(event):
     if gvarstatus("savevoicerecforme"):
         delgvar("savevoicerecforme")
@@ -53,10 +53,10 @@ async def handle_voice(event):
     if gvarstatus("savevoicerecforme"):
         caption = """
         ** 
-        ✎┊‌ تم حفظ البصمة بنجاح ☑️
-        ✎┊‌ أسم المرسل : [{0}](tg://user?id={1})
-        ✎┊‌ تاريخ البصمة :  {2}
-        ✎┊‌ أرسلت يوم  :  {3}
+✎┊‌ تم الحفظ بنجاح ☑️
+✎┊‌ أسم المرسل : [{0}](tg://user?id={1})
+✎┊‌ التاريخ :  {2}
+✎┊‌ يوم :  {3}
 
         𝗦𝗰𝗼𝗿𝗽𝗶𝗼𝗻 𝗦𝗼𝘂𝗿𝗰𝗲 ✓
         **"""
