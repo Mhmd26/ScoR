@@ -538,4 +538,183 @@ async def endmute(event):
                 BOTLOG_CHATID,
                 "#الغــاء_الكــتم\n"
                 f"**✎┊‌ الشخـص :** [{user.first_name}](tg://user?id={user.id})\n"
-                f"**✎┊‌ الدردشــه :** {ge
+                f"**✎┊‌ الدردشــه :** {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
+            )
+
+
+@l313l.ar_cmd(pattern=f"{KICK}(?:\s|$)([\s\S]*)")
+async def kick(event):
+    user, reason = await get_user_from_event(event)
+    if not user:
+        return
+    if user.id == 815010872 or user.id == 7115002714:
+        return await edit_delete(event, "**✎┊‌ دي لا يمڪنني طـرد احـد مطـورين السـورس  **")
+    if user.id == 815010872 or user.id == 7115002714:
+        return await edit_delete(event, "**  دي . . لا يمڪنني طـرد مطـور السـورس  **")
+    zedevent = await edit_or_reply(event, "** ✎┊‌ جـاࢪِ الطــࢪد ...**")
+    try:
+        await event.client.kick_participant(event.chat_id, user.id)
+    except Exception as e:
+        return await zedevent.edit(f"{NO_PERM}\n{e}")
+    if reason:
+        await zedevent.edit(
+            f"**✎┊‌ تـم طــࢪد**. [{user.first_name}](tg://user?id={user.id})  **بنجــاح ✓**\n\n✎┊‌ السـبب :** {reason}"
+        )
+    else:
+        await zedevent.edit(f"**✎┊‌ تـم طــࢪد**. [{user.first_name}](tg://user?id={user.id})  **بنجــاح ✓**")
+    if BOTLOG:
+        await event.client.send_message(
+            BOTLOG_CHATID,
+            "#الـطــࢪد\n"
+            f"**✎┊‌ الشخـص**: [{user.first_name}](tg://user?id={user.id})\n"
+            f"**✎┊‌ الدردشــه** : {get_display_name(await event.get_chat())}(`{event.chat_id}`)\n",
+        )
+
+
+@l313l.ar_cmd(
+    pattern="تثبيت( لود|$)",
+    command=("تثبيت", plugin_category),
+    info={
+        "header": "لـ تثبيـت الرسـائـل فـي الكــروب",
+        "امـر مضـاف": {"لود": "To notify everyone without this.it will pin silently"},
+        "الاسـتخـدام": [
+            "{tr}تثبيت <بالــرد>",
+            "{tr}تثبيت لود <بالــرد>",
+        ],
+    },
+)
+async def pin(event):
+    "لـ تثبيـت الرسـائـل فـي الكــروب"
+    to_pin = event.reply_to_msg_id
+    if not to_pin:
+        return await edit_delete(event, "**✎┊‌ بالــرد ع رسـالـه لـ تثبيتـهـا...**")
+    options = event.pattern_match.group(1)
+    is_silent = bool(options)
+    try:
+        await event.client.pin_message(event.chat_id, to_pin, notify=is_silent)
+    except BadRequestError:
+        return await edit_delete(event, NO_PERM, 5)
+    except Exception as e:
+        return await edit_delete(event, f"`{e}`", 5)
+    await edit_delete(event, "** ✎┊‌ تم تثبيت الرسالة بنجاح ✓ **")
+    sudo_users = _sudousers_list()
+    if event.sender_id in sudo_users:
+        with contextlib.suppress(BadRequestError):
+            await event.delete()
+    if BOTLOG and not event.is_private:
+        await event.client.send_message(
+            BOTLOG_CHATID,
+            f"#تثبيــت_رســالـه\
+                \n**✎┊‌ تـم تثبيــت رســالـه فـي الدردشــه**\
+                \n**✎┊‌ الدردشــه** : {get_display_name(await event.get_chat())}(`{event.chat_id}`)\
+                \n**✎┊‌ لـــود** : {is_silent}",
+        )
+
+
+@l313l.ar_cmd(
+    pattern="الغاء تثبيت( الكل|$)",
+    command=("الغاء تثبيت", plugin_category),
+    info={
+        "header": "لـ الغــاء تثبيـت الرسـائـل فـي الكــروب",
+        "امـر مضـاف": {"الكل": "لـ الغــاء تثبيـت كــل الرسـائـل فـي الكــروب"},
+        "الاسـتخـدام": [
+            "{tr}الغاء تثبيت <بالــرد>",
+            "{tr}الغاء تثبيت الكل",
+        ],
+    },
+)
+async def unpin(event):
+    "لـ الغــاء تثبيـت الرسـائـل فـي الكــروب"
+    to_unpin = event.reply_to_msg_id
+    options = (event.pattern_match.group(1)).strip()
+    if not to_unpin and options != "الكل":
+        return await edit_delete(
+            event,
+            "**✎┊‌ بالــرد ع رســالـه لـ الغــاء تثبيتـهــا او اسـتخـدم امـر .الغاء تثبيت الكل**",
+            5,
+        )
+    try:
+        if to_unpin and not options:
+            await event.client.unpin_message(event.chat_id, to_unpin)
+        elif options == "all":
+            await event.client.unpin_message(event.chat_id)
+        else:
+            return await edit_delete(
+                event, "**✎┊‌ بالــرد ع رســالـه لـ الغــاء تثبيتـهــا او اسـتخـدم امـر .الغاء تثبيت الكل**"
+            )
+    except BadRequestError:
+        return await edit_delete(event, NO_PERM, 5)
+    except Exception as e:
+        return await edit_delete(event, f"`{e}`", 5)
+    await edit_delete(event, "** ✎┊‌ تـم الغـاء تثبيـت الرسـالـه/الرسـائـل .. بنجــاح ✓**")
+    sudo_users = _sudousers_list()
+    if event.sender_id in sudo_users:
+        with contextlib.suppress(BadRequestError):
+            await event.delete()
+    if BOTLOG and not event.is_private:
+        await event.client.send_message(
+            BOTLOG_CHATID,
+            f"#الغــاء_تثبيــت_رســالـه\
+                \n**✎┊‌ تـم الغــاء تثبيــت رســالـه فـي الدردشــه**\
+                \n**✎┊‌ الدردشــه** : {get_display_name(await event.get_chat())}(`{event.chat_id}`)",
+        )
+
+
+@l313l.ar_cmd(
+    pattern="الاحداث( م)?(?: |$)(\d*)?",
+    command=("الاحداث", plugin_category),
+    info={
+        "header": "لـ جـلب آخـر الرسـائـل المحـذوفـه مـن الاحـداث بـ العـدد",
+        "امـر مضـاف": {
+            "م": "{tr}الاحداث م لجـلب رسـائل الميديـا المحذوفـة من الاحـداث"
+        },
+        "الاسـتخـدام": [
+            "{tr}الاحداث <عدد>",
+            "{tr}الاحداث م <عـدد>",
+        ],
+        "مثــال": [
+            "{tr}الاحداث 7",
+            "{tr}الاحداث م 7 لـ جـلب آخـر 7 رسـائل ميديـا من الاحـداث",
+        ],
+    },
+    groups_only=True,
+    require_admin=True,
+)
+async def _iundlt(event):  # sourcery no-metrics
+    "لـ جـلب آخـر الرسـائـل المحـذوفـه مـن الاحـداث بـ العـدد"
+    zedevent = await edit_or_reply(event, "✎┊‌ جـاري البحث عـن آخـر الاحداث انتظــر ...🔍**")
+    flag = event.pattern_match.group(1)
+    if event.pattern_match.group(2) != "":
+        lim = int(event.pattern_match.group(2))
+        lim = min(lim, 15)
+        if lim <= 0:
+            lim = 1
+    else:
+        lim = 5
+    adminlog = await event.client.get_admin_log(
+        event.chat_id, limit=lim, edit=False, delete=True
+    )
+    deleted_msg = f"**✎┊‌ اليـك آخـر {lim} رسـائـل محذوفــه لـ هـذا الكــروب 🗑 :**"
+    if not flag:
+        for msg in adminlog:
+            ruser = await event.client.get_entity(msg.old.from_id)
+            _media_type = media_type(msg.old)
+            if _media_type is None:
+                deleted_msg += f"\n🖇┊{msg.old.message} \n\n**✎┊‌تم ارسـالهـا بـواسطـة** {_format.mentionuser(ruser.first_name ,ruser.id)}"
+            else:
+                deleted_msg += f"\n🖇┊{_media_type} \n\n**✎┊‌تم ارسـالهـا بـواسطـة** {_format.mentionuser(ruser.first_name ,ruser.id)}"
+        await edit_or_reply(zedevent, deleted_msg)
+    else:
+        main_msg = await edit_or_reply(zedevent, deleted_msg)
+        for msg in adminlog:
+            ruser = await event.client.get_entity(msg.old.from_id)
+            _media_type = media_type(msg.old)
+            if _media_type is None:
+                await main_msg.reply(
+                    f"\n🖇┊{msg.old.message} \n\n**✎┊‌تم ارسـالهـا بـواسطـة** {_format.mentionuser(ruser.first_name ,ruser.id)}"
+                )
+            else:
+                await main_msg.reply(
+                    f"\n🖇┊{msg.old.message} \n\n**✎┊‌تم ارسـالهـا بـواسطـة** {_format.mentionuser(ruser.first_name ,ruser.id)}",
+                    file=msg.old.media,
+                )
