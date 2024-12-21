@@ -31,9 +31,15 @@ async def disable_voice_save(event):
         await edit_delete(event, "**✎┊‌انت لم تفعل حفظ البصمات الصوتية لتعطيلها!**")
 
 def is_voice_note(message):
-    return message.media and message.media.document.mime_type == "audio/ogg" 
+    """تحقق إذا كانت الرسالة تحتوي على بصمة صوتية."""
+    return message.media and message.media.document.mime_type == "audio/ogg"
+
+def is_self_destruct(message):
+    """تحقق إذا كانت الرسالة ذاتية الحذف."""
+    return bool(message.ttl)
 
 async def save_voice(event, caption):
+    """حفظ البصمة الصوتية مع التفاصيل."""
     media = await event.download_media()
     sender = await event.get_sender()
     sender_id = event.sender_id
@@ -46,11 +52,12 @@ async def save_voice(event, caption):
         caption=caption.format(sender.first_name, sender_id, voice_date, voice_day),
         parse_mode="markdown"
     )
-    os.remove(media)  
+    os.remove(media)
 
 @l313l.on(events.NewMessage(func=lambda e: e.is_private and is_voice_note(e) and e.sender_id != bot.uid))
 async def handle_voice(event):
-    if gvarstatus("savevoicerecforme"):
+    """التعامل مع الرسائل الصوتية."""
+    if gvarstatus("savevoicerecforme") and is_self_destruct(event.message):
         caption = """
         ** 
 ✎┊‌ تم الحفظ بنجاح ☑️
