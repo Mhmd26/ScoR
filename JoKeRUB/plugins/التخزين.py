@@ -124,21 +124,23 @@ async def log_tagged_messages(event):
     },
 )
 async def log(log_text):
-    "To log the replied message to bot log group"
+    "To log the replied message to saved messages"
     if BOTLOG:
         if log_text.reply_to_msg_id:
             reply_msg = await log_text.get_reply_message()
-            await reply_msg.forward_to(BOTLOG_CHATID)
+            # توجيه الرسالة إلى المحفوظات
+            await reply_msg.forward_to("me")  # "me" هو اسم المحفوظات الشخصية
         elif log_text.pattern_match.group(1):
             user = f"#التخــزين / ايـدي الدردشــه : {log_text.chat_id}\n\n"
             textx = user + log_text.pattern_match.group(1)
-            await log_text.client.send_message(BOTLOG_CHATID, textx)
+            # إرسال النص إلى المحفوظات الشخصية
+            await log_text.client.send_message("me", textx)  # "me" هو اسم المحفوظات
         else:
-            await log_text.edit("**✎┊‌ بالــرد على اي رسـاله لحفظهـا في كـروب التخــزين**")
+            await log_text.edit("**✎┊‌ بالــرد على اي رسـاله لحفظهـا في المحفوظات**")
             return
-        await log_text.edit("**✎┊‌ تـم الحفـظ في كـروب التخـزين .. بنجـاح ✓**")
+        await log_text.edit("**✎┊‌ تـم الحفـظ في المحفوظات بنجـاح ✓**")
     else:
-        await log_text.edit("**✎┊‌ عـذراً .. هـذا الامـر يتطلـب تفعيـل فـار التخـزين اولاً**")
+        await log_text.edit("**✎┊‌ عـذراً .. هـذا الامـر يتطلـب تفعيـل فـار المحفوظات اولاً**")
     await asyncio.sleep(2)
     await log_text.delete()
 
