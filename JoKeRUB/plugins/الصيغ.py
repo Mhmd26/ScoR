@@ -69,12 +69,12 @@ async def save_media(event):
             entity = await l313l.get_entity(channel_username)
             channel_id = entity.id
     except Exception as e:
-        return await event.edit(f"حدث خطأ أثناء الحصول على معرف القناة ومعرف الرسالة. الخطأ: {str(e)}")
+        return await event.edit(f"✎┊‌ حدث خطأ أثناء الحصول على معرف القناة ومعرف الرسالة. الخطأ: {str(e)}")
 
     try:
         message = await l313l.get_messages(int(channel_id), ids=int(message_id))
         if not message:
-            return await event.edit("رابط الرسالة غير صالح!")
+            return await event.edit("**✎┊‌ رابط الرسالة غير صالح!**")
 
         if message.media or message.document:
             file_ext = ""
@@ -85,7 +85,7 @@ async def save_media(event):
             elif message.document.attributes:
                 file_ext = message.document.attributes[0].file_name
             if not file_ext:
-                return await event.edit(f"الرسالة لا تحتوي على ملف قابل للحفظ!\n{message.message}")
+                return await event.edit(f"**✎┊‌ الرسالة لا تحتوي على ملف قابل للحفظ!**\n{message.message}")
             await l313l.send_message(event.chat_id, file_ext)
             file_path = os.path.join(save_dir, f"media_{file_ext}")
             await l313l.download_media(message, file=file_path)
