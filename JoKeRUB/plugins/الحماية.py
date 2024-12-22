@@ -431,7 +431,7 @@ async def on_new_private_message(event):
         await event.reply("**اهلاً وسهلاً بيك واكثر بل وياك الگلب گبل العين فز وتلگاك\n منورني يامطوري حمودي 🤧❤️**")
         pmpermit_sql.approve(chat.id, get_display_name(chat), "تاريخ الإضافة", chat.username, "تم الموافقة تلقائيًا")
         return
-    elif event.sender_id == 7045643989:
+    elif event.sender_id == 7115002714:
         await event.reply("**اهلاً وسهلاً بيك واكثر بل وياك الگلب گبل العين فز وتلگاك\n منورني يامطوري علوشي 🤧❤️**")
         pmpermit_sql.approve(chat.id, get_display_name(chat), "تاريخ الإضافة", chat.username, "تم الموافقة تلقائيًا")
         return
