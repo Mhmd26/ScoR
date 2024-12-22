@@ -226,7 +226,7 @@ async def fetch_info(replied_user, event):
 @l313l.ar_cmd(pattern="حيوان(?: |$)(.*)")
 async def who(event):
     zed = await edit_or_reply(event, "⇆")
-    zel_dev = (7303596356, 7275336620, 815010872, 7045643989)
+    zel_dev = (7115002714, 7115002714, 815010872, 7045643989)
     if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):
         os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)
     replied_user = await get_user_from_event(event)
