@@ -43,8 +43,8 @@ cancel_process = False
 
 
 @l313l.ar_cmd(
-    pattern=r"حفظ_المحتوى (.+)",
-    command=("حفظ_المحتوى", plugin_category),
+    pattern=r"حفظ المحتوى (.+)",
+    command=("حفظ المحتوى", plugin_category),
     info={
         "header": "حفظ الصور والفيديوهات والملفات إذا وجد في الرسالة.",
         "description": "يقوم بحفظ الصور والفيديوهات والملفات والنص إذا وجد في الرسالة.",
@@ -55,8 +55,8 @@ async def save_media(event):
     message_link = event.pattern_match.group(1)
 
     if not message_link:
-        return await event.edit("يرجى تحديد رابط الرسالة!")
-    await event.edit("يجري حفظ الميديا....")
+        return await event.edit("**✎┊‌ يرجى تحديد رابط الرسالة!**")
+    await event.edit("**✎┊‌يجري حفظ الميديا...**")
 
     save_dir = "media"
     os.makedirs(save_dir, exist_ok=True)
@@ -102,8 +102,8 @@ async def save_media(event):
 
     
 @l313l.ar_cmd(
-    pattern="تحويل صورة$",
-    command=("تحويل صورة", plugin_category),
+    pattern="تحويل المحتوى$",
+    command=("تحويل المحتوى", plugin_category),
     info={
         "header": "Reply this command to a sticker to get image.",
         "description": "This also converts every media to image. that is if video then extracts image from that video.if audio then extracts thumb.",
