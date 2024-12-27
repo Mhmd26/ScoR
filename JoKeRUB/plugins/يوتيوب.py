@@ -291,8 +291,8 @@ async def download_video(event):
 
 
 @l313l.ar_cmd(
-    pattern="يوت(?: |$)(\d*)? ?([\s\S]*)",
-    command=("يوت", plugin_category),
+    pattern="noo(?: |$)(\d*)? ?([\s\S]*)",
+    command=("noo", plugin_category),
     info={
         "header": "To search youtube videos",
         "description": "Fetches youtube search results with views and duration with required no of count results by default it fetches 10 results",
@@ -390,34 +390,47 @@ async def _(event):
         await bot.delete_dialog(conv.chat_id)
         await event.delete()
                 
-@l313l.on(admin_cmd(pattern="يوتيوب(?: |$)(.*)"))
+@l313l.on(admin_cmd(pattern="يوت(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
     r_link = event.pattern_match.group(1)
-    if "youtube.com" not in r_link and "youtu.be" not in r_link:
-        await event.edit("**✎┊‌يجب وضع رابط يوتيوب فقط مع الأمر**")
-    else:
-        await event.edit("**✎┊‌تتم المعالجة انتظر قليلا**")
-        chat = "@LEbot"  # تغيير اسم البوت إلى البوت المناسب لـ YouTube
-        async with bot.conversation(chat) as conv:
-            try:
-                msg_start = await conv.send_message("/start")
-                r = await conv.get_response()
-                msg = await conv.send_message(r_link)
-                details = await conv.get_response()
-                video = await conv.get_response()
-                await bot.send_read_acknowledge(conv.chat_id)
-            except YouBlockedUserError:
-                await event.edit("✎┊‌الغـي حـظر هـذا البـوت و حـاول مجـددا @LEbot")
-                return
-            await bot.send_file(event.chat_id, video)
-            await event.client.delete_messages(
-                conv.chat_id, [msg_start.id, r.id, msg.id, details.id, video.id]
-            )
-            await bot.delete_dialog(conv.chat_id)
-            await event.delete()
-        
+
+    await event.edit("**✎┊‌تتم المعالجة انتظر قليلا**")
+    chat = "@LEbot"  # تغيير اسم البوت إلى البوت المناسب لـ YouTube
+    async with bot.conversation(chat) as conv:
+        try:
+            msg_start = await conv.send_message("/start")
+            r = await conv.get_response()
+            msg = await conv.send_message(r_link)
+            details = await conv.get_response()
+
+            # التفاعل مع الأزرار
+            buttons = details.buttons
+            if buttons:
+                for row in buttons:
+                    for button in row:
+                        if button.text == "ملف صوتي":  # تأكد من النص الموجود على الزر
+                            await conv.send_message(button)
+                            audio_response = await conv.get_response()
+
+            video = await conv.get_response()
+            await bot.send_read_acknowledge(conv.chat_id)
+        except YouBlockedUserError:
+            await event.edit("✎┊‌الغـي حـظر هـذا البـوت و حـاول مجـددا @LEbot")
+            return
+
+        # إرسال الملف الصوتي
+        if audio_response:
+            await bot.send_file(event.chat_id, audio_response)
+
+        # حذف الرسائل الزائدة
+        await event.client.delete_messages(
+            conv.chat_id, [msg_start.id, r.id, msg.id, details.id, video.id]
+        )
+        await bot.delete_dialog(conv.chat_id)
+        await event.delete()
+
 @l313l.on(admin_cmd(pattern="سؤال(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
