@@ -25,8 +25,10 @@ async def search_song_on_youtube(event):
     
     if song_name:
         try:
+            await event.edit("**✎┊‌انتظر يتم جلب طلبك**")
             youtube_link = search_youtube(song_name)
             await event.respond(f"{youtube_link}")
+            await event.delete()  # حذف الرسالة الأصلية
         except Exception as e:
             await event.edit("حدث خطأ أثناء البحث.")
     else:
