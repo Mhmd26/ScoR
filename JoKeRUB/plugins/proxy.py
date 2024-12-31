@@ -53,10 +53,11 @@ async def fetch_random_proxy(event):
             ping = get_ping(proxy)
 
             if ping is not None:
-                await event.respond(f"**تم الحصول على بروكسي:**\n{proxy}\n**البنك:** {ping} ms")
+                await event.respond(f"**✎┊‌ تم الحصول على بروكسي:**\n{proxy}\n**البنك:** {ping} ms")
             else:
-                await event.respond("**عذرًا، لم أتمكن من حساب البنك للبروكسي.**")
+                await event.respond("**✎┊‌ عذرًا، لم أتمكن من حساب البنك للبروكسي.**")
         else:
-            await event.respond("**عذرًا، لم يتم العثور على بروكسيات في الوقت الحالي.**")
+            await event.respond("**✎┊‌ عذرًا، لم يتم العثور على بروكسيات في الوقت الحالي.**")
     except Exception as e:
-        await event.respond(f"**حدث خطأ أثناء جلب البروكسي:**\n{e}")
+        await event.respond(f"**✎┊‌ حدث خطأ أثناء جلب البروكسي:**\n{e}")
+        
