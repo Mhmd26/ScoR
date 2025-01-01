@@ -1,126 +1,102 @@
-#JoKeRUB
-#- - - - - - - - - - - - -
-#Hussein : @lMl10l
-#@jepthon
-#- - - - - - - - - - - - -
-
-
+import requests
 import os
-import random
-import string
-from datetime import datetime
-
-from PIL import Image
-from telegraph import Telegraph, exceptions, upload_file
-from telethon.utils import get_display_name
-
+from telegraph import Telegraph, upload_file
 from JoKeRUB import l313l
 
-from ..Config import Config
-from ..core.logger import logging
-from ..core.managers import edit_or_reply
-from . import BOTLOG, BOTLOG_CHATID
+plugin_category = "الادوات"
 
-LOGS = logging.getLogger(__name__)
-plugin_category = "utils"
-
-
+# إعداد Telegraph
 telegraph = Telegraph()
-r = telegraph.create_account(short_name=Config.TELEGRAPH_SHORT_NAME)
-auth_url = r["auth_url"]
+telegraph.create_account(short_name="JoKeRUB")
 
+# مفتاح API الخاص بـ ImgBB
+imgbb_api_key = "2c13527e292170493a5313151f57ce1c"
 
-def resize_image(image):
-    im = Image.open(image)
-    im.save(image, "PNG")
+# رفع صورة إلى ImgBB
+def upload_to_imgbb(image_path):
+    try:
+        with open(image_path, "rb") as img_file:
+            url = "https://api.imgbb.com/1/upload"
+            files = {"image": img_file.read()}
+            payload = {"key": imgbb_api_key}
+            response = requests.post(url, data=payload, files=files)
+            result = response.json()
+            if response.status_code == 200 and result.get('status') == 200:
+                imgbb_url = result['data']['url']
+                return imgbb_url
+            else:
+                error_message = result.get('error', {}).get('message', 'خطأ غير معروف.')
+                return f"حدث خطأ أثناء رفع الصورة: {error_message}"
+    except Exception as e:
+        return f"حدث خطأ: {e}"
 
+# رفع صورة إلى Telegraph
+def upload_to_telegraph(image_path):
+    try:
+        media_urls = upload_file(image_path)
+        return f"https://telegra.ph{media_urls[0]}"
+    except Exception as e:
+        return f"حدث خطأ أثناء رفع الصورة إلى تليجراف: {e}"
 
+# رفع نص إلى Telegraph
+def upload_text_to_telegraph(title, content):
+    try:
+        response = telegraph.create_page(title=title, html_content=content)
+        return f"https://telegra.ph/{response['path']}"
+    except Exception as e:
+        return f"حدث خطأ أثناء رفع النص إلى تليجراف: {e}"
+
+# أمر رفع الصور بالرد
 @l313l.ar_cmd(
-    pattern="(ت(ل)?ك(راف)?) ?(m|t|ميديا|نص)(?:\s|$)([\s\S]*)",
-    command=("تلكراف", plugin_category),
+    pattern="تلكراف ميديا (imgbb|telegraph)$",
+    command=("تلكراف ميديا", plugin_category),
     info={
-        "header": "To get telegraph link.",
-        "description": "Reply to text message to paste that text on telegraph you can also pass input along with command \
-            So that to customize title of that telegraph and reply to media file to get sharable link of that media(atmost 5mb is supported)",
-        "options": {
-            "m or media": "To get telegraph link of replied sticker/image/video/gif.",
-            "t or text": "To get telegraph link of replied text you can use custom title.",
-        },
-        "usage": [
-            "{tr}tgm",
-            "{tr}tgt <title(optional)>",
-            "{tr}telegraph media",
-            "{tr}telegraph text <title(optional)>",
-        ],
+        "header": "لرفع صورة إلى ImgBB أو Telegraph.",
+        "الاستخدام": "{tr}تلكراف ميديا <imgbb|telegraph> (بالرد على الصورة)",
     },
-)  # sourcery no-metrics
-async def _(event):
-    "To get telegraph link."
-    jokevent = await edit_or_reply(event, "` ✎┊‌جـار انشـاء رابـط تلكـراف`")
-    optional_title = event.pattern_match.group(5)
-    if not event.reply_to_msg_id:
-        return await jokevent.edit(
-            "` ✎┊‌قـم بالـرد عـلى هـذه الرسـالة للحـصول عـلى رابـط تلكـراف فـورا`",
-        )
+)
+async def upload_image(event):
+    reply = await event.get_reply_message()
+    service = event.pattern_match.group(1).strip().lower()  # اختيار الخدمة (ImgBB أو Telegraph)
 
-    start = datetime.now()
-    r_message = await event.get_reply_message()
-    input_str = (event.pattern_match.group(4)).strip()
-    if input_str in ["ميديا", "m"]:
-        downloaded_file_name = await event.client.download_media(
-            r_message, Config.TEMP_DIR
-        )
-        await jokevent.edit(f"` ✎┊‌تـم التحـميل الـى {downloaded_file_name}`")
-        if downloaded_file_name.endswith((".webp")):
-            resize_image(downloaded_file_name)
-        try:
-            media_urls = upload_file(downloaded_file_name)
-        except exceptions.TelegraphException as exc:
-            await jokevent.edit(f"** ✎┊‌خـطأ : **\n`{exc}`")
-            os.remove(downloaded_file_name)
+    if reply and reply.photo:
+        await event.edit(f"**✎┊‌انتظر يتم رفع الصورة إلى {service}...**")
+        photo = await event.client.download_media(reply.photo, file="temp_image.jpg")
+        
+        if service == "imgbb":
+            link = upload_to_imgbb(photo)
+        elif service == "telegraph":
+            link = upload_to_telegraph(photo)
         else:
-            end = datetime.now()
-            ms = (end - start).seconds
-            os.remove(downloaded_file_name)
-            await jokevent.edit(
-                f"** ✎┊‌الـرابـط : **[إضـغط هنـا](https://telegra.ph{media_urls[0]})\
-                    \n** ✎┊‌الوقـت المأخـوذ : **`{ms} ثـانيـة.`",
-                link_preview=False,
-            )
-    elif input_str in ["نص", "t"]:
-        user_object = await event.client.get_entity(r_message.sender_id)
-        title_of_page = get_display_name(user_object)
-        # apparently, all Users do not have last_name field
-        if optional_title:
-            title_of_page = optional_title
-        page_content = r_message.message
-        if r_message.media:
-            if page_content != "":
-                title_of_page = page_content
-            downloaded_file_name = await event.client.download_media(
-                r_message, Config.TEMP_DIR
-            )
-            m_list = None
-            with open(downloaded_file_name, "rb") as fd:
-                m_list = fd.readlines()
-            for m in m_list:
-                page_content += m.decode("UTF-8") + "\n"
-            os.remove(downloaded_file_name)
-        page_content = page_content.replace("\n", "<br>")
-        try:
-            response = telegraph.create_page(title_of_page, html_content=page_content)
-        except Exception as e:
-            LOGS.info(e)
-            title_of_page = "".join(
-                random.choice(list(string.ascii_lowercase + string.ascii_uppercase))
-                for _ in range(16)
-            )
-            response = telegraph.create_page(title_of_page, html_content=page_content)
-        end = datetime.now()
-        ms = (end - start).seconds
-        joker = f"https://telegra.ph/{response['path']}"
-        await jokevent.edit(
-            f"** ✎┊‌الـرابـط : ** [اضغـط هنـا]({joker})\
-                 \n** ✎┊‌الـوقـت المـأخـوذ : **`{ms} ثـانيـة.`",
-            link_preview=False,
-        )
+            await event.edit("خدمة غير معروفة. اختر بين `imgbb` أو `telegraph`.")
+            os.remove(photo)
+            return
+
+        await event.respond(f"رابط الصورة:\n{link}")
+        os.remove(photo)  # حذف الصورة المؤقتة بعد الرفع
+        await event.delete()
+    else:
+        await event.edit("يرجى الرد على صورة لاستخدام هذا الأمر.")
+
+# أمر رفع النصوص إلى Telegraph
+@l313l.ar_cmd(
+    pattern="تلكراف نص(?:\s|$)([\s\S]*)",
+    command=("تلكراف نص", plugin_category),
+    info={
+        "header": "لرفع نص إلى Telegraph.",
+        "الاستخدام": "{tr}تلكراف نص <عنوان اختياري> (بالرد على النص)",
+    },
+)
+async def upload_text(event):
+    reply = await event.get_reply_message()
+    title = event.pattern_match.group(1).strip() or "نص بدون عنوان"  # عنوان النص
+    
+    if reply and reply.text:
+        await event.edit("**✎┊‌انتظر يتم رفع النص إلى Telegraph...**")
+        content = reply.text.replace("\n", "<br>")  # تنسيق النص
+        link = upload_text_to_telegraph(title, content)
+        await event.respond(f"رابط النص:\n{link}")
+        await event.delete()
+    else:
+        await event.edit("يرجى الرد على نص لاستخدام هذا الأمر.")
+    
