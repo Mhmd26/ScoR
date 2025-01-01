@@ -23,35 +23,7 @@ def download_instagram_video(url):
         print("حدث خطأ:", e)
         return None
 
-# أمر تحميل فيديو إنستغرام
-@l313l.ar_cmd(
-    pattern="انستا (.+)",
-    command=("انستا", plugin_category),
-    info={
-        "header": "لـ تحميل فيديو من إنستغرام",
-        "الاستخدام": "{tr}إنستا <رابط إنستغرام>",
-    },
-)
-async def download_instagram(event):
-    instagram_url = event.pattern_match.group(1).strip()
-    
-    if instagram_url:
-        try:
-            msg = await event.edit("**✎┊‌ انتظر... جاري التحميل من إنستغرام**")
-            video_file_path = download_instagram_video(instagram_url)
-            await msg.delete()
-            if video_file_path:
-                with open(video_file_path, 'rb') as video_file:
-                    await event.respond(file=video_file)
-                os.remove(video_file_path)  # حذف الفيديو بعد إرساله
-            else:
-                await event.edit("**✎┊‌ حدث خطأ أثناء تحميل الفيديو من إنستغرام.**")
-        except Exception as e:
-            await event.edit("**✎┊‌ حدث خطأ أثناء تحميل الفيديو من إنستغرام.**")
-    else:
-        await event.edit("**✎┊‌ يرجى إدخال رابط فيديو إنستغرام بعد الأمر.**")
-
-
+# تحميل فيديو من تيك توك باستخدام API
 def download_tiktok_video(url):
     try:
         response = requests.get(f"https://www.tikwm.com/api/?url={url}").json()
@@ -71,6 +43,34 @@ def save_tiktok_video(url, save_path="tiktok_video.mp4"):
         return save_path
     return None
 
+# أمر تحميل فيديو إنستغرام
+@l313l.ar_cmd(
+    pattern="انستا (.+)",
+    command=("انستا", plugin_category),
+    info={
+        "header": "لـ تحميل فيديو من إنستغرام",
+        "الاستخدام": "{tr}إنستا <رابط إنستغرام>",
+    },
+)
+async def download_instagram(event):
+    instagram_url = event.pattern_match.group(1).strip()
+    
+    if instagram_url:
+        try:
+            msg = await event.edit("**✎┊‌ انتظر... جاري التحميل من إنستغرام**")
+            video_file_path = download_instagram_video(instagram_url)
+            if video_file_path:
+                with open(video_file_path, 'rb') as video_file:
+                    await event.client.send_file(event.chat_id, video_file)
+                os.remove(video_file_path)  # حذف الفيديو بعد إرساله
+                await msg.delete()  # حذف رسالة الانتظار
+            else:
+                await msg.edit("**✎┊‌ حدث خطأ أثناء تحميل الفيديو من إنستغرام.**")
+        except Exception as e:
+            await msg.edit("**✎┊‌ حدث خطأ أثناء تحميل الفيديو من إنستغرام.**")
+    else:
+        await event.edit("**✎┊‌ يرجى إدخال رابط فيديو إنستغرام بعد الأمر.**")
+
 # أمر تحميل فيديو تيك توك
 @l313l.ar_cmd(
     pattern="تيك (.+)",
@@ -85,16 +85,18 @@ async def download_tiktok(event):
     
     if tiktok_url:
         try:
-            await event.edit("**✎┊ ‌انتظر... جاري التحميل من تيك توك**")
+            msg = await event.edit("**✎┊‌انتظر... جاري التحميل من تيك توك**")
             saved_video_path = save_tiktok_video(tiktok_url)
-            await msg.delete()
+
             if saved_video_path:
                 with open(saved_video_path, 'rb') as video_file:
                     await event.client.send_file(event.chat_id, video_file)
                 os.remove(saved_video_path)  # حذف الفيديو بعد إرساله
+                await msg.delete()  # حذف رسالة الانتظار
             else:
-                await event.edit("✎┊ حدث خطأ أثناء تحميل الفيديو من تيك توك.")
+                await msg.edit("**✎┊‌ حدث خطأ أثناء تحميل الفيديو من تيك توك.**")
         except Exception as e:
-            await event.edit("✎┊ حدث خطأ أثناء تحميل الفيديو من تيك توك.")
+            await msg.edit("**✎┊‌ حدث خطأ أثناء تحميل الفيديو من تيك توك.**")
     else:
-        await event.edit("✎┊ يرجى إدخال رابط فيديو تيك توك بعد الأمر.")
+        await event.edit("**✎┊‌ يرجى إدخال رابط فيديو تيك توك بعد الأمر.**")
+                
