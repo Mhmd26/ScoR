@@ -61,6 +61,16 @@ def download_tiktok_video(url):
         print("حدث خطأ:", e)
         return None
 
+# تحميل فيديو تيك توك وحفظه محليًا
+def save_tiktok_video(url, save_path="tiktok_video.mp4"):
+    video_url = download_tiktok_video(url)
+    if video_url:
+        video_content = requests.get(video_url).content
+        with open(save_path, 'wb') as f:
+            f.write(video_content)
+        return save_path
+    return None
+
 # أمر تحميل فيديو تيك توك
 @l313l.ar_cmd(
     pattern="تيك (.+)",
@@ -75,23 +85,16 @@ async def download_tiktok(event):
     
     if tiktok_url:
         try:
-            await event.edit("**✎┊‌انتظر... جاري التحميل من تيك توك**")
-            video_url = download_tiktok_video(tiktok_url)
-
-            if video_url:
-                video_content = requests.get(video_url).content
-                await event.delete()
-                await event.client.send_file(
-                    event.chat_id,
-                    file=video_content,
-                    force_document=False,  # إرسال كفيديو وليس كملف
-                    caption=None  # بدون أي نص
-                )
-
+            await event.edit("**✎┊ ‌انتظر... جاري التحميل من تيك توك**")
+            saved_video_path = save_tiktok_video(tiktok_url)
+            await msg.delete()
+            if saved_video_path:
+                with open(saved_video_path, 'rb') as video_file:
+                    await event.client.send_file(event.chat_id, video_file)
+                os.remove(saved_video_path)  # حذف الفيديو بعد إرساله
             else:
-                await event.edit("**✎┊ حدث خطأ أثناء تحميل الفيديو من تيك توك.**")
+                await event.edit("✎┊ حدث خطأ أثناء تحميل الفيديو من تيك توك.")
         except Exception as e:
-            await event.edit("**✎┊ حدث خطأ أثناء تحميل الفيديو من تيك توك.**")
+            await event.edit("✎┊ حدث خطأ أثناء تحميل الفيديو من تيك توك.")
     else:
-        await event.edit("**✎┊ يرجى إدخال رابط فيديو تيك توك بعد الأمر.**")
-        
+        await event.edit("✎┊ يرجى إدخال رابط فيديو تيك توك بعد الأمر.")
