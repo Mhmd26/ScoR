@@ -82,28 +82,29 @@ if Config.PLUGIN_CHANNEL:
                     f"✎┊‌ المـلف `{plugin_name}` غيـر موجـود ❌.",
                 )
 
-    @l313l.on(events.NewMessage(pattern=r"^\.الغاء تنصيب(?: (.+))?$"))
+    @l313l.on(events.NewMessage(pattern=r"^\.الغاء تنصيب$"))
     async def uninstall_command(event):
         """
-        أمر لإلغاء تثبيت مكون إضافي باستخدام الرد على ملف أو كتابة الاسم.
+        أمر لإلغاء تثبيت مكون إضافي باستخدام الرد على ملف فقط.
         """
-        plugin_name = None
-
-        # إذا كان الأمر ردًا على ملف
-        if event.reply_to_msg_id:
-            reply_message = await event.get_reply_message()
-            if reply_message and reply_message.file and reply_message.file.name:
-                plugin_name = Path(reply_message.file.name).stem
-
-        # إذا تم تحديد اسم الملف مباشرةً
-        if not plugin_name:
-            plugin_name = event.pattern_match.group(1)
-
-        if not plugin_name:
-            await event.reply("✎┊‌ الرجاء تحديد اسم المكون أو الرد على ملف ❌.")
+        # التحقق من وجود رد على ملف
+        if not event.reply_to_msg_id:
+            await event.reply("✎┊‌ الرجاء الرد على الملف الذي تريد إزالته ❌.")
             return
 
-        plugin_name = plugin_name.strip()
+        reply_message = await event.get_reply_message()
+        if not (reply_message and reply_message.file and reply_message.file.name):
+            await event.reply("✎┊‌ الرد لا يحتوي على ملف صالح ❌.")
+            return
+
+        # الحصول على اسم المكون من الملف
+        plugin_name = Path(reply_message.file.name).stem.strip()
+
+        if not plugin_name:
+            await event.reply("✎┊‌ لم يتمكن البوت من تحديد اسم الملف ❌.")
+            return
+
+        # استدعاء وظيفة الإزالة
         await uninstall(plugin_name)
         await event.reply(f"✎┊‌ جـارٍ إزالة المـلف `{plugin_name}`...")
 
