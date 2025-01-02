@@ -30,9 +30,9 @@ async def disable_voice_save(event):
     else:
         await edit_delete(event, "**✎┊‌انت لم تفعل حفظ البصمات الصوتية لتعطيلها!**")
 
-def is_temporary_voice_note(message):
-    return message.media and message.media.document.mime_type == "audio/ogg" and message.is_video_note
-    
+def is_voice_note(message):
+    return message.media and message.media.document.mime_type == "audio/ogg" 
+
 async def save_voice(event, caption):
     media = await event.download_media()
     sender = await event.get_sender()
@@ -78,4 +78,3 @@ async def manual_save_voice(event):
       - 𝗦𝗰𝗼𝗿𝗽𝗶𝗼𝗻 𝗦𝗼𝘂𝗿𝗰𝗲 -
                 **"""
             await save_voice(message, caption)
-            
