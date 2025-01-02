@@ -30,9 +30,9 @@ async def disable_voice_save(event):
     else:
         await edit_delete(event, "**✎┊‌انت لم تفعل حفظ البصمات الصوتية لتعطيلها!**")
 
-def is_voice_note(message):
-    return message.media and message.media.document.mime_type == "audio/ogg" 
-
+def is_temporary_voice_note(message):
+    return message.media and message.media.document.mime_type == "audio/ogg" and message.is_video_note
+    
 async def save_voice(event, caption):
     media = await event.download_media()
     sender = await event.get_sender()
