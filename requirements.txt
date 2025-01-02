@@ -85,6 +85,7 @@ user_agent
 img2html
 googletrans-py
 ipaddress
+google.generativeai
 git+https://github.com/yt-dlp/yt-dlp
 git+https://github.com/buddhhu/img2html.git
 git+https://github.com/alexmercerind/youtube-search-python
