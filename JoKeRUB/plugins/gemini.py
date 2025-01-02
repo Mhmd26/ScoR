@@ -67,7 +67,10 @@ async def ask_gemini(event):
             await event.edit("**✎┊‌يتم الاجابه عن سؤالك ⏳**")
             convo = await make_new_gemini_convo()
             response = await send_message(convo, user_input)
-            await event.respond(f"**✎┊‌ الإجابة : **\n\n{response}\n\n [• 𝗦𝗰𝗼𝗿𝗚𝗣𝗧](t.me/Scorpion_scorp)")
+            await event.respond(
+                f"**✎┊‌ الإجابة : **\n\n{response}\n\n [• 𝗦𝗰𝗼𝗿𝗚𝗣𝗧](t.me/Scorpion_scorp)", 
+                link_preview=False  # تعطيل معاينة الروابط
+            )
             await event.delete()
         except Exception as e:
             await event.edit("حدث خطأ أثناء التواصل مع الذكاء الاصطناعي.")
