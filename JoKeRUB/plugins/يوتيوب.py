@@ -392,7 +392,7 @@ async def _(event):
                 
 
 
-@l313l.on(admin_cmd(pattern="سؤال(?: |$)(.*)"))
+@l313l.on(admin_cmd(pattern="nooon(?: |$)(.*)"))
 async def _(event):
     if event.fwd_from:
         return
