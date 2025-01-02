@@ -57,7 +57,7 @@ if Config.PLUGIN_CHANNEL:
         وظيفة لإلغاء تثبيت المكونات الإضافية.
         تقوم بحذف الملف من النظام وإلغاء تحميله.
         """
-        plugin_path = f"JoKeRUB/plugins/{plugin_name}.py"
+        plugin_path = f"JoKeRUB/plugins/{plugin_name}"
         if os.path.exists(plugin_path):
             try:
                 # إزالة تحميل المكون من النظام
