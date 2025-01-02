@@ -45,8 +45,8 @@ def save_tiktok_video(url, save_path="tiktok_video.mp4"):
 
 # أمر تحميل فيديو إنستغرام
 @l313l.ar_cmd(
-    pattern="انستا (.+)",
-    command=("انستا", plugin_category),
+    pattern="انستغرام (.+)",
+    command=("انستغرام", plugin_category),
     info={
         "header": "لـ تحميل فيديو من إنستغرام",
         "الاستخدام": "{tr}إنستا <رابط إنستغرام>",
