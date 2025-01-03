@@ -1,100 +1,110 @@
-import html
-
+# Copyright (C) 2021 Scorpion TEAM
+from telethon.tl.types import User
 from JoKeRUB import l313l
-from ..core.managers import edit_or_reply
-from ..sql_helper import warns_sql as sql
-from telethon.tl.functions.channels import EditBannedRequest
-from telethon.tl.types import ChatBannedRights
-plugin_category = "admin"
+plugin_category = "utils"
 
-#warn
+# تخزين عدد التحذيرات لكل مستخدم
+warnings = {}
+
 @l313l.ar_cmd(
-    pattern="تحذير(?:\s|$)([\s\S]*)",
+    pattern="تحذير(?: (.*))?$",
     command=("تحذير", plugin_category),
     info={
-        "header": "لتحذير المستخدم.",
-        "description": "سيحذر المستخدم الذي تم الرد عليه.",
-        "usage": "تحذير <السبب>",
+        "header": "To warn a user and ban after 3 warnings.",
+        "description": "Warns the user for violations. After 3 warnings, the user will be banned from the group or blocked in private chat.",
+        "usage": "{tr}تحذير <reason>",
     },
 )
-async def _(event):
-    "لتحذير المستخدم"
-    warn_reason = event.pattern_match.group(1)
-    if not warn_reason:
-        warn_reason = "✎┊‌ لا يوجد سبب ، 🗒"
-    reply_message = await event.get_reply_message()
-    limit, soft_warn = sql.get_warn_setting(event.chat_id)
-    num_warns, reasons = sql.warn_user(
-        str(reply_message.sender_id), event.chat_id, warn_reason
-    )
-    if num_warns >= limit:
-        sql.reset_warns(str(reply_message.sender_id), event.chat_id)
-        if soft_warn:
-            logger.info("TODO: kick user")
-            reply = "**✎┊‌بسبب تخطي التحذيرات الـ {} ، يجب طرد المستخدم! 🚷**".format(
-                limit, reply_message.sender_id
-            )
-        else:
-            try:
-                await event.client(EditBannedRequest(event.chat_id, reply_message.sender_id, ChatBannedRights(until_date=None, view_messages=True)))
-                reply = "**✎┊‌بسبب تخطي التحذيرات الـ {} ، تم حظر المستخدم! ⛔️**".format(
-                    limit, reply_message.sender_id
-                )
-            except Exception as e:
-                reply = "**✎┊‌حدث خطأ أثناء محاولة طرد المستخدم! ⚠️**"
-    else:
-        reply = "**✎┊‌[ المستخدم 👤](tg://user?id={}) لديه {}/{} تحذيرات، احذر!**".format(
-            reply_message.sender_id, num_warns, limit
+async def warn_user(event):
+    "Warn a user and ban after 3 warnings"
+    reason = event.pattern_match.group(1)
+    reply = await event.get_reply_message()
+    
+    if not reply or not isinstance(reply.sender, User):
+        return await event.edit("**✎┊‌ قم بالرد على رسالة المستخدم لتحذيره.**")
+    
+    user_id = reply.sender_id
+    chat_id = event.chat_id
+    
+    # إذا لم يتم تحديد سبب
+    reason_text = f"السبب: {reason}" if reason else "بدون سبب."
+    
+    # تحديث عدد التحذيرات
+    if user_id not in warnings:
+        warnings[user_id] = 0
+    warnings[user_id] += 1
+    
+    # إرسال التحذير
+    if warnings[user_id] < 3:
+        await event.client.send_message(
+            chat_id,
+            f"**✎┊‌ تم تحذير المستخدم :** [{reply.sender.first_name}](tg://user?id={user_id})\n"
+            f"**عدد التحذيرات :** {warnings[user_id]}/3\n{reason_text}"
         )
-        if warn_reason:
-            reply += "\n**✎┊‌سبب التحذير الأخير** \n{}".format(html.escape(warn_reason))
-    await edit_or_reply(event, reply)
+    else:
+        try:
+            # إذا كانت المحادثة خاصة، حظر المستخدم
+            if event.is_private:
+                await event.client.block_user(user_id)
+                action = "تم حظر المستخدم من الرسائل الخاصة."
+            else:
+                # إذا كانت المحادثة مجموعة، حظر المستخدم من المجموعة
+                await event.client.kick_participant(chat_id, user_id)
+                action = "تم حظر المستخدم من المجموعة."
+            
+            await event.client.send_message(
+                chat_id,
+                f"**✎┊‌ تم حظر المستخدم :** [{reply.sender.first_name}](tg://user?id={user_id}) ✓\n"
+                f"**السبب:** تجاوز الحد المسموح للتحذيرات.\n**الإجراء:** {action}"
+            )
+            # حذف التحذيرات بعد الحظر
+            del warnings[user_id]
+        except Exception as e:
+            await event.edit(f"**خـطأ أثناء محاولة الحظر:**\n`{str(e)}`")
 
 
 @l313l.ar_cmd(
-    pattern="التحذيرات",
+    pattern="التحذيرات$",
     command=("التحذيرات", plugin_category),
     info={
-        "header": "للحصول على قائمة تحذيرات المستخدمين.",
-        "usage": "التحذير <بالرد>",
+        "header": "Show all users with warnings.",
+        "description": "Displays the list of users who have warnings.",
+        "usage": "{tr}قائمة التحذيرات",
     },
 )
-async def _(event):
-    "للحصول على قائمة تحذيرات المستخدمين."
-    reply_message = await event.get_reply_message()
-    if not reply_message:
-        return await edit_delete(
-            event, "**✎┊‌قم بالرد ع المستخدم للحصول ع تحذيراته . **"
-        )
-    result = sql.get_warns(str(reply_message.sender_id), event.chat_id)
-    if not result or result[0] == 0:
-        return await edit_or_reply(event, "✎┊‌هذا المستخدم ليس لديه أي تحذير! ")
-    num_warns, reasons = result
-    limit, soft_warn = sql.get_warn_setting(event.chat_id)
-    if not reasons:
-        return await edit_or_reply(
-            event,
-            f"**✎┊‌هذا المستخدم لديه {num_warns} / {limit} تحذيرات ، لكن لا توجد اسباب **",
-        )
-    text = f"**✎┊‌هذا المستخدم لديه {num_warns} / {limit} تحذيرات ، للأسباب :**"
-    text += "\r\n"
-    text += reasons
-    await event.edit(text)
+async def list_warnings(event):
+    "List all users with warnings"
+    if not warnings:
+        return await event.edit("**✎┊‌ لا توجد أي تحذيرات حاليًا.**")
+    
+    output = "**✎┊‌ قائمة المستخدمين المحذرين:**\n\n"
+    for user_id, count in warnings.items():
+        output += f"**المعرف:** [{user_id}](tg://user?id={user_id})\n**التحذيرات:** {count}/3\n\n"
+    
+    await event.edit(output)
 
 
 @l313l.ar_cmd(
-    pattern="ازالة التحذير(?:\s|$)([\s\S]*)",
+    pattern="ازالة التحذير(?: (.*))?$",
     command=("ازالة التحذير", plugin_category),
     info={
-        "header": "لحذف تحذيرات المستخدم الذي تم الرد عليه",
-        "usage": [
-            "{tr}ح التحذير",
-            "{tr}حذف التحذير",
-        ],
+        "header": "Remove warnings for a user.",
+        "description": "Clears all warnings for the specified user.",
+        "usage": "{tr}ازالة التحذيرات <reply>",
     },
 )
-async def _(event):
-    "لحذف او اعادة تحذيرات المستخدم الذي تم الرد عليه"
-    reply_message = await event.get_reply_message()
-    sql.reset_warns(str(reply_message.sender_id), event.chat_id)
-    await edit_or_reply(event, "**✎┊‌تم إعادة ضبط التحذيرات!**")
+async def clear_warnings(event):
+    "Clear warnings for a user"
+    reply = await event.get_reply_message()
+    
+    if not reply or not isinstance(reply.sender, User):
+        return await event.edit("**✎┊‌ قم بالرد على رسالة المستخدم لإزالة تحذيراته.**")
+    
+    user_id = reply.sender_id
+    
+    if user_id in warnings:
+        del warnings[user_id]
+        await event.edit(f"**✎┊‌ تم إزالة جميع التحذيرات عن المستخدم:** [{reply.sender.first_name}](tg://user?id={user_id})")
+    else:
+        await event.edit("**✎┊‌ هذا المستخدم ليس لديه أي تحذيرات.**")
+            
