@@ -11,7 +11,7 @@ plugin_category = "tools"
 
 #Reda
 
-@l313l.ar_cmd(pattern="المكاتب")
+@l313l.ar_cmd(pattern="0987654")
 async def reda(event):
     installed_packages = pkg_resources.working_set
     installed_packages_list = sorted(["%s==%s" % (i.key, i.version)
@@ -23,8 +23,8 @@ async def reda(event):
     await edit_or_reply(event, list)
 
 @l313l.ar_cmd(
-    pattern="الملفات$",
-    command=("الملفات", plugin_category),
+    pattern="ملفات العقرب$",
+    command=("ملفات العقرب", plugin_category),
     info={
         "header": "To list all plugins in JoKeRUB.",
         "usage": "{tr}plugins",
@@ -39,8 +39,8 @@ async def _(event):
 
 
 @l313l.ar_cmd(
-    pattern="فاراتي$",
-    command=("فاراتي", plugin_category),
+    pattern="09875$",
+    command=("09875", plugin_category),
     info={
         "header": "To list all environment values in JoKeRUB.",
         "description": "to show all heroku vars/Config values in your JoKeRUB",
@@ -52,7 +52,7 @@ async def _(event):
     cmd = "env"
     o = (await _catutils.runcmd(cmd))[0]
     OUTPUT = (
-        f"**[الجوكر](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
+        f"**[العقرب](tg://need_update_for_some_feature/) قـائمـة الـفـارات:**\n\n\n{o}\n\n**انتبه هنالك معلومات حساسة لا تُعطِها لشخص غير موثوق**"
     )
     await edit_or_reply(event, "**تم ارسال المعلومات في الرسائل المحفوضة \nانتبه من الاشخاص الي يطلبون منك كتابة هذا الامر يريد ان يخترقك!**")
     await l313l.send_message("me", OUTPUT)
@@ -78,7 +78,7 @@ async def _(event):
     await edit_or_reply(
         event, f"**✎┊‌ نـشـرت هـذه الـرسالة فـي  :** `{yaml_format(result)}`"
     )
-@l313l.ar_cmd(pattern="رابط مباشر")
+@l313l.ar_cmd(pattern="09876")
 async def upload_reda(event):
     r = await event.get_reply_message()
     if r is None:
