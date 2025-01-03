@@ -19,7 +19,7 @@ if Config.TG_BOT_USERNAME is not None and tgbot is not None:
         result = None
         query = event.text
         await bot.get_me()
-        if query.startswith("م24") and event.query.user_id == bot.uid:
+        if query.startswith("م23") and event.query.user_id == bot.uid:
             buttons = [
                 [Button.url("— 𝗚𝗼 𝗧𝗼 𝗖𝗵𝗮𝘁 —", "https://t.me/ScorGPTbot")],
             ]
