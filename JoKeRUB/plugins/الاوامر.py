@@ -145,20 +145,11 @@ async def _(event):
 async def _(event):
 	if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
 		await event.edit(
-		"** اوامر المساعدة | 𝗛𝗲𝗹𝗽 𝗼𝗿𝗱𝗲𝗿𝘀 ✍🏻 **:\n \n** اختر احداها :**\n\n**- { `.اوامر الصلاة` }** \n**- { `.اوامر مساعدة` }**\n**- { `.اوامر الاذاعه` }** \n\n**[العقرب |  𝗦𝗰𝗼𝗿𝗽𝗶𝗼 ](t.me/Scorpion_scorp)🦂**"
+		"** اوامر الارسال | 𝗧𝗿𝗮𝗻𝘀𝗺𝗶𝘀𝘀𝗶𝗼𝗻 𝗼𝗿𝗱𝗲𝗿𝘀 ✍🏻 :\n \n   اختر احداها \n\n- { `.امر الصورة الذاتية` }\n- { `.اوامر التحذيرات` }\n- { `.اوامر الملكية` } \n- { `.اوامر السليب` } \n- { `.اوامر الاذكار` }\n- { `.الحاسبة` }\n\n[العقرب |  𝗦𝗰𝗼𝗿𝗽𝗶𝗼 ](t.me/Scorpion_scorp)🦂**"
 )
 @l313l.ar_cmd(
     pattern="م13$",
     command=("م13", plugin_category),
-)
-async def _(event):
-	if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
-		await event.edit(
-		"** اوامر الارسال | 𝗧𝗿𝗮𝗻𝘀𝗺𝗶𝘀𝘀𝗶𝗼𝗻 𝗼𝗿𝗱𝗲𝗿𝘀 ✍🏻 :\n \n   اختر احداها \n\n- { `.امر الصورة الذاتية` }\n- { `.اوامر التحذيرات` }\n- { `.اوامر الملكية` } \n- { `.اوامر السليب` } \n- { `.اوامر الاذكار` }\n- { `.الحاسبة` }\n\n[العقرب |  𝗦𝗰𝗼𝗿𝗽𝗶𝗼 ](t.me/Scorpion_scorp)🦂**"
-)
-@l313l.ar_cmd(
-    pattern="م14$",
-    command=("م14", plugin_category),
 )
 async def _(event):
 	if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
@@ -172,8 +163,8 @@ async def _(event):
 )
 
 @l313l.ar_cmd(
-    pattern="م15$",
-    command=("م15", plugin_category),
+    pattern="م14$",
+    command=("م14", plugin_category),
 )
 async def _(event):
 	if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
@@ -182,8 +173,8 @@ async def _(event):
 )
 
 @l313l.ar_cmd(
-    pattern="م16$",
-    command=("م16", plugin_category),
+    pattern="م15$",
+    command=("م15", plugin_category),
 )
 async def _(event):
 	if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
@@ -191,16 +182,16 @@ async def _(event):
 		"**  اوامر تحويل الصيغ و الجهات ✍🏻 **:\n \n **اختر احداها:**\n\n**- { `.اوامر التحويل` }**\n**- { `.اوامر الجهات` }** \n\n**[العقرب |  𝗦𝗰𝗼𝗿𝗽𝗶𝗼 ](t.me/Scorpion_scorp)🦂**"
 )
 @l313l.ar_cmd(
-    pattern="م17$",
-    command=("م17", plugin_category),)
+    pattern="م16$",
+    command=("م16", plugin_category),)
 async def _(event):
      if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
             await event.edit(
                 "**قائمة اوامر التمبـلر ✍🏻 :\n\n ✎┊‌ اختر احدى هذه القوائم\n\n- { `.الزغرفة` } \n- { `.اسماء تمبلر` }   \n- { `.اسماء عربية` }\n- { `.اشهر مزغرفة` } \n- { `.الاختصارات` } \n- { `.البايو` }\n - {`.بايو`}\n- { `.المتحركات` }\n\n[العقرب |  𝗦𝗰𝗼𝗿𝗽𝗶𝗼 ](t.me/Scorpion_scorp)🦂**"
 )
 @l313l.ar_cmd(
-    pattern="م18$",
-    command=("م18", plugin_category),
+    pattern="م17$",
+    command=("م17", plugin_category),
 )
 async def _(event):
 	if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
@@ -211,8 +202,8 @@ async def _(event):
 
 
 @l313l.ar_cmd(
-    pattern="م19$",
-    command=("م19", plugin_category),
+    pattern="م18$",
+    command=("م18", plugin_category),
 )
 async def _(event):
 	if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
@@ -222,8 +213,8 @@ async def _(event):
 )
 
 @l313l.ar_cmd(
-    pattern="م20$",
-    command=("م20", plugin_category),
+    pattern="م19$",
+    command=("م19", plugin_category),
 )
 async def _(event):
     if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
@@ -231,8 +222,8 @@ async def _(event):
             "**  نقاط بوتات | 𝗖𝗼𝗹𝗹𝗲𝗰𝘁 𝗽𝗼𝗶𝗻𝘁𝘀 ✍🏻 **:\n \n  **اختر احداها:**\n\n**- { `.اوامر التجميع` } **\n**- { `.اوامر وعد` }** \n\n**[العقرب |  𝗦𝗰𝗼𝗿𝗽𝗶𝗼 ](t.me/Scorpion_scorp)🦂**"
         )
 @l313l.ar_cmd(
-    pattern="م21$",
-    command=("م21", plugin_category),
+    pattern="م20$",
+    command=("م20", plugin_category),
 )
 async def _(event):
 	if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
@@ -241,8 +232,8 @@ async def _(event):
 
 	)
 @l313l.ar_cmd(
-    pattern="م22$",
-    command=("م22", plugin_category),
+    pattern="م21$",
+    command=("م21", plugin_category),
 )
 async def _(event):
 	if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
@@ -251,8 +242,8 @@ async def _(event):
 
 		)
 @l313l.ar_cmd(
-    pattern="م23$",
-    command=("م23", plugin_category),
+    pattern="م22$",
+    command=("م22", plugin_category),
 )
 async def _(event):
 	if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
