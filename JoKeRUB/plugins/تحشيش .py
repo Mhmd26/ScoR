@@ -57,9 +57,9 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7045643989:
+    if user.id == 815010872:
         return await edit_or_reply(mention, f"**0% ♥🙂**")
-    if user.id == 7045643989:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**0% ♥🙂**")
     if user.id == 705475246:
         return await edit_or_reply(mention, f"**0% ♥🙂**")
@@ -76,7 +76,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7045643989:
+    if user.id == 815010872:
         return await edit_or_reply(mention, f"**0% ♥🙂**")
     muh = user.first_name.replace("\u2060", "") if user.first_name else user.username
     rzona = random.choice(rr7)
@@ -91,7 +91,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7045643989:
+    if user.id == 815010872:
         return await edit_or_reply(mention, f"**100% ميحتاج تسوي نسبة الذكاء للمطور معروف**")
     muh = user.first_name.replace("\u2060", "") if user.first_name else user.username
     rzona = random.choice(rr7)
@@ -106,7 +106,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7045643989:
+    if user.id == 815010872:
         return await edit_or_reply(mention, f"**تاج راسك مطوري**")
     muh = user.first_name.replace("\u2060", "") if user.first_name else user.username
     rzona = random.choice(rr7)
@@ -121,7 +121,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7045643989:
+    if user.id == 815010872:
         return await edit_or_reply(mention, f"**تاج راسك مطوري**")
     muh = user.first_name.replace("\u2060", "") if user.first_name else user.username
     rzona = random.choice(rr7)
@@ -136,7 +136,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7045643989:
+    if user.id == 815010872:
         return await edit_or_reply(mention, f"**المطور ميخون يبقى وفي للكل**")
     muh = user.first_name.replace("\u2060", "") if user.first_name else user.username
     rzona = random.choice(rr7)
@@ -151,7 +151,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7045643989:
+    if user.id == 815010872:
         return await edit_or_reply(mention, f"**المطور حلو ميحتاج تقيمه 🤤**")
     muh = user.first_name.replace("\u2060", "") if user.first_name else user.username
     rzona = random.choice(rr7)
