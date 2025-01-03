@@ -719,3 +719,106 @@ async def _iundlt(event):  # sourcery no-metrics
                     f"\n🖇┊{msg.old.message} \n\n**✎┊‌تم ارسـالهـا بـواسطـة** {_format.mentionuser(ruser.first_name ,ruser.id)}",
                     file=msg.old.media,
                 )
+
+from telethon.errors import UserAdminInvalidError, UserIdInvalidError
+from telethon.tl.functions.channels import EditBannedRequest
+from telethon.tl.types import ChatBannedRights
+
+from JoKeRUB import l313l
+
+from ..helpers.utils import _format
+
+joker_t8ed = "https://d.top4top.io/p_3192y3wwq0.jpg"
+joker_unt8ed = "https://c.top4top.io/p_3192u3nz30.jpg"
+
+@l313l.ar_cmd(
+    pattern="تقييد(?:\s|$)([\s\S]*)",
+    command=("تقييد", plugin_category),
+    info={
+        "header": "لتقييد المستخدم في المجموعة بدون مدة زمنية",
+        "description": "يقوم بتقييد المستخدم في المجموعة بدون تحديد مدة زمنية.",
+        "usage": [
+            "{tr}تقييد <userid/username/reply>",
+            "{tr}تقييد <userid/username/reply> <reason>",
+        ],
+        "examples": ["{tr}تقييد @username لأسباب مختلفة"],
+    },
+    groups_only=True,
+    require_admin=True,
+)
+async def T8ed_Joker(event):
+    await event.delete()
+    user, reason = await get_user_from_event(event)
+    if not user:
+        return
+    if user.id == event.client.uid:
+        return await event.edit("عذرًا، لا يمكنني تقييد نفسي.")
+    try:
+        await event.client(
+            EditBannedRequest(
+                event.chat_id,
+                user.id,
+                ChatBannedRights(until_date=None, send_messages=True),
+            )
+        )
+        if reason:
+            await event.client.send_file(
+                event.chat_id,
+                joker_t8ed,
+                caption=f"تم تقييد المستخدم {_format.mentionuser(user.first_name ,user.id)} بنجاح ✅.\nالسبب: {reason}",
+            )
+        else:
+            await event.client.send_file(
+                event.chat_id,
+                joker_t8ed,
+                caption=f"**تم تقييد المستخدم {_format.mentionuser(user.first_name ,user.id)} بنجاح ✅**",
+            )
+    except UserIdInvalidError:
+        return await event.edit("يبدو أن تقييد هذا المستخدم تم إلغاؤه.")
+    except UserAdminInvalidError:
+        return await event.edit("يبدو أنك لست مشرفًا في المجموعة أو تحاول تقييد مشرف هنا.")
+    except Exception as e:
+        return await event.edit(f"`{str(e)}`")
+
+@l313l.ar_cmd(
+    pattern="الغاء التقييد(?:\s|$)([\s\S]*)",
+    command=("الغاء التقييد", plugin_category),
+    info={
+        "header": "لالغاء تقيد المستخدم في المجموعة",
+        "description": "يقوم بإلغاء التقييد للمستخدم في المجموعة.",
+        "usage": [
+            "{tr}الغاء تقييد <userid/username/reply>",
+            "{tr}الغاء تقييد <userid/username/reply> <reason>",
+        ],
+        "examples": ["{tr}الغاء تقييد @username لأسباب مختلفة"],
+    },
+    groups_only=True,
+    require_admin=True,
+)
+async def cancel_t8ed(event):
+    await event.delete()
+    user, _ = await get_user_from_event(event)
+    if not user:
+        return
+    if user.id == event.client.uid:
+        return await event.client.send_message(event.chat_id, "عذرًا، لا يمكنك إلغاء تقييد نفسك.")
+    try:
+        await event.client(
+            EditBannedRequest(
+                event.chat_id,
+                user.id,
+                ChatBannedRights(until_date=None, send_messages=False),
+            )
+        )
+        await event.client.send_file(
+            event.chat_id,
+            joker_unt8ed,
+            caption=f"**✎┊‌ تم الغاء تقييد المستخدم {_format.mentionuser(user.first_name, user.id)} بنجاح ✅.**"
+        )
+    except UserIdInvalidError:
+        return await event.client.send_message(event.chat_id, "يبدو أن التقييد على هذا المستخدم تم إلغاؤه بالفعل.")
+    except UserAdminInvalidError:
+        return await event.client.send_message(event.chat_id, "يبدو أنك لست مشرفًا في المجموعة أو تحاول إلغاء تقييد مشرف هنا.")
+    except Exception as e:
+        return await event.client.send_message(event.chat_id, f"`{str(e)}`")
+        
