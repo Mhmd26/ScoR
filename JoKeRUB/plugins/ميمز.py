@@ -69,7 +69,7 @@ async def _(event):
         return await event.edit("***حدث خطا ما حاول مجددا**")
 
 
-@l313l.on(admin_cmd(pattern="ايميل وهمي(?: |$)(.*)"))
+@l313l.on(admin_cmd(pattern="fake mail(?: |$)(.*)"))
 async def _(event):
     chat = "@TempMailBot"
     geez = await event.edit("**جاري انشاء بريد ...**")
