@@ -10,13 +10,13 @@ warnings = {}
     pattern="تحذير(?: (.*))?$",
     command=("تحذير", plugin_category),
     info={
-        "header": "To warn a user and ban after 3 warnings.",
-        "description": "Warns the user for violations. After 3 warnings, the user will be banned from the group or blocked in private chat.",
+        "header": "To warn a user and restrict after 3 warnings.",
+        "description": "Warns the user for violations. After 3 warnings, the user will be restricted in the group.",
         "usage": "{tr}تحذير <reason>",
     },
 )
 async def warn_user(event):
-    "Warn a user and ban after 3 warnings"
+    "Warn a user and restrict after 3 warnings"
     reason = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     
@@ -27,7 +27,7 @@ async def warn_user(event):
     chat_id = event.chat_id
     
     # إذا لم يتم تحديد سبب
-    reason_text = f"السبب: {reason}" if reason else "بدون سبب."
+    reason_text = f"**✎┊‌ السبب: {reason}**" if reason else "بدون سبب."
     
     # تحديث عدد التحذيرات
     if user_id not in warnings:
@@ -39,28 +39,28 @@ async def warn_user(event):
         await event.client.send_message(
             chat_id,
             f"**✎┊‌ تم تحذير المستخدم :** [{reply.sender.first_name}](tg://user?id={user_id})\n"
-            f"**عدد التحذيرات :** {warnings[user_id]}/3\n{reason_text}"
+            f"**✎┊‌ عدد التحذيرات :** {warnings[user_id]}/3\n{reason_text}"
         )
     else:
         try:
-            # إذا كانت المحادثة خاصة، حظر المستخدم
-            if event.is_private:
-                await event.client.block_user(user_id)
-                action = "تم حظر المستخدم من الرسائل الخاصة."
+            # إذا كانت المحادثة مجموعة، تقييد المستخدم
+            if not event.is_private:
+                await event.client.edit_permissions(
+                    chat_id, user_id, send_messages=False
+                )
+                action = "تم تقييد المستخدم من إرسال الرسائل في المجموعة."
             else:
-                # إذا كانت المحادثة مجموعة، حظر المستخدم من المجموعة
-                await event.client.kick_participant(chat_id, user_id)
-                action = "تم حظر المستخدم من المجموعة."
-            
+                action = "لا يمكن تقييد المستخدم في المحادثة الخاصة."
+
             await event.client.send_message(
                 chat_id,
-                f"**✎┊‌ تم حظر المستخدم :** [{reply.sender.first_name}](tg://user?id={user_id}) ✓\n"
+                f"**✎┊‌ تم تقييد المستخدم :** [{reply.sender.first_name}](tg://user?id={user_id}) ✓\n"
                 f"**السبب:** تجاوز الحد المسموح للتحذيرات.\n**الإجراء:** {action}"
             )
-            # حذف التحذيرات بعد الحظر
+            # حذف التحذيرات بعد التقييد
             del warnings[user_id]
         except Exception as e:
-            await event.edit(f"**خـطأ أثناء محاولة الحظر:**\n`{str(e)}`")
+            await event.edit(f"**خـطأ أثناء محاولة التقييد:**\n`{str(e)}`")
 
 
 @l313l.ar_cmd(
@@ -79,7 +79,7 @@ async def list_warnings(event):
     
     output = "**✎┊‌ قائمة المستخدمين المحذرين:**\n\n"
     for user_id, count in warnings.items():
-        output += f"**المعرف:** [{user_id}](tg://user?id={user_id})\n**التحذيرات:** {count}/3\n\n"
+        output += f"**✎┊‌ المعرف:** [{user_id}](tg://user?id={user_id})\n**✎┊‌ التحذيرات:** {count}/3\n\n"
     
     await event.edit(output)
 
@@ -107,4 +107,3 @@ async def clear_warnings(event):
         await event.edit(f"**✎┊‌ تم إزالة جميع التحذيرات عن المستخدم:** [{reply.sender.first_name}](tg://user?id={user_id})")
     else:
         await event.edit("**✎┊‌ هذا المستخدم ليس لديه أي تحذيرات.**")
-            
