@@ -44,7 +44,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -52,7 +52,7 @@ async def permalink(mention):
     me = await mention.client.get_me()
     my_first = me.first_name
     my_mention = f"[{me.first_name}](tg://user?id={me.id})"
-    await edit_or_reply(mention, f"🚻 ** ✎┊‌  المستخدم ** [{JoKeRUB}](tg://user?id={user.id}) \n ☑️ **✎┊‌  تم رفعها مرتك بواسطه  :**{my_mention} 👰🏼‍♀️.\n**✎┊‌  يلا حبيبي امشي نخلف بيبي 👶🏻🤤** ")
+    await edit_or_reply(mention, f"** ✎┊‌  المستخدم ** [{JoKeRUB}](tg://user?id={user.id}) \n**✎┊‌  تم رفعها مرتك بواسطه  :**{my_mention} 👰🏼‍♀️.\n**✎┊‌  يلا حبيبي امشي نخلف بيبي 👶🏻🤤** ")
 
 @l313l.on(admin_cmd(pattern="رفع جلب(?:\s|$)([\s\S]*)"))
 async def permalink(mention):
@@ -60,7 +60,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -76,7 +76,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -92,7 +92,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -108,7 +108,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -124,7 +124,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -140,7 +140,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -198,7 +198,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -218,7 +218,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -259,7 +259,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -278,7 +278,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -291,7 +291,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -307,7 +307,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -340,7 +340,7 @@ async def permalink(mention):
         return
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
     tag = user.first_name.replace("\u2060", "") if user.first_name else user.username
     await edit_or_reply(mention, f"** ⣠⡶⠚⠛⠲⢄⡀\n⣼⠁      ⠀⠀⠀⠳⢤⣄\n⢿⠀⢧⡀⠀⠀⠀⠀⠀⢈⡇\n⠈⠳⣼⡙⠒⠶⠶⠖⠚⠉⠳⣄\n⠀⠀⠈⣇⠀⠀⠀⠀⠀⠀⠀⠈⠳⣄\n⠀⠀⠀⠘⣆       ⠀⠀⠀⠀⠀⠈⠓⢦⣀\n⠀⠀⠀⠀⠈⢳⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠲⢤\n⠀⠀⠀⠀⠀⠀⠙⢦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢧\n⠀⠀⠀⠀⠀⠀⠀    ⠓⠦⠀⠀⠀⠀**\n**🚹 ¦ تعال مصه عزيزي ** [{tag}](tg://user?id={user.id})")
@@ -355,7 +355,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -371,7 +371,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -387,7 +387,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -403,7 +403,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -419,7 +419,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -435,7 +435,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -451,7 +451,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -467,7 +467,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -482,7 +482,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -497,7 +497,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -512,7 +512,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -527,7 +527,7 @@ async def permalink(mention):
     user, custom = await get_user_from_event(mention)
     if not user:
         return
-    if user.id == 7275336620:
+    if user.id == 7115002714:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور**")
     if user.id == 815010872:
         return await edit_or_reply(mention, f"**✎┊‌ لكك دي هذا المطور **")
@@ -536,7 +536,7 @@ async def permalink(mention):
     my_first = me.first_name
     my_mention = f"[{me.first_name}](tg://user?id={me.id})"
     await edit_or_reply(mention, f"**✎┊‌  انتِ طالق طالق طالق 🙎🏻‍♂️ من  :**{my_mention} .\n**✎┊‌  لقد تم طلاقها بلثلاث وفسخ زواجكما الان الكل حر طليق ** ")
-lMl10l = [7275336620, 815010872]
+lMl10l = [7115002714, 815010872]
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
     if event.reply_to and event.sender_id in lMl10l:
