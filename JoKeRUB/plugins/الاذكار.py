@@ -30,8 +30,8 @@ async def _(event):
             
 #by ~ @RR 9R7
 @l313l.ar_cmd(
-    pattern="احاديث$",
-    command=("احاديث", plugin_category),)
+    pattern="ادعية$",
+    command=("ادعية", plugin_category),)
 async def _(event):
      if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
            me = random.choice(roza)
