@@ -63,8 +63,8 @@ async def install(event):
 
 
 @l313l.ar_cmd(
-    pattern="الغاء التنصيب (.*)",
-    command=("الغاء التنصيب", plugin_category),
+    pattern="الغاء تنصيب (.*)",
+    command=("الغاء تنصيب", plugin_category),
     info={
         "header": "To uninstall a plugin temporarily.",
         "description": "To stop functioning of that plugin and remove that plugin from bot.",
