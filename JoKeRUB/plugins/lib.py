@@ -17,10 +17,10 @@ async def install_library(event):
     library_name = event.pattern_match.group(1).strip()
 
     if library_name:
-        await event.edit(f"**✎┊‌ جاري تثبيت المكتبة: \n {library_name} ...**")  # رسالة انتظار
+        await event.edit(f"**✎┊‌ جاري تثبيت المكتبة : \n {library_name} ⏳**")  # رسالة انتظار
         try:
             subprocess.check_call([sys.executable, "-m", "pip", "install", library_name])
-            await event.edit(f"**✎┊‌ تم تثبيت المكتبة بنجاح: \n {library_name} **")
+            await event.edit(f"**✎┊‌ تم تثبيت المكتبة بنجاح: \n {library_name} ✅**")
         except Exception as e:
             await event.edit(f"**✎┊‌ حدث خطأ أثناء تثبيت المكتبة: {str(e)}**")
     else:
