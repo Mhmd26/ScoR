@@ -45,13 +45,13 @@ if Config.TG_BOT_USERNAME is not None and tgbot is not None:
             await event.answer([result] if result else None)
 
 
-@bot.on(admin_cmd(outgoing=True, pattern="م26"))
+@bot.on(admin_cmd(outgoing=True, pattern="م20"))
 async def repo(event):
     if event.fwd_from:
         return
     lMl10l = Config.TG_BOT_USERNAME
     if event.reply_to_msg_id:
         await event.get_reply_message()
-    response = await bot.inline_query(lMl10l, "م26")
+    response = await bot.inline_query(lMl10l, "م20")
     await response[0].click(event.chat_id)
     await event.delete()
