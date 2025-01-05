@@ -1,6 +1,6 @@
 import requests
 import os
-from telegraph import Telegraph, upload_file
+from telegraph import Telegraph
 from JoKeRUB import l313l
 
 plugin_category = "الادوات"
@@ -30,14 +30,6 @@ def upload_to_imgbb(image_path):
     except Exception as e:
         return f"حدث خطأ: {e}"
 
-# رفع صورة إلى Telegraph
-def upload_to_telegraph(image_path):
-    try:
-        media_urls = upload_file(image_path)
-        return f"https://telegra.ph{media_urls[0]}"
-    except Exception as e:
-        return f"حدث خطأ أثناء رفع الصورة إلى تليجراف: {e}"
-
 # رفع نص إلى Telegraph
 def upload_text_to_telegraph(title, content):
     try:
@@ -46,32 +38,25 @@ def upload_text_to_telegraph(title, content):
     except Exception as e:
         return f"حدث خطأ أثناء رفع النص إلى تليجراف: {e}"
 
-# أمر رفع الصور بالرد
+# أمر رفع الصور باستخدام ImgBB دائمًا
 @l313l.ar_cmd(
-    pattern="تلكراف ميديا (imgbb|telegraph)$",
+    pattern="تلكراف ميديا$",
     command=("تلكراف ميديا", plugin_category),
     info={
-        "header": "لرفع صورة إلى ImgBB أو Telegraph.",
-        "الاستخدام": "{tr}تلكراف ميديا <imgbb|telegraph> (بالرد على الصورة)",
+        "header": "لرفع صورة إلى ImgBB.",
+        "الاستخدام": "{tr}تلكراف ميديا (بالرد على الصورة)",
     },
 )
 async def upload_image(event):
     reply = await event.get_reply_message()
-    service = event.pattern_match.group(1).strip().lower()  # اختيار الخدمة (ImgBB أو Telegraph)
 
     if reply and reply.photo:
-        await event.edit(f"**✎┊‌انتظر يتم رفع الصورة إلى {service}...**")
+        await event.edit("**✎┊‌انتظر يتم رفع الصورة إلى ImgBB...**")
         photo = await event.client.download_media(reply.photo, file="temp_image.jpg")
         
-        if service == "imgbb":
-            link = upload_to_imgbb(photo)
-        elif service == "telegraph":
-            link = upload_to_telegraph(photo)
-        else:
-            await event.edit("خدمة غير معروفة. اختر بين `imgbb` أو `telegraph`.")
-            os.remove(photo)
-            return
-
+        # رفع الصورة باستخدام ImgBB
+        link = upload_to_imgbb(photo)
+        
         await event.respond(f"رابط الصورة:\n{link}")
         os.remove(photo)  # حذف الصورة المؤقتة بعد الرفع
         await event.delete()
@@ -99,4 +84,3 @@ async def upload_text(event):
         await event.delete()
     else:
         await event.edit("يرجى الرد على نص لاستخدام هذا الأمر.")
-    
