@@ -227,8 +227,8 @@ async def _(event):
 
 
 @l313l.ar_cmd(
-    pattern="سليب_ميديا(?:\s|$)([\s\S]*)",
-    command=("سليب_ميديا", plugin_category),
+    pattern="سليب ميديا(?:\s|$)([\s\S]*)",
+    command=("سليب ميديا", plugin_category),
     info={
         "header": "Enables afk for your account",
         "description": "When you are in afk if any one tags you then your bot will reply as he is offline.\
