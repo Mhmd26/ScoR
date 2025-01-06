@@ -492,11 +492,14 @@ async def HuRepkg(_):
     await edit_or_reply(
         _, f"**✎┊‌ تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**")
 
+
+
 @l313l.on(admin_cmd(pattern="حزمه"))
 async def HuRepkg(_):
     Jep = await _.get_reply_message()
     if not Jep:
         return await edit_or_reply(_, "**- يجب عليك الرد على حزمة.**")
+    
     _stickerset = None
     for attr in Jep.media.document.attributes:
         if isinstance(attr, types.DocumentAttributeSticker):
@@ -504,9 +507,14 @@ async def HuRepkg(_):
             break
     if _stickerset is None:
         return await edit_or_reply(_, "**- يجب عليك الرد على حزمة.**")
+    
     _id = _stickerset.id
     _hash = _stickerset.access_hash
-    _get_stiks = await _.client(functions.messages.GetStickerSetRequest(types.InputStickerSetID(id=_id, access_hash=_hash), hash=0))
+    _get_stiks = await _.client(functions.messages.GetStickerSetRequest(
+        stickerset=types.InputStickerSetID(id=_id, access_hash=_hash),
+        hash=0
+    ))
+    
     stiks = []
     for i in _get_stiks.documents:
         mul = get_input_document(i)
@@ -516,42 +524,24 @@ async def HuRepkg(_):
                 emoji=(i.attributes[1]).alt,
             )
         )
+    
     try:
-        _packname = ""
-        if len(_.text) > 20:
-            _packname = _.text.split(" ", maxsplit=1)[1]
-        HuRe_Jep = await _.client(
-            functions.messages.CreateChatRequest(
-                users=[_.sender_id],
-                title=_packname,
-                random_id=random.randint(1, 1000000000),
-                reply_markup=types.ReplyKeyboardMarkup(
-                    rows=[
-                        [
-                            types.KeyboardButton(
-                                types.InputStickerSetAnimatedEmoji(
-                                    stickerset=types.InputStickerSetID(
-                                        id=sticker.stickerset.id,
-                                        access_hash=sticker.stickerset.access_hash,
-                                    ),
-                                    emoji=sticker.emoji,
-                                )
-                            )
-                            for sticker in stiks
-                        ]
-                    ],
-                    resize=True,
-                    one_time=True,
-                ),
-            )
-        )
+        _packname = "نسخة_" + str(random.randint(1, 100000))
+        await _.client(functions.stickers.CreateStickerSetRequest(
+            user_id=_.sender_id,
+            title=_packname,
+            short_name=_packname,
+            stickers=stiks
+        ))
     except Exception as er:
         LOGS.exception(er)
         return await edit_or_reply(_, str(er))
+    
     await edit_or_reply(
         _,
-        f"**✎┊‌ تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**",
+        f"**✎┊‌ تم نسخ الحزمة بنجاح ✓ \nالحزمة الجديدة → [اضغط هنا](https://t.me/addstickers/{_packname})**"
     )
+
 @l313l.ar_cmd(
     pattern="معلومات الملصق$",
     command=("معلومات الملصق", plugin_category),
