@@ -155,7 +155,7 @@ async def _(event):
         response = await conv.get_response()
         await event.client.send_read_ackno
 
-@l313l.on(admin_cmd(pattern="قائمه (جميع القنوات|القنوات المشرف عليها|قنواتي)"))
+@l313l.on(admin_cmd(pattern="قائمة (القنوات|القنوات المشرف عليها|قنواتي)"))
 async def ViewChJok(event):  
     catcmd = event.pattern_match.group(1)
     catevent = await edit_or_reply(event, STAT_INDICATION)
@@ -217,7 +217,7 @@ async def ViewChJok(event):
     except Exception:
         await edit_or_reply(catevent, output)
         
-@l313l.on(admin_cmd(pattern="قائمه (جميع المجموعات|مجموعات اديرها|كروباتي)$"))
+@l313l.on(admin_cmd(pattern="قائمة (المجموعات|مجموعات اديرها|كروباتي)$"))
 async def stats(event):  # sourcery no-metrics
     catcmd = event.pattern_match.group(1)
     catevent = await edit_or_reply(event, STAT_INDICATION)
