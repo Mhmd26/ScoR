@@ -193,7 +193,7 @@ async def ViewChJok(event):
                     hica.append(channel_link)
                 if not is_owner and not is_admin:
                     hi.append(channel_link)
-    if catcmd == "جميع القنوات":
+    if catcmd == "القنوات":
         output = CHANNELS_STR
         for k, channel in enumerate(hi, start=1):
             output += f"{k}• {channel}\n"
@@ -242,7 +242,7 @@ async def stats(event):  # sourcery no-metrics
                 higa.append([entity.title, entity.id])
             if entity.creator:
                 higo.append([entity.title, entity.id])
-    if catcmd == "جميع المجموعات":
+    if catcmd == "المجموعات":
         output = GROUPS_STR
         for k, i in enumerate(hi, start=1):
             output += f"{k} .) [{i[0]}](https://t.me/c/{i[1]}/1)\n"
