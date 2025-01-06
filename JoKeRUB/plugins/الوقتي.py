@@ -230,16 +230,23 @@ async def _(event):
 
 @l313l.on(admin_cmd(pattern="كروب وقتي"))
 async def _(event):
-    ison = get_auto_g()
-    if event.is_group or event.is_channel:
+    try:
+        if not (event.is_group or event.is_channel):
+            return await edit_delete(event, "**يجب استخدام الأمر في مجموعة أو قناة فقط.**")
+        
+        ison = get_auto_g()
         if ison is not None and ison == str(event.chat_id):
-            return await edit_delete(event, "**الاسم الوقتي شغال للكروب/القناة**")
+            return await edit_delete(event, "**الاسم الوقتي يعمل بالفعل في هذه المجموعة/القناة.**")
+        
         chid = event.chat_id
         auto_g(str(chid))
-        await edit_delete(event, "**تم تفـعيل الاسـم الوقتي للقناة/الكروب ✓**")
+        await edit_delete(event, "**تم تفعيل الاسم الوقتي بنجاح. سيتم تحديث الاسم بشكل دوري.**")
         await group_loop()
-    else:
-        return await edit_delete(event, "**يمكنك استعمال الاسم الوقتي في الكروب او في القناة فقط**")
+    except ChatAdminRequiredError:
+        await edit_delete(event, "**البوت يحتاج إلى صلاحية تغيير اسم المجموعة أو القناة.**")
+    except Exception as e:
+        LOGS.error(str(e))
+        await edit_delete(event, f"**حدث خطأ غير متوقع: {str(e)}**")
 
 @l313l.on(admin_cmd(pattern="كروب صورة وقتي"))
 async def _(event):
