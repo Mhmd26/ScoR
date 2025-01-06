@@ -36,7 +36,8 @@ from ..helpers.functions import animator, crop_and_divide
 from ..helpers.tools import media_type
 from ..helpers.utils import _cattools
 from ..sql_helper.globals import gvarstatus
-
+from telethon import functions, types
+from telethon.utils import get_input_document
 plugin_category = "fun"
 
 # modified and developed by @mrconfused , @jisan7509
