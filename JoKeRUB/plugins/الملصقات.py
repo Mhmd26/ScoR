@@ -457,9 +457,9 @@ async def kang(args):  # sourcery no-metrics
 async def HuRepkg(_):
     Jep = await _.get_reply_message()
     if not Jep:
-        return await edit_or_reply(_, "**- يجب عليك الرد على حزمة.**")
+        return await edit_or_reply(_, "**✎┊‌ يجب عليك الرد على حزمة.**")
     if len(_.text) <= 9:
-        return await edit_or_reply(_, "**- يجب عليك وضع اسم الحزمة مع الأمر.**")
+        return await edit_or_reply(_, "**✎┊‌ يجب عليك وضع الاسم القصير للحزمة مع الأمر \n يمكنك الحصول على الاسم القصير بأستخدام امر \n الامر: (`.معلومات_الملصق`)**")
     if len(_.text) > 9:
         _packname = _.text.split(" ", maxsplit=1)[1]
     else:
@@ -490,7 +490,7 @@ async def HuRepkg(_):
         LOGS.exception(er)
         return await edit_or_reply(_, str(er))
     await edit_or_reply(
-        _, f"**- تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**")
+        _, f"**✎┊‌ تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**")
 
 @l313l.on(admin_cmd(pattern="حزمه"))
 async def HuRepkg(_):
@@ -553,8 +553,8 @@ async def HuRepkg(_):
         f"**✎┊‌ تم اخذ الحزمة بنجاح ✓ \nالحزمة  → [اضغط هنا](https://t.me/addstickers/{HuRe_Jep.set.short_name})**",
     )
 @l313l.ar_cmd(
-    pattern="معلومات_الملصق$",
-    command=("معلومات_الملصق", plugin_category),
+    pattern="معلومات الملصق$",
+    command=("معلومات الملصق", plugin_category),
     info={
         "header": "To get information about a sticker pick.",
         "description": "Gets info about the sticker packk",
@@ -598,12 +598,12 @@ hash=0
         if document_sticker.emoticon not in pack_emojis:
             pack_emojis.append(document_sticker.emoticon)
     OUTPUT = (
-        f"**✎┊‌ عنوان الملصق:** `{get_stickerset.set.title}\n`"
-        f"**✎┊‌ الاسم القصير للملصق:** `{get_stickerset.set.short_name}`\n"
-        f"**✎┊‌ المـسؤل:** `{get_stickerset.set.official}`\n"
-        f"**✎┊‌ الارشيف:** `{get_stickerset.set.archived}`\n"
-        f"**✎┊‌ حزمة الملصق:** `{get_stickerset.set.count}`\n"
-        f"**✎┊‌ الايموجي المستخدم**\n{' '.join(pack_emojis)}"
+        f"**✎┊‌ عنوان الملصق |** `{get_stickerset.set.title}\n`"
+        f"**✎┊‌ الاسم القصير للملصق |** `{get_stickerset.set.short_name}`\n"
+        f"**✎┊‌ المـسؤل |** `{get_stickerset.set.official}`\n"
+        f"**✎┊‌ الارشيف |** `{get_stickerset.set.archived}`\n"
+        f"**✎┊‌ حزمة الملصق |** `{get_stickerset.set.count}`\n"
+        f"**✎┊‌ الايموجيات المستخدمة**\n{' '.join(pack_emojis)}"
     )
     await catevent.edit(OUTPUT)
 
