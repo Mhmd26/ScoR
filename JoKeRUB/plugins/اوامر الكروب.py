@@ -318,7 +318,7 @@ async def rm_deletedacc(show):
             \nالـدردشة: {show.chat.title}(`{show.chat_id}`)",
         )
 
-@l313l.ar_cmd(pattern="حظر_الكل(?:\s|$)([\s\S]*)")
+@l313l.ar_cmd(pattern="حظر الكل(?:\s|$)([\s\S]*)")
 async def banall(event):
      chat_id = event.chat_id
      if event.is_private:
@@ -349,7 +349,7 @@ async def banall(event):
          spam_chats.remove(chat_id)
      except:
          pass
-@l313l.ar_cmd(pattern="كتم_الكل(?:\s|$)([\s\S]*)")
+@l313l.ar_cmd(pattern="كتم الكل(?:\s|$)([\s\S]*)")
 async def muteall(event):
      if event.is_private:
          return await edit_or_reply(event, "** ✎┊‌ هذا الامر يستعمل للقنوات والمجموعات فقط !**")
@@ -379,7 +379,7 @@ async def muteall(event):
          spam_chats.remove(chat_id)
      except:
          pass
-@l313l.ar_cmd(pattern="طرد_الكل(?:\s|$)([\s\S]*)")
+@l313l.ar_cmd(pattern="طرد الكل(?:\s|$)([\s\S]*)")
 async def kickall(event):
      chat_id = event.chat_id
      if event.is_private:
@@ -554,16 +554,16 @@ async def _(event):  # sourcery no-metrics
         await et.edit(required_string.format(c, p, d, y, m, w, o, q, r, b, n))
         await sleep(5)
     await et.edit(
-        """: {} مـجموع المـستخدمين
-الحـسابـات المـحذوفة: {}
-حـالة المستـخدم الفـارغه: {}
-اخر ظهور منذ شـهر: {}
-اخر ظـهور منـذ اسبوع: {}
-غير متصل: {}
-المستخدمين النشطون: {}
-اخر ظهور قبل قليل: {}
-البوتات: {}
-مـلاحظة: {}""".format(
+        """: {} مـجموع المـستخدمين ✎┊‌
+✎┊‌ الحـسابـات المـحذوفة: {}
+✎┊‌ حـالة المستـخدم الفـارغه: {}
+✎┊‌ اخر ظهور منذ شـهر: {}
+✎┊‌ اخر ظـهور منـذ اسبوع: {}
+✎┊‌ غير متصل: {}
+✎┊‌ المستخدمين النشطون: {}
+✎┊‌ اخر ظهور قبل قليل: {}
+✎┊‌ البوتات: {}
+✎┊‌ مـلاحظة: {}""".format(
             p, d, y, m, w, o, q, r, b, n
         )
     )
@@ -677,57 +677,6 @@ async def Hussein(event):
             print(f"حدث خطأ أثناء حذف محادثات البوت: {e}")
     await event.edit("**✎┊‌ تم حذف جميع محادثات البوتات بنجاح ✓ **")
 
-# الكود من كتابة فريق الجوكر بس تسرقة تنشر بقناة الفضايح انتَ وقناتك 🖤
-@l313l.ar_cmd(pattern=r"ذكاء(.*)")
-async def hussein(event):
-    await event.edit("**✎┊‌ جارِ الجواب على سؤالك انتظر قليلاً ...**")
-    text = event.pattern_match.group(1).strip()
-    if text:
-        url = f'http://api.itdevo.uz/ChatGPT/api/index.php?text={text}'
-        response = requests.get(url).text
-        await event.edit(response)
-    else:
-        await event.edit("يُرجى كتابة رسالة مع الأمر للحصول على إجابة.")
-is_Reham = False
-No_group_Joker = "@Scorpion_scorp"
-# يا يلفاشل هم الك نيه تاخذه وتنشره بسورسك 🤣
-active_aljoker = []
-
-@l313l.ar_cmd(pattern=r"الذكاء تفعيل")
-async def enable_bot(event):
-    global is_Reham
-    if not is_Reham:
-        is_Reham = True
-        active_aljoker.append(event.chat_id)
-        await event.edit("**✎┊‌ تم تفعيل امر الذكاء الاصطناعي سيتم الرد على اسئلة الجميع عند الرد علي.**")
-    else:
-        await event.edit("**✎┊‌ الزر مُفعّل بالفعل.**")
-@l313l.ar_cmd(pattern=r"الذكاء تعطيل")
-async def disable_bot(event):
-    global is_Reham
-    if is_Reham:
-        is_Reham = False
-        active_aljoker.remove(event.chat_id)
-        await event.edit("**✎┊‌ تم تعطيل امر الذكاء الاصطناعي.**")
-    else:
-        await event.edit("**✎┊‌ الزر مُعطّل بالفعل.**")
-@l313l.on(events.NewMessage(incoming=True))
-async def reply_to_hussein(event):
-    if not is_Reham:
-        return
-    if event.is_private or event.chat_id not in active_aljoker:
-        return
-    message = event.message
-    if message.reply_to_msg_id:
-        reply_message = await event.get_reply_message()
-        if reply_message.sender_id == event.client.uid:
-            text = message.text.strip()
-            if event.chat.username == No_group_Joker:
-                return
-            response = requests.get(f'https://gptzaid.zaidbot.repl.co/1/text={text}').text
-            await asyncio.sleep(4)
-            await event.reply(response)
-#ها هم تريد تخمط بمحرم ؟ روح شوفلك موكب واضرب زنجيل احسن من ماتخمط
 Ya_Hussein = False
 active_joker = []
 @l313l.on(events.NewMessage(incoming=True))
@@ -744,13 +693,13 @@ async def Hussein(event):
             aljoker_entity = await l313l.get_entity(sender.id)
             aljoker_profile = f"[{aljoker_entity.first_name}](tg://user?id={aljoker_entity.id})"
             await event.reply(f"**✎┊‌ عذرًا {aljoker_profile}، يُرجى عدم إرسال الرسائل التي تحتوي على إيموجي المُميز**")
-@l313l.ar_cmd(pattern="المميز تفعيل")
+@l313l.ar_cmd(pattern="المميز قفل")
 async def disable_emoji_blocker(event):
     global Ya_Hussein
     Ya_Hussein = True
     active_joker.append(event.chat_id)
     await event.edit("**✎┊‌ ✓ تم تفعيل امر منع الايموجي المُميز بنجاح**")
-@l313l.ar_cmd(pattern="المميز تعطيل")
+@l313l.ar_cmd(pattern="المميز فتح")
 async def disable_emoji_blocker(event):
     global Ya_Hussein
     Ya_Hussein = False
@@ -777,25 +726,25 @@ async def Hussein(event):
                 else:
                     remove_admins_aljoker[user_id] = now
 
-@l313l.ar_cmd(pattern="منع_التفليش", require_admin=True)
+@l313l.ar_cmd(pattern="منع التفليش", require_admin=True)
 async def Hussein_aljoker(event):
     addgvar("Mn3_Kick", True)
     await event.edit("**✎┊‌ تم تفعيل منع التفليش للمجموعة بنجاح ✓**")
 
-@l313l.ar_cmd(pattern="سماح_التفليش", require_admin=True)
+@l313l.ar_cmd(pattern="سماح التفليش", require_admin=True)
 async def Hussein_aljoker(event):
     delgvar("Mn3_Kick")
     await event.edit("**✎┊‌ تم تفعيل منع التفليش للمجموعة بنجاح ✓**")
 message_counts = {}
 enabled_groups = []
 Ya_Abbas = False
-@l313l.ar_cmd(pattern="النشر تعطيل")
+@l313l.ar_cmd(pattern="منع النشر")
 async def enable_code(event):
     global Ya_Abbas
     Ya_Abbas = True
     enabled_groups.append(event.chat_id)
     await event.edit("**✎┊‌ ✓ تم تفعيل امر منع النشر التلقائي بنجاح**")
-@l313l.ar_cmd(pattern="النشر تفعيل")
+@l313l.ar_cmd(pattern="النشر سماح")
 async def disable_code(event):
     global Ya_Abbas
     Ya_Abbas = False
@@ -844,13 +793,13 @@ async def handle_messages(event):
                 aljoker_url = gvarstatus("aljoker_url") or "https://telegra.ph/file/ee30cda28bd1346e54cb3.jpg"
                 await l313l.send_file(sender_id, aljoker_url, caption=f'**{aljoker_message}**\n**مدة الغياب: {aljoker_time}**')
                 aljoker_Menu.add(sender_id)
-@l313l.ar_cmd(pattern="الخاص تعطيل")
+@l313l.ar_cmd(pattern="الخاص قفل")
 async def joker5a9(event: Message):
     global afk_start_time
     addgvar("5a9_dis", True)
     afk_start_time = datetime.now()
     await event.edit('**✎┊‌ تم قفل الخاص بنجاح الان لا احد يمكنهُ مراسلتك**')
-@l313l.ar_cmd(pattern="الخاص تفعيل")
+@l313l.ar_cmd(pattern="الخاص فتح")
 async def joker5a9(event: Message):
     global afk_start_time
     delgvar("5a9_dis")
