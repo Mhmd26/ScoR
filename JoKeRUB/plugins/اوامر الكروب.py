@@ -421,8 +421,8 @@ async def ca_sp(event):
       pass
     return await edit_or_reply(event, "** ✎┊‌ تم الغاء العملية بنجاح ✓**")
 @l313l.ar_cmd(
-    pattern="احصائيات الاعضاء ?([\s\S]*)",
-    command=("احصائيات الاعضاء", plugin_category),
+    pattern="احصائيات الكروب ?([\s\S]*)",
+    command=("احصائيات الكروب", plugin_category),
     info={
         "header": "To get breif summary of members in the group",
         "description": "To get breif summary of members in the group . Need to add some features in future.",
