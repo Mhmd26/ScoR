@@ -272,3 +272,33 @@ async def stats(event):  # sourcery no-metrics
             output,
             caption=caption,
         )
+# أمر للكشف عن معلومات حساب عبر ID
+@l313l.ar_cmd(
+    pattern="عرض الحساب (\d+)",
+    command=("عرض الحساب", plugin_category),
+    info={
+        "header": "للكشف عن معلومات حساب عبر ID",
+        "الاستخدام": "{tr}كشف <ID الحساب>",
+    },
+)
+async def get_user_info(event):
+    user_id = event.pattern_match.group(1).strip()
+
+    if user_id:
+        await event.edit(f"**✎┊‌ جاري البحث عن معلومات الحساب ID: \n {user_id} ...**")
+        try:
+            user = await event.client.get_entity(int(user_id))
+            user_info = f"""
+**✎┊‌ معلومات الحساب:**
+- **الاسم:** {user.first_name or 'غير متوفر'}
+- **المعرف:** @{user.username if user.username else 'غير متوفر'}
+- **رابط الحساب:** [اضغط هنا](tg://openmessage?user_id={user.id})
+"""
+            await event.edit(user_info, link_preview=False)
+        except ValueError:
+            await event.edit("**✎┊‌ الآيدي غير صحيح. يرجى التحقق من الرقم المدخل.**")
+        except Exception:
+            await event.edit("**✎┊‌ الآيدي غير موجود أو الحساب محذوف.**")
+    else:
+        await event.edit("**✎┊‌ يرجى إدخال ID الحساب بعد الأمر.**")
+        
