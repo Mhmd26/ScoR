@@ -698,7 +698,7 @@ async def disable_emoji_blocker(event):
     global Ya_Hussein
     Ya_Hussein = True
     active_joker.append(event.chat_id)
-    await event.edit("**✎┊‌ ✓ تم تفعيل امر منع الايموجي المُميز بنجاح**")
+   # await event.edit("**✎┊‌ ✓ تم تفعيل امر منع الايموجي المُميز بنجاح**")
 @l313l.ar_cmd(pattern="المميز فتح")
 async def disable_emoji_blocker(event):
     global Ya_Hussein
