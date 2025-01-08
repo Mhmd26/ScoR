@@ -19,7 +19,7 @@ if Config.TG_BOT_USERNAME is not None and tgbot is not None:
         result = None
         query = event.text
         await bot.get_me()
-        if query.startswith("م20") and event.query.user_id == bot.uid:
+        if query.startswith("م19") and event.query.user_id == bot.uid:
             buttons = [
                 [Button.url("— 𝗚𝗼 𝗧𝗼 𝗖𝗵𝗮𝘁 —", "https://t.me/ScorGPTbot")],
             ]
@@ -45,13 +45,13 @@ if Config.TG_BOT_USERNAME is not None and tgbot is not None:
             await event.answer([result] if result else None)
 
 
-@bot.on(admin_cmd(outgoing=True, pattern="م20"))
+@bot.on(admin_cmd(outgoing=True, pattern="م19"))
 async def repo(event):
     if event.fwd_from:
         return
     lMl10l = Config.TG_BOT_USERNAME
     if event.reply_to_msg_id:
         await event.get_reply_message()
-    response = await bot.inline_query(lMl10l, "م20")
+    response = await bot.inline_query(lMl10l, "م19")
     await response[0].click(event.chat_id)
     await event.delete()
