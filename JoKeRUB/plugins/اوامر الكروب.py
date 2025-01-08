@@ -789,7 +789,7 @@ async def handle_messages(event):
             await event.delete()
             if sender_id not in aljoker_Menu:
                 aljoker_time = aljoker_waqt()
-                aljoker_message = gvarstatus("aljoker_message") or f"صاحب الحساب قافل خاصة قبل يلا دعبل"
+                aljoker_message = gvarstatus("aljoker_message") or f"عذرا مالك الحساب قافل الخاص 😴 "
                 aljoker_url = gvarstatus("aljoker_url") or "https://telegra.ph/file/ee30cda28bd1346e54cb3.jpg"
                 await l313l.send_file(sender_id, aljoker_url, caption=f'**{aljoker_message}**\n**مدة الغياب: {aljoker_time}**')
                 aljoker_Menu.add(sender_id)
@@ -829,12 +829,15 @@ word = ''
 async def get_bot_entity():
     return await l313l.get_entity('me')
 
-@l313l.on(events.NewMessage(outgoing=True, pattern=r'\.اسرع (.*)'))
+@l313l.on(events.NewMessage(outgoing=True, pattern=r'\.اسرع(?: (.*))?'))
 async def handle_start(event):
     global is_game_started, is_word_sent, word, bot_entity
+    word = event.pattern_match.group(1)
+    if not word:  # في حال لم تتم إضافة كلمة بعد الأمر
+        await event.edit("**يرجى إدخال الكلمة بعد الأمر. مثال: `.اسرع كتاب`**")
+        return
     is_game_started = True
     is_word_sent = False
-    word = event.pattern_match.group(1)
     chat_id = event.chat_id
     await event.edit(f"**اول من يكتب ( {word} ) سيفوز**")
 
@@ -854,7 +857,7 @@ async def handle_winner(event):
                 sender_first_name = sender.first_name if sender else 'مجهول'
                 sorted_points = sorted(points.items(), key=lambda x: x[1], reverse=True)
                 points_text = '\n'.join([f'{i+1}• {(await l313l.get_entity(participant_id)).first_name}: {participant_points}' for i, (participant_id, participant_points) in enumerate(sorted_points)])
-                await l313l.send_message(event.chat_id, f'الف مبرووووك 🎉 الاعب ( {sender_first_name} ) فاز! \n اصبحت نقاطة: {points[winner_id]}\nنقاط المشاركين:\n{points_text}')
+                await l313l.send_message(event.chat_id, f'الف مبرووووك 🎉 الاعب ( {sender_first_name} ) فاز! \n اصبحت نقاطة: {points[winner_id]}\nنقاط المشاركين:\n{points_text}/n/nلتصفير النقاط ارسل (`.تصفير`)')
 joker = [
     "تلعب وخوش تلعب 😂👏🏻",
     "لك عاش يابطل استمر 💪🏻",
