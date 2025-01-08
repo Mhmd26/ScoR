@@ -21,7 +21,7 @@ safety_settings = [
 
 # تعيين مفتاح API مباشرة
 def configure_api():
-    api_key = "AIzaSyDC83QfhUo5c17dhZUayLOSUHjM3vjy_0c"  # المفتاح الذي قدمته
+    api_key = "AIzaSyAHn1PvfCLCOp1IcWf4HvZZFT8HN5nxcZM"  # المفتاح الذي قدمته
     genai.configure(api_key=api_key)
 
 # إنشاء محادثة جديدة مع Gemini
