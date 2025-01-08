@@ -726,25 +726,25 @@ async def Hussein(event):
                 else:
                     remove_admins_aljoker[user_id] = now
 
-@l313l.ar_cmd(pattern="قفل التفليش", require_admin=True)
+@l313l.ar_cmd(pattern="التفليش قفل", require_admin=True)
 async def Hussein_aljoker(event):
     addgvar("Mn3_Kick", True)
     await event.edit("**✎┊‌ تم تفعيل منع التفليش للمجموعة بنجاح ✓**")
 
-@l313l.ar_cmd(pattern="فتح التفليش", require_admin=True)
+@l313l.ar_cmd(pattern="التفليش فتح", require_admin=True)
 async def Hussein_aljoker(event):
     delgvar("Mn3_Kick")
     await event.edit("**✎┊‌ تم تفعيل منع التفليش للمجموعة بنجاح ✓**")
 message_counts = {}
 enabled_groups = []
 Ya_Abbas = False
-@l313l.ar_cmd(pattern="قفل النشر")
+@l313l.ar_cmd(pattern="النشر قفل")
 async def enable_code(event):
     global Ya_Abbas
     Ya_Abbas = True
     enabled_groups.append(event.chat_id)
     await event.edit("**✎┊‌ ✓ تم تفعيل امر منع النشر التلقائي بنجاح**")
-@l313l.ar_cmd(pattern="فتح النشر")
+@l313l.ar_cmd(pattern="النشر فتح")
 async def disable_code(event):
     global Ya_Abbas
     Ya_Abbas = False
