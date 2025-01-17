@@ -98,8 +98,6 @@ async def save_media(event):
             await event.edit("**✎┊‌ الرسالة لا تحتوي على ميديا!**")
     except Exception as e:
         await event.edit(f"**✎┊‌حدث خطأ أثناء حفظ الرسالة. الخطأ: **{str(e)}")
-
-
     
 @l313l.ar_cmd(
     pattern="تحويل صورة$",
@@ -124,14 +122,21 @@ async def _(event):
         return await edit_delete(
             output[0], "✎┊‌ غـير قـادر على تحويل الملصق إلى صورة من هـذا الـرد ⚠️"
         )
+    
     meme_file = convert_toimage(output[1])
+    
     try:
         await event.client.send_file(
             event.chat_id, meme_file, reply_to=reply_to_id, force_document=False
         )
     except telethon.errors.rpcbaseerrors.ForbiddenError as e:
         if "CHAT_SEND_PHOTOS_FORBIDDEN" in str(e):
+            # إرسال رسالة توضيحية في المجموعة
             await event.reply("✎┊‌ لا يمكـن إرسال الصورة، الوسائط مقيدة في هذه المجموعة ⚠️")
+            # إرسال الصورة إلى الرسائل المحفوظة
+            await event.client.send_file(
+                "me", meme_file, caption="✎┊‌ هذه هي الصورة التي طلبت تحويلها."
+            )
         else:
             raise e  # لإعادة رفع الخطأ إذا كان خطأً مختلفًا
 
@@ -251,7 +256,12 @@ async def _(event):
         )
     except telethon.errors.rpcbaseerrors.ForbiddenError as e:
         if "CHAT_SEND_PHOTOS_FORBIDDEN" in str(e):
-            await event.reply("✎┊‌ لا يمكـن إرسال الملصق، الوسائط مقيدة في هذه المجموعة ⚠️")
+            # إرسال رسالة توضيحية في المجموعة
+            await event.reply("✎┊‌ الوسائط مقيدة في هذه المجموعة، تم إرسال الملصق إلى الرسائل المحفوظة ⚠️")
+            # إرسال الملصق إلى الرسائل المحفوظة
+            await event.client.send_file(
+                "me", meme_file, caption="✎┊‌ هذا هو الملصق الذي طلبت تحويله."
+            )
         else:
             raise e  # إعادة رفع الخطأ إذا كان مختلفًا
 
