@@ -102,8 +102,8 @@ async def save_media(event):
 
     
 @l313l.ar_cmd(
-    pattern="تحويل المحتوى$",
-    command=("تحويل المحتوى", plugin_category),
+    pattern="تحويل صورة$",
+    command=("تحويل صورة", plugin_category),
     info={
         "header": "Reply this command to a sticker to get image.",
         "description": "This also converts every media to image. that is if video then extracts image from that video.if audio then extracts thumb.",
@@ -118,15 +118,23 @@ async def _(event):
         return await edit_delete(
             event, "✎┊‌ يجـب عليـك الرد عـلى الملصق لتحويـله الـى صورة ⚠️"
         )
+    
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
             output[0], "✎┊‌ غـير قـادر على تحويل الملصق إلى صورة من هـذا الـرد ⚠️"
         )
     meme_file = convert_toimage(output[1])
-    await event.client.send_file(
-        event.chat_id, meme_file, reply_to=reply_to_id, force_document=False
-    )
+    try:
+        await event.client.send_file(
+            event.chat_id, meme_file, reply_to=reply_to_id, force_document=False
+        )
+    except telethon.errors.rpcbaseerrors.ForbiddenError as e:
+        if "CHAT_SEND_PHOTOS_FORBIDDEN" in str(e):
+            await event.reply("✎┊‌ لا يمكـن إرسال الصورة، الوسائط مقيدة في هذه المجموعة ⚠️")
+        else:
+            raise e  # لإعادة رفع الخطأ إذا كان خطأً مختلفًا
+
     await output[0].delete()
 
 @l313l.ar_cmd(
@@ -228,15 +236,25 @@ async def _(event):
         return await edit_delete(
             event, "✎┊‌ يجـب عليـك الرد عـلى الصـورة لتحويـلها الـى مـلصق ⚠️"
         )
+    
     output = await _cattools.media_to_pic(event, reply)
     if output[1] is None:
         return await edit_delete(
             output[0], "✎┊‌ غـير قـادر على استـخراج الـملصق من هـذا الـرد ⚠️"
         )
+    
     meme_file = convert_tosticker(output[1])
-    await event.client.send_file(
-        event.chat_id, meme_file, reply_to=reply_to_id, force_document=False
-    )
+    
+    try:
+        await event.client.send_file(
+            event.chat_id, meme_file, reply_to=reply_to_id, force_document=False
+        )
+    except telethon.errors.rpcbaseerrors.ForbiddenError as e:
+        if "CHAT_SEND_PHOTOS_FORBIDDEN" in str(e):
+            await event.reply("✎┊‌ لا يمكـن إرسال الملصق، الوسائط مقيدة في هذه المجموعة ⚠️")
+        else:
+            raise e  # إعادة رفع الخطأ إذا كان مختلفًا
+
     await output[0].delete()
 
 @l313l.ar_cmd(
