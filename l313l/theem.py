@@ -23,8 +23,8 @@ ZL = (
 )
 
 FANAN = ""
-sts_fanan = "https://t.me/plmnkoijbvhutd843/5"
-sts_fanan2 = "https://telegra.ph/file/e1888c3b3f741365fd020.jpg" 
+sts_fanan = "https://t.me/plmnkoijbvhutd843/20"
+sts_fanan2 = "https://t.me/plmnkoijbvhutd843/5" 
 sts_fanan3 = "https://telegra.ph/file/c932a7c83cbd4ce874456.jpg"
 sts_fanan4 = "https://telegra.ph/file/249f3b094498296cc0e7c.jpg"
 sts_fanan5 = "https://telegra.ph/file/36d8196990a50a7e34dd0.jpg"
