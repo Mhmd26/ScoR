@@ -161,7 +161,7 @@ async def stsfanan(lon):
     lonid = await rd(lon)
     if sts_fanan2:
         zed_c = f"**{FANAN}**\n"
-        zed_c += f"**✎┊‌ ثيم البشير شو HD غير مضر للعيون ❤️ ...**\n"
+        zed_c += f"**✎┊‌ ثيم رأس السنه بدقة 4k  ❤️ ...**\n"
         zed_c += f"**✎┊‌ لـ تحميـل الثيـم ارســل **`.ث2`"
         zed_c += f"\n\n** [العقرب | 𝐒𝐜𝐨𝐫𝐩𝐢𝐨𝐧  ](t.me/Scorpion_scorp)**☑️"
         await lon.client.send_file(lon.chat_id, sts_fanan2, caption=zed_c, reply_to=lonid)
