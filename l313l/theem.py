@@ -5,7 +5,7 @@
 # theme loaded from here
 
 ZL = (
-    "** قائمة الثيمات | 𝗟𝗶𝘀𝘁 𝗼𝗳 𝘁𝗵𝗲𝗺𝗲𝘀 🦂 **\n\n"
+    "** قائمة الثيمات | 𝗟𝗶𝘀𝘁 𝗼𝗳 𝘁𝗵𝗲𝗺𝗲𝘀 ✍🏻 **\n\n"
     "**✎┊‌ اختر احدى هذه الانواع :**\n\n"
     "**-  {  `.ن1`  } ┊**‌\n"
     "**-  {  `.ن2`  } ┊**\n"
@@ -19,10 +19,10 @@ ZL = (
     "**-  { `.ن10` } ┊**\n"
     "**-  { `.ن11` } ┊**\n"
     "**-  { `.ن12` } ┊**\n"
-    "\n\n** [العقرب |  𝗦𝗰𝗼𝗿𝗽𝗶𝗼 ](t.me/Scorpions_scorp)🦂**"
+    "\n\n** [العقرب | 𝐒𝐜𝐨𝐫𝐩𝐢𝐨𝐧 ☑️](t.me/Scorpions_scorp)**"
 )
 
-FANAN = " 𝗦𝗰𝗼𝗿𝗽𝗶𝗼 𝗦𝗼𝘂𝗿𝗰𝗲🦂"
+FANAN = ""
 sts_fanan = "https://telegra.ph/file/6da40cf4e58c547f63fb7.jpg"
 sts_fanan2 = "https://telegra.ph/file/e1888c3b3f741365fd020.jpg" 
 sts_fanan3 = "https://telegra.ph/file/c932a7c83cbd4ce874456.jpg"
@@ -49,7 +49,7 @@ sts_fanan23 = "https://telegra.ph/file/359f8fa9d71da3a21d827.jpg"
 sts_fanan24 = "https://telegra.ph/file/6cb3fefec44a39160d926.jpg"
 sts_fanan25 = "https://telegra.ph/file/ed575fb95c274e420e2fe.jpg"
 sts_fanan26 = "https://telegra.ph/file/225ad2b15a2b44b77acf1.jpg"
-THMAT = """[𝗦𝗰𝗼𝗿𝗽𝗶𝗼 𝙏𝙃𝙀𝙈𝙀](t.me/Scorpions_scorp) 🦂"""
+THMAT = """[𝗦𝗰𝗼𝗿𝗽𝗶𝗼 𝙏𝙃𝙀𝙈𝙀](t.me/Scorpions_scorp) 🎨"""
 sts_attheme = "https://t.me/SSSSllv/35"
 sts_attheme2 = "https://t.me/SSSSllv/17" 
 sts_attheme3 = "https://t.me/SSSSllv/27"
