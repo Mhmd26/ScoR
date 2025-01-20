@@ -38,16 +38,16 @@ def add_url(url):
             urls.append(url)
             return f"**✎┊‌ تم إضافة الرابط بنجاح ✅ \n {url}**"
 
-# إزالة رابط
-def remove_url(index):
+# إزالة رابط باستخدام الرابط نفسه
+def remove_url_by_link(url):
     with lock:
         if not urls:
             return "**✎┊‌ لاتوجد روابط لإزالتها ✨**"
-        if 0 <= index < len(urls):
-            removed_url = urls.pop(index)
-            return f"**✎┊‌ تم حذف الرابط ✅ \n {removed_url}**"
+        if url in urls:
+            urls.remove(url)
+            return f"**✎┊‌ تم حذف الرابط ✅ \n {url}**"
         else:
-            return "**✎┊‌ الرقم المدخل غير صحيح ❌**"
+            return "**✎┊‌ الرابط غير موجود في القائمة ❌**"
 
 # عرض قائمة الروابط الشغالة
 def get_active_urls():
@@ -77,20 +77,33 @@ async def add_url_command(event):
     await event.edit(result)
 
 @l313l.ar_cmd(
-    pattern="حذف رابط (\d+)",
+    pattern="حذف رابط (.+)",
     command=("حذف رابط", plugin_category),
     info={
-        "header": "لحذف رابط من قائمة المراقبة",
-        "الاستخـدام": "{tr}حذف رابط <رقم الرابط>",
+        "header": "لحذف رابط من قائمة المراقبة باستخدام الرابط نفسه",
+        "الاستخـدام": "{tr}حذف رابط <الرابط>",
     },
 )
-async def remove_url_command(event):
-    try:
-        index = int(event.pattern_match.group(1).strip()) - 1
-        result = remove_url(index)
-        await event.edit(result)
-    except ValueError:
-        await event.edit("**✎┊‌ يرجى إدخال رقم صحيح ❌**")
+async def remove_url_command_by_link(event):
+    url = event.pattern_match.group(1).strip()
+    result = remove_url_by_link(url)
+    await event.edit(result)
+
+@l313l.ar_cmd(
+    pattern="عرض الروابط الشغالة",
+    command=("عرض الروابط الشغالة", plugin_category),
+    info={
+        "header": "لعرض قائمة الروابط التي تعمل حاليًا",
+        "الاستخـدام": "{tr}عرض الروابط الشغالة",
+    },
+)
+async def list_active_urls_command(event):
+    active_urls = get_active_urls()
+    if active_urls:
+        result = "**✎┊‌ الروابط الشغالة ✅:**\n" + "\n".join(active_urls)
+    else:
+        result = "**✎┊‌ لا توجد روابط شغالة حاليًا ✨**"
+    await event.edit(result)
 
 @l313l.ar_cmd(
     pattern="قائمة الروابط$",
