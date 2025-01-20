@@ -174,7 +174,7 @@ async def stsfanan(i):
     sic_id = await rd(i)
     if sts_fanan3:
         tumc = f""
-        tumc += f"**✎┊‌ ثيم البشير_شو2..ثيم تجريبي🧸❤️ **\n"
+        tumc += f"**✎┊‌ ثيم غروب الشمس دقة 4k 🌇 **\n"
         tumc += f"**✎┊‌ لـ تحميـل الثيـم ارســل ** `.ث3` "
         tumc += f"\n\n** [العقرب | 𝐒𝐜𝐨𝐫𝐩𝐢𝐨𝐧  ](t.me/Scorpion_scorp)**☑️"
         await i.client.send_file(i.chat_id, sts_fanan3, caption=tumc, reply_to=sic_id)
