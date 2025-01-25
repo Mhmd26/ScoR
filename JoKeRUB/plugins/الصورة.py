@@ -9,8 +9,8 @@ name = "Profile Photos"
 
 
 @l313l.ar_cmd(
-    pattern="اخذ صور(?: |$)(.*)",
-    command=("اخذ صور", plugin_category),
+    pattern="افتاره(?: |$)(.*)",
+    command=("افتاره", plugin_category),
     info={
         "header": "To get user or group profile pic.",
         "description": "Reply to a user to get his profile pic or use command along\
@@ -76,6 +76,6 @@ async def potocmd(event):
     await event.delete()
 CMD_HELP.update(
     {
-        "الصورة": "**✎┊‌ الامر ⦂** `.صورة` <عدد الصور (اختياري)> <بالرد على الشخص>\nالوظيفة ⦂ لأخذ صورة حساب شخص معين بالرد عليه بالامر"
+        ".."
     }
 )
