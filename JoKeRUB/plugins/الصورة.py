@@ -9,8 +9,8 @@ name = "Profile Photos"
 
 
 @l313l.ar_cmd(
-    pattern="صورة(?: |$)(.*)",
-    command=("صورة", plugin_category),
+    pattern="اخذ صور(?: |$)(.*)",
+    command=("اخذ صور", plugin_category),
     info={
         "header": "To get user or group profile pic.",
         "description": "Reply to a user to get his profile pic or use command along\
