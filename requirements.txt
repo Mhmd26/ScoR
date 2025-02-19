@@ -1,6 +1,7 @@
 telethon
 pydub
 schedule
+pytgcalls
 waitress
 gunicorn
 ocrspace
