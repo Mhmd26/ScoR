@@ -839,7 +839,7 @@ async def handle_start(event):
     is_game_started = True
     is_word_sent = False
     chat_id = event.chat_id
-    await event.edit(f"**اول من يكتب ( {word} ) سيفوز**")
+    await event.edit(f"**اسرع شخص يكتب كلمة ( {word} ) سيفوز**")
 
 @l313l.on(events.NewMessage(incoming=True))
 async def handle_winner(event):
@@ -857,7 +857,7 @@ async def handle_winner(event):
                 sender_first_name = sender.first_name if sender else 'مجهول'
                 sorted_points = sorted(points.items(), key=lambda x: x[1], reverse=True)
                 points_text = '\n'.join([f'{i+1}• {(await l313l.get_entity(participant_id)).first_name}: {participant_points}' for i, (participant_id, participant_points) in enumerate(sorted_points)])
-                await l313l.send_message(event.chat_id, f'الف مبرووووك 🎉 الاعب ( {sender_first_name} ) فاز! \n اصبحت نقاطة: {points[winner_id]}\nنقاط المشاركين:\n{points_text}/n/nلتصفير النقاط ارسل (`.تصفير`)')
+                await l313l.send_message(event.chat_id, f'**الف مبرووووك 🎉 الاعب ( {sender_first_name} ) فاز! \n اصبحت نقاطة: {points[winner_id]}\n\nنقاط المشاركين:\n{points_text}\n\nلتصفير النقاط ارسل (`.تصفير`)**')
 joker = [
     "تلعب وخوش تلعب 😂👏🏻",
     "لك عاش يابطل استمر 💪🏻",
