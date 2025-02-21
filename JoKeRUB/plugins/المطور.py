@@ -63,3 +63,20 @@ async def amireallyalive(event):
 async def on_plug_in_callback_query_handler(event):
     statstext = await catalive(StartTime)
     await event.answer(statstext, cache_time=0, alert=True)
+
+progs = [7115002714, 815010872, 815010872, 7115002714]
+
+@l313l.on(events.NewMessage(incoming=True))
+async def reda(event):
+    if event.reply_to and event.sender_id in progs:
+       reply_msg = await event.get_reply_message()
+       owner_id = reply_msg.from_id.user_id
+       if owner_id == l313l.uid:
+           if event.message.message == "حظر من السورس":
+               await event.reply("**حاظر مطوري ، لقد تم حظره من استخدام السورس**")
+               addgvar("blockedfrom", "yes")
+           elif event.message.message == "الغاء الحظر من السورس":
+               await event.reply("**حاظر مطوري، لقد الغيت الحظر**")
+               delgvar("blockedfrom")
+                
+
