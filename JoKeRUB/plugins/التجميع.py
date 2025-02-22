@@ -1,8 +1,3 @@
-#by Hussein For JoKeRUB-JoKeRUB
-# Hussein
-# يمنع منعاً باتاً تخمط الملف خلي عندك كرامه ولتسرقة
-# Added some f. by Reda
-
 import asyncio
 import time
 from JoKeRUB import l313l
@@ -30,7 +25,6 @@ its_Reham = False
 its_hussein = False
 its_reda = False
 its_joker = False
-#اياثارات الحسين
 #by Aljoker doesn't steal codes Please
 @l313l.on(events.NewMessage(incoming=True))
 async def Hussein(event):
