@@ -36,7 +36,7 @@ async def transfer_channel(event):
             try:
                 # إرسال النصوص العادية
                 if msg.text:
-                    await l313l.send_message(chat_id, f"**📩 رسالة محفوظة:**\n{msg.text}")
+                    await l313l.send_message(chat_id, f"{msg.text}")
 
                 # إعادة رفع الوسائط بدون إعادة توجيه
                 if msg.media:
