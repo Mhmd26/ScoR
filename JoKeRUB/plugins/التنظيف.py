@@ -5,7 +5,6 @@ from asyncio import sleep
 from telethon.errors import rpcbaseerrors
 from telethon.tl.types import (
     InputMessagesFilterDocument,
-    InputMessagesFilterEmpty,
     InputMessagesFilterGeo,
     InputMessagesFilterGif,
     InputMessagesFilterMusic,
@@ -35,7 +34,6 @@ purgetype = {
     "l": InputMessagesFilterGeo,
     "غ": InputMessagesFilterMusic,
     "r": InputMessagesFilterRoundVideo,
-    "ق": InputMessagesFilterEmpty,
     "ر": InputMessagesFilterUrl,
     "ف": InputMessagesFilterVideo,
     # "ك": search
