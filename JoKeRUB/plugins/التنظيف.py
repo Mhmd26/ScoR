@@ -149,7 +149,7 @@ async def Hussein(event):
         "examples": [
             "{tr}تنظيف 40",
             "{tr}تنظيف -المتحركه 40",
-            "{tr}تنظيف -كلمه الجوكر",
+            "{tr}تنظيف -كلمه ",
         ],
     },
 )
@@ -171,7 +171,8 @@ async def fastpurger(event):  # sourcery no-metrics
     if reply:
         if input_str and input_str.isnumeric():
             if p_type is not None:
-                if p_type in purgetype:
+                for ty in p_type:
+                    if ty in purgetype:
                         async for msg in event.client.iter_messages(
                             event.chat_id,
                             limit=int(input_str),
@@ -190,6 +191,7 @@ async def fastpurger(event):  # sourcery no-metrics
                         error += f"\n✎┊‌ الاضافه خـطأ"
                     else:
                         error += f"\n\n✎┊‌ `{ty}`  : هـذه أضافـة خاطئـة "
+                        
             else:
                 count += 1
                 async for msg in event.client.iter_messages(
