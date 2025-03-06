@@ -27,16 +27,16 @@ plugin_category = "utils"
 purgelist = {}
 
 purgetype = {
-    "ب": InputMessagesFilterVoice,
-    "م": InputMessagesFilterDocument,
-    "ح": InputMessagesFilterGif,
-    "ص": InputMessagesFilterPhotos,
-    "l": InputMessagesFilterGeo,
-    "غ": InputMessagesFilterMusic,
-    "r": InputMessagesFilterRoundVideo,
-    "ر": InputMessagesFilterUrl,
-    "ف": InputMessagesFilterVideo,
-    # "ك": search
+    "البصمات": InputMessagesFilterVoice,
+    "الملفات": InputMessagesFilterDocument,
+    "المتحركات": InputMessagesFilterGif,
+    "الصور": InputMessagesFilterPhotos,
+    "المواقع": InputMessagesFilterGeo,
+    "الأغاني": InputMessagesFilterMusic,
+    "الرسائل الدائرية": InputMessagesFilterRoundVideo,
+    "جميع الرسائل": InputMessagesFilterEmpty,
+    "الروابط": InputMessagesFilterUrl,
+    "الفيديوهات": InputMessagesFilterVideo,
 }
 
 
@@ -159,12 +159,11 @@ async def fastpurger(event):  # sourcery no-metrics
     msgs = []
     count = 0
     input_str = event.pattern_match.group(1)
-    ptype = re.findall(r"-\w+", input_str)
-    try:
-        p_type = ptype[0].replace("-", "")
-        input_str = input_str.replace(ptype[0], "").strip()
-    except IndexError:
-        p_type = None
+    words = input_str.split()
+    p_type = words[0] if words and words[0] in purgetype else None
+    if p_type:
+    input_str = " ".join(words[1:]).strip()  # إزالة نوع التنظيف من النص الأساسي
+
     error = ""
     result = ""
     await event.delete()
@@ -172,8 +171,7 @@ async def fastpurger(event):  # sourcery no-metrics
     if reply:
         if input_str and input_str.isnumeric():
             if p_type is not None:
-                for ty in p_type:
-                    if ty in purgetype:
+                if p_type in purgetype:
                         async for msg in event.client.iter_messages(
                             event.chat_id,
                             limit=int(input_str),
