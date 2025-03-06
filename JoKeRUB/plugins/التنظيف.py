@@ -5,6 +5,7 @@ from asyncio import sleep
 from telethon.errors import rpcbaseerrors
 from telethon.tl.types import (
     InputMessagesFilterDocument,
+    InputMessagesFilterEmpty,
     InputMessagesFilterGeo,
     InputMessagesFilterGif,
     InputMessagesFilterMusic,
@@ -12,7 +13,7 @@ from telethon.tl.types import (
     InputMessagesFilterRoundVideo,
     InputMessagesFilterUrl,
     InputMessagesFilterVideo,
-    InputMessagesFilterSticker,
+    InputMessagesFilterVoice,
 )
 
 from JoKeRUB import l313l
@@ -33,10 +34,10 @@ purgetype = {
     "ص": InputMessagesFilterPhotos,
     "l": InputMessagesFilterGeo,
     "غ": InputMessagesFilterMusic,
-    "r": InputMessagesFilterRoundVideo,,
+    "r": InputMessagesFilterRoundVideo,
+    "ق": InputMessagesFilterEmpty,
     "ر": InputMessagesFilterUrl,
     "ف": InputMessagesFilterVideo,
-    "س": InputMessagesFilterSticker,
     # "ك": search
 }
 
@@ -368,4 +369,4 @@ async def fastpurger(event):  # sourcery no-metrics
         )
     await sleep(5)
     await hi.delete()
-            
+                                                           
