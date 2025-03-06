@@ -5,6 +5,7 @@ from asyncio import sleep
 from telethon.errors import rpcbaseerrors
 from telethon.tl.types import (
     InputMessagesFilterDocument,
+    InputMessagesFilterEmpty,
     InputMessagesFilterGeo,
     InputMessagesFilterGif,
     InputMessagesFilterMusic,
@@ -27,16 +28,17 @@ plugin_category = "utils"
 purgelist = {}
 
 purgetype = {
-    "البصمات": InputMessagesFilterVoice,
-    "الملفات": InputMessagesFilterDocument,
-    "المتحركات": InputMessagesFilterGif,
-    "الصور": InputMessagesFilterPhotos,
-    "المواقع": InputMessagesFilterGeo,
-    "الأغاني": InputMessagesFilterMusic,
-    "الرسائل الدائرية": InputMessagesFilterRoundVideo,
-    "جميع الرسائل": InputMessagesFilterEmpty,
-    "الروابط": InputMessagesFilterUrl,
-    "الفيديوهات": InputMessagesFilterVideo,
+    "ب": InputMessagesFilterVoice,
+    "م": InputMessagesFilterDocument,
+    "ح": InputMessagesFilterGif,
+    "ص": InputMessagesFilterPhotos,
+    "l": InputMessagesFilterGeo,
+    "غ": InputMessagesFilterMusic,
+    "r": InputMessagesFilterRoundVideo,
+    "ق": InputMessagesFilterEmpty,
+    "ر": InputMessagesFilterUrl,
+    "ف": InputMessagesFilterVideo,
+    # "ك": search
 }
 
 
@@ -149,7 +151,7 @@ async def Hussein(event):
         "examples": [
             "{tr}تنظيف 40",
             "{tr}تنظيف -المتحركه 40",
-            "{tr}تنظيف -كلمه ",
+            "{tr}تنظيف -كلمه الجوكر",
         ],
     },
 )
@@ -159,11 +161,12 @@ async def fastpurger(event):  # sourcery no-metrics
     msgs = []
     count = 0
     input_str = event.pattern_match.group(1)
-    words = input_str.split()
-    p_type = words[0] if words and words[0] in purgetype else None
-    if p_type:
-    input_str = " ".join(words[1:]).strip()  # إزالة نوع التنظيف من النص الأساسي
-
+    ptype = re.findall(r"-\w+", input_str)
+    try:
+        p_type = ptype[0].replace("-", "")
+        input_str = input_str.replace(ptype[0], "").strip()
+    except IndexError:
+        p_type = None
     error = ""
     result = ""
     await event.delete()
@@ -191,7 +194,6 @@ async def fastpurger(event):  # sourcery no-metrics
                         error += f"\n✎┊‌ الاضافه خـطأ"
                     else:
                         error += f"\n\n✎┊‌ `{ty}`  : هـذه أضافـة خاطئـة "
-                        
             else:
                 count += 1
                 async for msg in event.client.iter_messages(
@@ -367,3 +369,4 @@ async def fastpurger(event):  # sourcery no-metrics
         )
     await sleep(5)
     await hi.delete()
+                        
