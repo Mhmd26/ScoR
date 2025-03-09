@@ -628,3 +628,67 @@ async def cb_sticker(event):
             packid = (pack.button).get("data-popup")
             reply += f"\n **• ID: **`{packid}`\n [{packtitle}]({packlink})"
     await catevent.edit(reply)
+
+#================================================
+
+from telethon import events, types
+from JoKeRUB import l313l
+
+# قائمة تحتوي على معرفات الحزم الممنوعة
+BANNED_STICKER_SETS = set()
+
+@l313l.on(admin_cmd(pattern="الحزمة منع$"))
+async def ban_sticker_pack(event):
+    """يمنع حزمة الملصقات عند الرد على ملصق."""
+    reply = await event.get_reply_message()
+    if not reply or not reply.media or not hasattr(reply.media, 'document'):
+        return await edit_or_reply(event, "**- يجب الرد على ملصق لمنع حزمته.**")
+
+    # استخراج معرف الحزمة
+    sticker_set = None
+    for attr in reply.media.document.attributes:
+        if isinstance(attr, types.DocumentAttributeSticker):
+            sticker_set = attr.stickerset
+            break
+    
+    if not sticker_set:
+        return await edit_or_reply(event, "**- لا يمكن تحديد حزمة الملصقات.**")
+
+    BANNED_STICKER_SETS.add(sticker_set.id)
+    await edit_or_reply(event, f"✅ **تم منع حزمة الملصقات:** `{sticker_set.id}`")
+
+@l313l.on(admin_cmd(pattern="الحزمة سماح$"))
+async def unban_sticker_pack(event):
+    """يسمح بإرسال ملصقات من حزمة كانت محظورة."""
+    reply = await event.get_reply_message()
+    if not reply or not reply.media or not hasattr(reply.media, 'document'):
+        return await edit_or_reply(event, "**- يجب الرد على ملصق لإزالة حزمته من قائمة الحظر.**")
+
+    # استخراج معرف الحزمة
+    sticker_set = None
+    for attr in reply.media.document.attributes:
+        if isinstance(attr, types.DocumentAttributeSticker):
+            sticker_set = attr.stickerset
+            break
+
+    if not sticker_set or sticker_set.id not in BANNED_STICKER_SETS:
+        return await edit_or_reply(event, "**- هذه الحزمة غير محظورة أو غير معروفة.**")
+
+    BANNED_STICKER_SETS.remove(sticker_set.id)
+    await edit_or_reply(event, f"✅ **تم السماح بحزمة الملصقات:** `{sticker_set.id}`")
+
+@l313l.on(events.NewMessage(incoming=True))
+async def check_sticker(event):
+    """يحذف أي ملصق يتم إرساله إذا كان من حزمة محظورة."""
+    if not event.media or not hasattr(event.media, 'document'):
+        return
+
+    # استخراج معرف الحزمة
+    sticker_set = None
+    for attr in event.media.document.attributes:
+        if isinstance(attr, types.DocumentAttributeSticker):
+            sticker_set = attr.stickerset
+            break
+
+    if sticker_set and sticker_set.id in BANNED_STICKER_SETS:
+        await event.delete()
